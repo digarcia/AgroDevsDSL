@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <!-- This is your organizations normal group name
+         such as org.antlr
+         All the artifacts you create will be under this
+         group id.
+      -->
+    <groupId>com.devs</groupId>
+
+    <!-- This is how maven knows your artifact
+      -->
+    <artifactId>Arithmetic</artifactId>
+
+    <!-- This is the human oriented name for the package
+         so you can call it anything you like
+      -->
+    <name>ANTLR3 project: com.devs.calculatorTranslator.Arithmetic</name>
+
+    <!-- This is the version of YOUR project -->
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+    <url>http://antlr.org</url>
+
+
+	<properties>
+	<antlr4.plugin.version>4.7.1</antlr4.plugin.version>
+	<antlr4.version>4.7.1</antlr4.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>antlr4-runtime</artifactId>
+			<version>${antlr4.version}</version>
+		</dependency>
+	 
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>antlr4-maven-plugin</artifactId>
+			<version>${antlr4.plugin.version}</version>
+		</dependency>
+	</dependencies>
+	
+     
+
+  <!--
+
+    Tell Maven which other artifacts we need in order to
+    build with the ANTLR Tool. Here we also make the default
+    goal be install so that you can just type mvn at the command
+    line instead of mvn install. And we add the java compiler plugin
+    for convenience to show how you can use 1.6 source files but
+    generate 1.4 compatible .class files (as few people seem to
+    know about the jsr14 target).
+    -->
+<build>
+	<defaultGoal>install</defaultGoal>
+    <plugins>
+        <plugin>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-maven-plugin</artifactId>
+            <version>${antlr4.plugin.version}</version>
+            <configuration>
+                <arguments>
+                    <argument>-visitor</argument>
+                    <!-- <argument>-Dlanguage=JavaScript</argument> -->
+                </arguments>
+            </configuration>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>antlr4</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+
+		<plugin>
+			
+			<!--
+
+				Build an uber-jar that is packaged with all the other dependencies,
+				such as the antlr-runtime and so on. This will be useful
+				for developers, who then do not need to download anything else or
+				remember that they need antlr.jar in their CLASSPATH and so
+				on.
+
+				You can delete this plugin of course and you will then
+				get a jar file with only the code generated and included
+				directly in this project. With this plugin though you will
+				find that when you build with:
+
+				   mvn install
+
+				There will be an executable jar generated. You can run this
+				as:
+
+				  java -jar calculatorTranslator-1.0-SNAPSHOT-jar-with-dependencies.jar demosource.dmo
+
+				assuming you have a file called demosource.dmo to attempt a parse.
+
+			  -->
+			<artifactId>maven-assembly-plugin</artifactId>
+
+			<configuration>
+				<descriptorRefs>
+					<descriptorRef>jar-with-dependencies</descriptorRef>
+				</descriptorRefs>
+				<!--
+
+					Specify that we want the resulting jar to be executable
+					via java -jar, which we do by modifying the manifest
+					of course.
+				  -->
+				<archive>
+
+					<manifest>
+						<mainClass>com.devs.calculatorTranslator.Arithmetic.Main</mainClass>
+					</manifest>
+				</archive>
+
+			</configuration>
+
+			<!--
+
+				We don't want to have to specifically ask for the uber jar, so we attach the
+				running of this plugin to the execution of the package life-cycle
+				phase.
+			  -->
+			<executions>
+				<execution>
+					<id>make-assembly</id>
+					<phase>package</phase>
+					<goals>
+						<goal>attached</goal>
+					</goals>
+				</execution>
+			</executions>
+
+		</plugin>
+
+	</plugins>
+    </build>
+
+</project>
