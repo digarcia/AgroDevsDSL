@@ -1,7 +1,7 @@
 // Define a grammar called AgroDevsDSL
 grammar AgroDevsDSL;
-program : steps ;                                                 // un programa es una inicializacion y una serie de pasos.
-steps : (step)+ ;                                                                // La lista de pasos es una lista de pasos no vacia
+program : steps ;                              // un programa es una inicializacion y una serie de pasos.
+steps : (step)+ ;                              // La lista de pasos es una lista de pasos no vacia
 
 // un paso tiene una precondicion,  variables de entrada, de salida y una lista de operaciones
 step:  stepDeclaration stepName '{' precondition inputVars outputVars operations  '}' ;     
