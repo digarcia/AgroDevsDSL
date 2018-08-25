@@ -30,4 +30,4 @@ COMMENT : '/*' .*? '*/' -> skip ; // Match "/*" stuff "*/"
 ID : ('a'..'z'|'A'..'Z'|[0-9])+ ;
 INT : [0-9]+ ;
 STRING : '"' .*? '"' ; // match anything in "..."
-
+WS : [ \t\n\r]+ -> skip ;

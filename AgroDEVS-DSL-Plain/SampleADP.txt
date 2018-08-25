@@ -1,0 +1,7 @@
+//Programa Prueba Gramatica AgroDevs
+STEP Paso1 {
+precondition : {}
+inputVars: {var1}
+outputVars: {var1}
+TableAccess
+}
