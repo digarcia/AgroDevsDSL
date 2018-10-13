@@ -6,7 +6,7 @@ steps : (step)+ ;                              // La lista de pasos es una lista
 // un paso tiene una precondicion,  variables de entrada, de salida y una lista de operaciones
 step:  stepDeclaration stepName '{' precondition inputVars outputVars operations  '}' ;     
 operations: (operation)+ ;
-operation: tableAccess | calculation | cellDevsCode;
+operation: tableAccess | calculation | cellDevsCodeDef;
 
 
 stepDeclaration: 'STEP' ;
@@ -16,13 +16,15 @@ inputVars: 'inputVars' ':' '{'  varlist '}';
 outputVars: 'outputVars'':' '{' varlist '}' ;
 tableAccess: 'tableAccess' ;
 calculation: 'calculation' ;
-cellDevsCode: 'cellDevsCode'':' STRING ;
+cellDevsCodeDef: 'cellDevsCode'':' cellDevsCodeValue ;
+cellDevsCodeValue: STRING ;
 
 varlist:  varName (',' varName)* ;
 varName: ID ;
 
 
 //Lex part
+
 
 //Standards
 LINE_COMMENT : '//' .*? '\r'? '\n' -> skip ; // Match "//" stuff '\n'
