@@ -23,11 +23,16 @@ initialvalue : 0
 # clu = tipo de cultivo
 StateVariables:  clu 
 StateValues: 0 
-neighborports: etapa out
+neighborports: etapa result
 localtransition : cell-rule
 
 
 [cell-rule]
+rule: 2 100 { (0,0) = 1 }
+rule: { (0,0)+1  } 100 { (0,0) = 2 }
+rule: {~result := 3 ;} 100 { (0,0) = 3 }
+rule: {} { $clu := 3 ;} 100 { (0,0)~result = 3 }
+rule: {} { $clu := 4 ;} 100 { $clu = 4}
 rule: 1 100 { uniform(0,100) >  50 }
 rule: 0 100 { uniform(0,100) <= 50 }
 
