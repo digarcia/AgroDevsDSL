@@ -20,7 +20,17 @@ public class AgroDevsDSLToCellDevs extends AgroDevsDSLBaseListener {
 	*/
 	@Override public void enterStep(AgroDevsDSLParser.StepContext ctx) { 
 		String stepName = ctx.stepName().getText();
-        System.out.println("# Step : "+stepName);	
+		System.out.println("# Step : "+stepName);	
+	}
+	
+	
+	/** Translate a CellDevs inline code declaration 
+	 *  into cellDevsCode
+	 */
+	@Override public void enterCellDevsCodeDef(AgroDevsDSLParser.CellDevsCodeDefContext ctx) { 
+		String cellDevsCode = ctx.cellDevsCodeValue().getText();
+		System.out.println("# CellDevs Code : ");	
+		System.out.println(cellDevsCode);	
 	}
 	
 }

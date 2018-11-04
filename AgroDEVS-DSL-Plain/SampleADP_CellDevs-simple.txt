@@ -6,6 +6,14 @@ outputVars: {var1}
 cellDevsCode: "value delay condition"
 }
 STEP Paso2 {
+precondition : { Paso1 Paso0 }
+inputVars: {var1}
+outputVars: {var1}
+value: "$clu := 1;$precio1 := 100;$costo1 := 15"
+delay: "10"
+condition: ""
+}
+STEP Paso3 {
 precondition : {}
 inputVars: {var1}
 outputVars: {var1}
