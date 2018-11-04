@@ -4,7 +4,7 @@ program : steps ;                              // un programa es una inicializac
 steps : (step)+ ;                              // La lista de pasos es una lista de pasos no vacia
 
 // un paso tiene una precondicion,  variables de entrada, de salida y una lista de operaciones
-step:  stepDeclaration stepName '{' precondition inputVars outputVars operations  '}' ;     
+step:  stepDeclaration stepName '{' precondition inputVars? outputVars? operations  '}' ;     
 operations: (operation)+ ;
 operation: tableAccess | calculation | cellDevsCodeDef | valueDelayCondition;
 
