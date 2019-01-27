@@ -12,6 +12,18 @@ delay: "10"
 condition: ""
 }
 STEP Paso3 {
+precondition : { Paso1 Paso0 }
+value: "$clu := 1;$precio1 := 100;$costo1 := 15"
+delay: "0"
+condition: ""
+}
+STEP Paso4 {
+precondition : { Paso1 Paso0 }
+value: "$clu := 1;$precio1 := 100;$costo1 := 15 ~pro := (((0,0)~lu1/ 100) * ((#macro(rinde_lu1) *
+			#macro(precio_lu1)) - #macro(costo_lu1))) "
+condition: ""
+}
+STEP Paso5 {
 precondition : {}
 inputVars: {var1}
 outputVars: {var1}
