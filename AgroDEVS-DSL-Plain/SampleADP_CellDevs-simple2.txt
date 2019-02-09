@@ -19,8 +19,8 @@ condition: ""
 }
 STEP Paso4 {
 precondition : { Paso1 Paso0 }
-value: "$clu := 1;$precio1 := 100;$costo1 := 15 ~pro := (((0,0)~lu1/ 100) * ((#macro(rinde_lu1) *
-			#macro(precio_lu1)) - #macro(costo_lu1))) "
+value: "$clu := 1;$precio1 := 100;$costo1 := 15 ~pro := (((0,0)~lu1/ 100) * ((#(rinde_lu1) *
+			#(precio_lu1)) - #(costo_lu1))) "
 condition: ""
 }
 STEP Paso5 {
@@ -31,22 +31,22 @@ cellDevsCode: "
 % Procesamiento
 % 1 - Calculo Profit / Emergia
 rule: 	{
-			~pro := (((0,0)~lu1/ 100) * ((#macro(rinde_lu1) *
-			#macro(precio_lu1)) - #macro(costo_lu1))) +
-			(((0,0)~lu2/ 100) * ((#macro(rinde_lu2) *
-			#macro(precio_lu2)) - #macro(costo_lu2))) +
-			(((0,0)~lu3/ 100) * (((#macro(rinde_lu4) *
-			#macro(precio_lu4)) + (#macro(rinde_lu5) * #macro(precio_lu2))) -
-			#macro(costo_lu3))) -
-			((0,0)~alq * (#macro(precio_lu2)));
-			~eme := (((0,0)~lu1/ 100) * #macro(emergia_lu1)) +
-			(((0,0)~lu2/ 100) * #macro(emergia_lu2)) +
-			(((0,0)~lu3/ 100) * #macro(emergia_lu3));
-			#macro(SetEtapaParametrosCalculados)
+			~pro := (((0,0)~lu1/ 100) * ((#(rinde_lu1) *
+			#(precio_lu1)) - #(costo_lu1))) +
+			(((0,0)~lu2/ 100) * ((#(rinde_lu2) *
+			#(precio_lu2)) - #(costo_lu2))) +
+			(((0,0)~lu3/ 100) * (((#(rinde_lu4) *
+			#(precio_lu4)) + (#(rinde_lu5) * #(precio_lu2))) -
+			#(costo_lu3))) -
+			((0,0)~alq * (#(precio_lu2)));
+			~eme := (((0,0)~lu1/ 100) * #(emergia_lu1)) +
+			(((0,0)~lu2/ 100) * #(emergia_lu2)) +
+			(((0,0)~lu3/ 100) * #(emergia_lu3));
+			#(SetEtapaParametrosCalculados)
 		}
 		0
 		{
-			(0,0)#macro(ambienteRecibido) and
+			(0,0)#(ambienteRecibido) and
 			(not isUndefined((0,0)~lu1)) and
 			(not isUndefined((0,0)~lu2)) and
 			(not isUndefined((0,0)~lu3)) and
@@ -55,11 +55,11 @@ rule: 	{
 rule: 	{
 			~pro := ?;
 			~eme := ?;
-			#macro(SetEtapaParametrosCalculados)
+			#(SetEtapaParametrosCalculados)
 		}
 		0
 		{
-			(0,0)#macro(ambienteRecibido)
+			(0,0)#(ambienteRecibido)
 		}
 "
 }

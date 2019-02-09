@@ -28,3 +28,19 @@ condition:	{
 			(0,0)#(ambienteRecibido)
 		}
 "
+
+
+hay manera de escribir las reglas de value y condition en antlr ?
+
+value
+{
+(asignacion_port)+
+}
+{
+(asignacion_val)+
+}
+
+
+condition{
+
+}
