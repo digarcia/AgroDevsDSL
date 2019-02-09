@@ -28,7 +28,7 @@ public class AgroDevsDSLToCellDevs extends AgroDevsDSLBaseListener {
 	 *  into cellDevsCode
 	 */
 	@Override public void enterCellDevsCodeDef(AgroDevsDSLParser.CellDevsCodeDefContext ctx) { 
-		String cellDevsCode = ctx.cellDevsCodeValue().getText().replace("\"", "") ;
+		String cellDevsCode = ctx.cellDevsCodeValue().getText().replace("\"", "").replace("#", "#macro")  ;
 		System.out.println("# CellDevs Code : ");	
 		System.out.println(cellDevsCode);	
 	}
@@ -37,10 +37,10 @@ public class AgroDevsDSLToCellDevs extends AgroDevsDSLBaseListener {
 	 *  into cellDevsCode
 	 */
 	@Override public void enterValueDelayCondition(AgroDevsDSLParser.ValueDelayConditionContext ctx) { 
-		String valueCode = ctx.valueCode().getText().replace("\"", "") ;
+		String valueCode = ctx.valueCode().getText().replace("\"", "").replace("#", "#macro") ;
 		AgroDevsDSLParser.DelayContext delay = ctx.delay();
 		String delayCode = (delay == null || delay.delayCode() == null || delay.delayCode().equals(""))?"0":delay.delayCode().getText().replace("\"", "") ;
-		String conditionCode = ctx.conditionCode().getText().replace("\"", "") ;;
+		String conditionCode = ctx.conditionCode().getText().replace("\"", "").replace("#", "#macro") ;;
 		System.out.println("# ValueDelayCondition : ");	
 		System.out.println("rule {"+valueCode+"} "+delayCode+" { "+conditionCode+" }");	
 	}

@@ -29,8 +29,8 @@ rule: {
 }
 {
 $clu := 1;
-$precio1 := 100
-$costo1 := 15
+$precio1 := 100;
+$costo1 := 15;
 }
 0
 {
