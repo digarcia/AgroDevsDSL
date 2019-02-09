@@ -1,0 +1,84 @@
+# Step : Paso1
+# CellDevs Code : 
+"value delay condition"
+# Step : Paso2
+# Step : Paso3
+# CellDevs Code : 
+"
+% Procesamiento
+% 1 - Calculo Profit / Emergia
+rule: 	{
+			~pro := (((0,0)~lu1/ 100) * ((#macro(rinde_lu1) *
+			#macro(precio_lu1)) - #macro(costo_lu1))) +
+			(((0,0)~lu2/ 100) * ((#macro(rinde_lu2) *
+			#macro(precio_lu2)) - #macro(costo_lu2))) +
+			(((0,0)~lu3/ 100) * (((#macro(rinde_lu4) *
+			#macro(precio_lu4)) + (#macro(rinde_lu5) * #macro(precio_lu2))) -
+			#macro(costo_lu3))) -
+			((0,0)~alq * (#macro(precio_lu2)));
+			~eme := (((0,0)~lu1/ 100) * #macro(emergia_lu1)) +
+			(((0,0)~lu2/ 100) * #macro(emergia_lu2)) +
+			(((0,0)~lu3/ 100) * #macro(emergia_lu3));
+			#macro(SetEtapaParametrosCalculados)
+		}
+		0
+		{
+			(0,0)#macro(ambienteRecibido) and
+			(not isUndefined((0,0)~lu1)) and
+			(not isUndefined((0,0)~lu2)) and
+			(not isUndefined((0,0)~lu3)) and
+			(not isUndefined((0,0)~mgm))
+		}
+rule: 	{
+			~pro := ?;
+			~eme := ?;
+			#macro(SetEtapaParametrosCalculados)
+		}
+		0
+		{
+			(0,0)#macro(ambienteRecibido)
+		}
+"
+
+# Step : Paso1
+# CellDevs Code : 
+"value delay condition"
+# Step : Paso2
+# Step : Paso3
+# CellDevs Code : 
+"
+% Procesamiento
+% 1 - Calculo Profit / Emergia
+rule: 	{
+			~pro := (((0,0)~lu1/ 100) * ((#macro(rinde_lu1) *
+			#macro(precio_lu1)) - #macro(costo_lu1))) +
+			(((0,0)~lu2/ 100) * ((#macro(rinde_lu2) *
+			#macro(precio_lu2)) - #macro(costo_lu2))) +
+			(((0,0)~lu3/ 100) * (((#macro(rinde_lu4) *
+			#macro(precio_lu4)) + (#macro(rinde_lu5) * #macro(precio_lu2))) -
+			#macro(costo_lu3))) -
+			((0,0)~alq * (#macro(precio_lu2)));
+			~eme := (((0,0)~lu1/ 100) * #macro(emergia_lu1)) +
+			(((0,0)~lu2/ 100) * #macro(emergia_lu2)) +
+			(((0,0)~lu3/ 100) * #macro(emergia_lu3));
+			#macro(SetEtapaParametrosCalculados)
+		}
+		0
+		{
+			(0,0)#macro(ambienteRecibido) and
+			(not isUndefined((0,0)~lu1)) and
+			(not isUndefined((0,0)~lu2)) and
+			(not isUndefined((0,0)~lu3)) and
+			(not isUndefined((0,0)~mgm))
+		}
+rule: 	{
+			~pro := ?;
+			~eme := ?;
+			#macro(SetEtapaParametrosCalculados)
+		}
+		0
+		{
+			(0,0)#macro(ambienteRecibido)
+		}
+"
+

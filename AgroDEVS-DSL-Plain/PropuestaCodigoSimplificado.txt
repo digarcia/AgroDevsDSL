@@ -1,0 +1,30 @@
+Propuesta Codigo Simplificado:
+
+cellDevsCode: "
+% Procesamiento
+% 1 - Calculo Profit / Emergia
+value: 	{
+			~pro := ((~lu1/ 100) * ((#(rinde_lu1) * #(precio_lu1)) - #(costo_lu1))) +
+					((~lu2/ 100) * ((#(rinde_lu2) * #(precio_lu2)) - #(costo_lu2))) +
+					((~lu3/ 100) * (((#(rinde_lu4) *#(precio_lu4)) + (#(rinde_lu5) * #(precio_lu2))) -#(costo_lu3))) -(~alq * (#(precio_lu2)));
+			~eme := ((~lu1/ 100) * #(emergia_lu1)) +
+					((~lu2/ 100) * #(emergia_lu2)) +
+					((~lu3/ 100) * #(emergia_lu3));
+			#(SetEtapaParametrosCalculados)
+		}
+condition:{
+			(0,0)#(ambienteRecibido) and
+			(not isUndefined(~lu1)) and
+			(not isUndefined(~lu2)) and
+			(not isUndefined(~lu3)) and
+			(not isUndefined(~mgm))
+		}
+value: 	{
+			~pro := ?;
+			~eme := ?;
+			#(SetEtapaParametrosCalculados)
+		}
+condition:	{
+			(0,0)#(ambienteRecibido)
+		}
+"

@@ -4,20 +4,28 @@ program : steps ;                              // un programa es una inicializac
 steps : (step)+ ;                              // La lista de pasos es una lista de pasos no vacia
 
 // un paso tiene una precondicion,  variables de entrada, de salida y una lista de operaciones
-step:  stepDeclaration stepName '{' precondition inputVars outputVars operations  '}' ;     
+step:  stepDeclaration stepName '{' precondition inputVars? outputVars? operations  '}' ;     
 operations: (operation)+ ;
-operation: tableAccess | calculation | cellDevsCodeDef;
+operation: tableAccess | calculation | cellDevsCodeDef | valueDelayCondition;
 
 
 stepDeclaration: 'STEP' ;
 stepName: ID ;
-precondition: 'precondition' ':' '{'  '}' ;
+precondition: 'precondition' ':' '{' pasos '}' ;
+pasos: (paso)* ;
+paso: ID;
 inputVars: 'inputVars' ':' '{'  varlist '}';
 outputVars: 'outputVars'':' '{' varlist '}' ;
 tableAccess: 'tableAccess' ;
 calculation: 'calculation' ;
 cellDevsCodeDef: 'cellDevsCode'':' cellDevsCodeValue ;
 cellDevsCodeValue: STRING ;
+valueDelayCondition: 'value'':' valueCode delay? 'condition'':' conditionCode ;
+delay: 'delay'':' delayCode ;
+valueCode: STRING ;
+delayCode: STRING ;
+conditionCode: STRING ;
+ 
 
 varlist:  varName (',' varName)* ;
 varName: ID ;
