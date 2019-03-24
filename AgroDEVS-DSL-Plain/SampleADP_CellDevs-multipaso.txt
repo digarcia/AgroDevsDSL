@@ -1,0 +1,56 @@
+//Programa Prueba Gramatica AgroDevs
+STEP Paso1 {
+precondition : {}
+inputVars: {var1}
+outputVars: {var1}
+cellDevsCode: "value delay condition"
+}
+STEP Paso2 {
+precondition : { Paso1 Paso0 }
+value: "$clu := 1;$precio1 := 100;$costo1 := 15"
+delay: "10"
+condition: ""
+}
+STEP AmbienteRecibido {
+precondition : { Paso1 Paso0 }
+value: "$clu := 1;$precio1 := 100;$costo1 := 15"
+delay: "0"
+condition: ""
+}
+STEP ParametrosCalculados {
+precondition : { AmbienteRecibido }
+condition: ""
+value: "$clu := 1;$precio1 := 100;$costo1 := 15 ~pro := (((0,0)~lu1/ 100) * ((#(rinde_lu1) *
+			#(precio_lu1)) - #(costo_lu1))) "
+}
+STEP UEOkEsperaVecinos {
+precondition : { ParametrosCalculados }
+condition: "(0,0)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente)))"
+value: "$clu := ...."
+}
+STEP UEErrorEsperaVecinos {
+precondition : { ParametrosCalculados }
+condition: "		(#macro(vecinosParametrosCalculados)) 	and
+		(not isUndefined((-1,0)~pro))	 		and
+		(
+			(-1,0)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente))) and
+			(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (-1,0)~pro)	and
+			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (-1,0)~pro)	and
+			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (-1,0)~pro)	and
+			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (-1,0)~pro)	and
+			(isUndefined((1,-1)~pro) or  (1,-1)~pro 	<= (-1,0)~pro)	and
+			(isUndefined((0,-1)~pro) or  (0,-1)~pro 	<= (-1,0)~pro)	and
+			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (-1,0)~pro)		
+		)"
+value: "~uee := (0,0)~uee + 1;						
+		#macro(actualizaCantidadUADegrada)"
+		"$clu 		:= 1;
+		$aju 		:= 3;
+		$clu1	 	:= (-1,0)~lu1;
+		$clu2 		:= (-1,0)~lu2;
+		$clu3	 	:= (-1,0)~lu3;
+		$cue_cota 	:= (-1,0)~ue_cota;
+		$cmgm 		:= (-1,0)~mgm;"
+}
+
+
