@@ -1,0 +1,17 @@
+//Programa Prueba Gramatica AgroDevs
+STEP Paso1 {
+precondition : { Paso1 Paso0 }
+value: "$clu := 1;$precio1 := 100;$costo1 := 15 ~pro := (((0,0)~lu1/ 100) * ((#(rinde_lu1) *
+			#(precio_lu1)) - #(costo_lu1))) "
+condition: ""
+}
+STEP Paso2 {
+precondition : { Paso1 Paso0 }
+value: "$clu := 1;$precio1 := 100;$costo1 := 15 ~pro := (((0,0)~lu1/ 100) * ((#(rinde_lu1) *
+			#(precio_lu1)) - #(costo_lu1))) "
+selectNeighbour: {
+var: "pro"
+op: ">"
+comparison: "((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente)))"
+}
+}

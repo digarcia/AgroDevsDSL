@@ -6,7 +6,7 @@ steps : (step)+ ;                              // La lista de pasos es una lista
 // un paso tiene una precondicion,  variables de entrada, de salida y una lista de operaciones
 step:  stepDeclaration stepName '{' precondition inputVars? outputVars? operations  '}' ;     
 operations: (operation)+ ;
-operation: tableAccess | calculation | cellDevsCodeDef | valueDelayCondition;
+operation: tableAccess | calculation | cellDevsCodeDef | valueDelayCondition | valueDelaySelectNeighbour;
 
 
 stepDeclaration: 'STEP' ;
@@ -21,11 +21,16 @@ calculation: 'calculation' ;
 cellDevsCodeDef: 'cellDevsCode'':' cellDevsCodeValue ;
 cellDevsCodeValue: STRING ;
 valueDelayCondition: 'value'':' valueCode delay? 'condition'':' conditionCode ;
+valueDelaySelectNeighbour: 'value'':' valueCode delay? 'selectNeighbour'':' selectNeighbourCode ;
 delay: 'delay'':' delayCode ;
 valueCode: STRING ;
 delayCode: STRING ;
 conditionCode: STRING ;
- 
+//selectNeighbourCode: STRING ;
+selectNeighbourCode: '{' 'var'':' selectVarCode 'op'':' selectOperatorCode  'comparison'':' selectComparisonCode '}' ;
+selectVarCode: STRING ;
+selectOperatorCode: STRING ;
+selectComparisonCode: STRING ; 
 
 varlist:  varName (',' varName)* ;
 varName: ID ;
