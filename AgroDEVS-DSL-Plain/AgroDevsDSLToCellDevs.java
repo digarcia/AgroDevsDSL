@@ -42,7 +42,7 @@ public class AgroDevsDSLToCellDevs extends AgroDevsDSLBaseListener {
 		String delayCode = (delay == null || delay.delayCode() == null || delay.delayCode().equals(""))?"0":delay.delayCode().getText().replace("\"", "") ;
 		String conditionCode = ctx.conditionCode().getText().replace("\"", "").replace("#", "#macro") ;;
 		System.out.println("# ValueDelayCondition : ");	
-		System.out.println("rule {"+valueCode+"} "+delayCode+" { "+conditionCode+" }");	
+		System.out.println("rule: {"+valueCode+"} "+delayCode+" { "+conditionCode+" }");	
 	}
 	
 	
@@ -56,7 +56,7 @@ public class AgroDevsDSLToCellDevs extends AgroDevsDSLBaseListener {
 		String selectNeighbourCode = ctx.selectNeighbourCode().getText();
 		System.out.println("# ValueDelaySelectNeighbour : ");	
 		//System.out.println("rule {"+valueCode+"} "+delayCode+" { "+selectNeighbourCode+" }");	
-		System.out.print("rule {"+valueCode+"} "+delayCode+" " );	
+		System.out.print("rule: {"+valueCode+"} "+delayCode+" " );	
 	}
 	
 	/** Translate a selectNeighbourCode declaration 
