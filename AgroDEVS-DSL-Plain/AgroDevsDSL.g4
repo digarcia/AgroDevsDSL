@@ -1,12 +1,15 @@
 // Define a grammar called AgroDevsDSL
 grammar AgroDevsDSL;
 program : steps ;                              // un programa es una inicializacion y una serie de pasos.
-steps : (step)+ ;                              // La lista de pasos es una lista de pasos no vacia
+steps : (step|stepSelectNeighbour)+ ;          // La lista de pasos es una lista de pasos no vacia
 
 // un paso tiene una precondicion,  variables de entrada, de salida y una lista de operaciones
 step:  stepDeclaration stepName '{' precondition inputVars? outputVars? operations  '}' ;     
 operations: (operation)+ ;
-operation: tableAccess | calculation | cellDevsCodeDef | valueDelayCondition | valueDelaySelectNeighbour;
+operation: tableAccess | calculation | cellDevsCodeDef | valueDelayCondition ;
+
+//el paso para vecinos (que genera multiples reglas) se tiene que considerar aparte
+stepSelectNeighbour:  stepDeclaration stepName '{' precondition inputVars? outputVars? valueDelaySelectNeighbour  '}' ;   
 
 
 stepDeclaration: 'STEP' ;

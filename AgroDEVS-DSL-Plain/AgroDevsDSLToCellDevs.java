@@ -53,10 +53,15 @@ public class AgroDevsDSLToCellDevs extends AgroDevsDSLBaseListener {
 		String valueCode = ctx.valueCode().getText().replace("\"", "").replace("#", "#macro") ;
 		AgroDevsDSLParser.DelayContext delay = ctx.delay();
 		String delayCode = (delay == null || delay.delayCode() == null || delay.delayCode().equals(""))?"0":delay.delayCode().getText().replace("\"", "") ;
-		String selectNeighbourCode = ctx.selectNeighbourCode().getText();
+		// AgroDevsDSLParser.SelectNeighbourCodeContext
+		AgroDevsDSLParser.SelectNeighbourCodeContext selectNeighbourCode = ctx.selectNeighbourCode();
 		System.out.println("# ValueDelaySelectNeighbour : ");	
 		//System.out.println("rule {"+valueCode+"} "+delayCode+" { "+selectNeighbourCode+" }");	
-		System.out.print("rule: {"+valueCode+"} "+delayCode+" " );	
+		//System.out.print("rule: {"+valueCode+"} "+delayCode+" " );
+		String selectVarCode = selectNeighbourCode.selectVarCode().getText().replace("\"", "") ;
+		String selectOperatorCode = selectNeighbourCode.selectOperatorCode().getText().replace("\"", "") ;
+		String selectComparisonCode = selectNeighbourCode.selectComparisonCode().getText().replace("\"", "");		
+		System.out.print("rule: {"+valueCode+"} "+delayCode+" SelectNeighbour("+selectVarCode+", "+selectOperatorCode+","+selectComparisonCode+")" );	
 	}
 	
 	/** Translate a selectNeighbourCode declaration 
@@ -67,7 +72,7 @@ public class AgroDevsDSLToCellDevs extends AgroDevsDSLBaseListener {
 		String selectOperatorCode = ctx.selectOperatorCode().getText().replace("\"", "") ;
 		String selectComparisonCode = ctx.selectComparisonCode().getText().replace("\"", "");
 		// System.out.println("# SelectNeighbour : ");	
-		System.out.println("SelectNeighbour("+selectVarCode+", "+selectOperatorCode+","+selectComparisonCode+")");	
+		// System.out.println("SelectNeighbour("+selectVarCode+", "+selectOperatorCode+","+selectComparisonCode+")");	
 	}
 	
 }
