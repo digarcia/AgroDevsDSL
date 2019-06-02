@@ -1,4 +1,21 @@
 //Programa Prueba Gramatica AgroDevs
+
+initialization: {
+nodeVars: {
+cam "cantidad de campañas procesadas",
+sumaDeg "suma parcial para degradacion",
+clu "flag copia lu",
+aju "tipo de ajuste, 1 resultado ok, 2 resultado error, 3 contexto",
+clu1 "valor a copiar en lu1",
+clu2 "valor a copiar en lu2",
+clu3 "valor a copiar en lu3",
+cueCota "valor a copiar en ue_cota",
+cmgm "valor a copiar en mgm"
+}
+}
+
+
+
 STEP Paso1 {
 precondition : { Paso1 Paso0 }
 value: "$clu := 1;$precio1 := 100;$costo1 := 15 ~pro := (((0,0)~lu1/ 100) * ((#(rinde_lu1) *

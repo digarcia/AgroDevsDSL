@@ -1,7 +1,14 @@
 // Define a grammar called AgroDevsDSL
 grammar AgroDevsDSL;
-program : steps ;                              // un programa es una inicializacion y una serie de pasos.
+program : initialization? steps ;                              // un programa es una inicializacion y una serie de pasos.
 steps : (step|stepSelectNeighbour)+ ;          // La lista de pasos es una lista de pasos no vacia
+
+
+//initialization contiene (en principio) la declaracion de puertos y variables y se usa para generar la
+// parte de inicializacion en cellDevs.
+initialization:  'initialization' ':' '{' nodeVars '}';
+nodeVars: 'nodeVars' ':' '{'  declaredVarlist '}';
+
 
 // un paso tiene una precondicion,  variables de entrada, de salida y una lista de operaciones
 step:  stepDeclaration stepName '{' precondition inputVars? outputVars? operations  '}' ;     
@@ -37,7 +44,9 @@ selectComparisonCode: STRING ;
 
 varlist:  varName (',' varName)* ;
 varName: ID ;
-
+declaredVarlist: varDeclaration (',' varDeclaration)* ; 
+varDeclaration: ID varDescription;
+varDescription: STRING;
 
 //Lex part
 
