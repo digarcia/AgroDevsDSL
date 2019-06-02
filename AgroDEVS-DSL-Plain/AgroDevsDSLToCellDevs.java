@@ -61,8 +61,58 @@ public class AgroDevsDSLToCellDevs extends AgroDevsDSLBaseListener {
 		String selectVarCode = selectNeighbourCode.selectVarCode().getText().replace("\"", "") ;
 		String selectOperatorCode = selectNeighbourCode.selectOperatorCode().getText().replace("\"", "") ;
 		String selectComparisonCode = selectNeighbourCode.selectComparisonCode().getText().replace("\"", "");		
-		System.out.print("rule: {"+valueCode+"} "+delayCode+" SelectNeighbour("+selectVarCode+", "+selectOperatorCode+","+selectComparisonCode+")" );	
+		System.out.println("rule: {"+valueCode+"} "+delayCode+" SelectNeighbour("+selectVarCode+", "+selectOperatorCode+","+selectComparisonCode+")" );
+		generateNeighboursRules(valueCode,delayCode,selectVarCode,selectOperatorCode,selectComparisonCode);
 	}
+	
+	
+	/** Translate a value-delay-selectNeighbour declaration 
+	 *  into cellDevsCode
+	 */
+	 public void generateNeighboursRules(String valueCode, String delayCode, String selectVarCode, String selectOperatorCode, String selectComparisonCode ) {
+		
+	for (int i = -1; i <= 1; i++) {
+		for (int j = -1; j <= 1; j++) {
+		  if ( i != 0 || j!= 0 ) {
+			  		String cellValue = "("+i+","+j+")";
+					System.out.println("%"+cellValue);
+					generateSingleNeighbourRules(cellValue,valueCode,delayCode,selectVarCode,selectOperatorCode,selectComparisonCode);
+		  }
+		}
+	}
+		
+	}
+	
+	/** Translate a value-delay-selectNeighbour declaration 
+	 *  into cellDevsCode
+	 */
+	 public void generateSingleNeighbourRules(String cellValue,String valueCode, String delayCode, String selectVarCode, String selectOperatorCode, String selectComparisonCode ) {
+		 
+		String cellVar = generateCellVar(cellValue,selectVarCode); // Ex: (0,1)~pro
+		System.out.println("(not isUndefined("+cellValue+"~"+selectVarCode+")) and");
+		System.out.println("(");
+		System.out.println(cellVar+" "+selectOperatorCode+" "+selectComparisonCode+" ");
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+			  if ( i != 0 || j!= 0 ) {
+						String otherCellValue = "("+i+","+j+")";
+						if (!otherCellValue.equals(cellValue)) {
+							String otherCellVar = generateCellVar(otherCellValue,selectVarCode);
+							//Generate opposite operator
+							System.out.println("and (isUndefined("+otherCellVar+") or "+otherCellVar+" <= "+cellVar+")");
+						}
+			  }
+			}
+		}
+		System.out.println(")");
+		 
+	}
+	
+	private String generateCellVar(String cellValue, String varCode) {
+		String cellVar = cellValue+"~"+varCode; // Ex: (0,1)~pro
+		return cellVar;
+	}
+	
 	
 	/** Translate a selectNeighbourCode declaration 
 	 *  into cellDevsCode
