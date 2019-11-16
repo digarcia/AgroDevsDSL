@@ -10,8 +10,64 @@
 
 
 import java.lang.String;
+import java.util.ArrayList;
 
 public class AgroDevsDSLToCellDevs extends AgroDevsDSLBaseListener {
+	
+	//Stack<Integer> stack = new Stack<Integer>();
+	ArrayList<String> ports = new ArrayList<String>();
+	ArrayList<String> vars = new ArrayList<String>();
+	String newline = System.lineSeparator();
+	
+	
+	// declaredVarlist
+	// nodeVars
+	// varDeclaration
+	/** 
+	 *  Translate an AgroDevs variable declaration into 
+	 *  a cellDevs port declaration and a cellDevs "copy" var declaration.
+	 *  Add both to global ports and vars lists
+	 */
+	@Override public void enterVarDeclaration(AgroDevsDSLParser.VarDeclarationContext ctx) { 
+		//AgroDevsDSLParser.DeclaredVarlistContext declaredVarlist = ctx.declaredVarlist();
+		String varDeclarationDescription = ctx.varDescription().getText();
+		String varDeclarationID = ctx.ID().getText();
+		//System.out.println("# varDeclarationDescription: ");
+		ports.add(varDeclarationID);
+		vars.add("c"+varDeclarationID);
+		System.out.println(varDeclarationID+":"+varDeclarationDescription);	
+	}
+	
+	
+	//nodeVars
+	/** Generates 
+	 *  a cellDevs port declaration and a cellDevs "copy" var declaration lists
+	 */
+	@Override public void exitNodeVars(AgroDevsDSLParser.NodeVarsContext ctx) { 
+		//AgroDevsDSLParser.DeclaredVarlistContext declaredVarlist = ctx.declaredVarlist();
+		//String varDeclarationDescription = ctx.varDescription().getText();
+		//String varDeclarationID = ctx.ID().getText();
+		//System.out.println("# varDeclarationDescription: ");
+		//StateVariables
+		System.out.print("StateVariables:");
+		for(String var: vars) {
+			System.out.print(" "+var);
+		}
+		System.out.println();
+		System.out.print("StateValues:");
+		for(String var: vars) {
+			System.out.print(" 0");
+		}
+		System.out.println();
+		
+		System.out.print("neighborports:");
+		for(String port: ports) {
+			System.out.print(" "+port);
+		}
+		System.out.println();
+		
+	}
+	
 	
 	
 	
@@ -32,6 +88,8 @@ public class AgroDevsDSLToCellDevs extends AgroDevsDSLBaseListener {
 		System.out.println("# CellDevs Code : ");	
 		System.out.println(cellDevsCode);	
 	}
+	
+	
 	
 	/** Translate a value-delay-condition declaration 
 	 *  into cellDevsCode
@@ -76,11 +134,21 @@ public class AgroDevsDSLToCellDevs extends AgroDevsDSLBaseListener {
 		  if ( i != 0 || j!= 0 ) {
 			  		String cellValue = "("+i+","+j+")";
 					System.out.println("%"+cellValue);
+					System.out.println(generateSingleNeighbourCopy(cellValue));
 					generateSingleNeighbourRules(cellValue,valueCode,delayCode,selectVarCode,selectOperatorCode,selectComparisonCode);
 		  }
 		}
 	}
 		
+	}
+	
+	public String generateSingleNeighbourCopy(String cellValue){
+	String copyPortsToVars = "{"+newline+
+		"$clu 		:= 1;"+newline+
+		"$aju 		:= 3;"+newline+
+		"$clu1 		:= "+cellValue+"~lu1"+newline+
+		"}";
+		return copyPortsToVars;
 	}
 	
 	/** Translate a value-delay-selectNeighbour declaration 
