@@ -35,7 +35,7 @@ public class AgroDevsDSLToCellDevs extends AgroDevsDSLBaseListener {
 		//System.out.println("# varDeclarationDescription: ");
 		ports.add(varDeclarationID);
 		vars.add("c"+varDeclarationID);
-		System.out.println(varDeclarationID+":"+varDeclarationDescription);	
+		System.out.println("%"+varDeclarationID+":"+varDeclarationDescription);	
 	}
 	
 	

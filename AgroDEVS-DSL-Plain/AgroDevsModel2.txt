@@ -1,0 +1,93 @@
+//Prototipo Agrodevs 2.0
+
+
+initialization: {
+nodeVars: {
+//representan composicion campo
+lu1 "porcentaje de lu tipo maiz",
+lu2 "porcentaje de lu tipo trigo/soja",
+lu3 "porcentaje de lu tipo soja primera",
+//tipo de productor
+owntyp "ownership type.tipo de productor: inquilino/propietario",
+envtyp "enviromental type.",
+tl "tech level: nivel tecnologico. nombre anterior: mgm",
+//condiciones ambientales
+wgc "weather growing condition. nombre anterior: amb",
+// variables economicas
+pro "profit",
+roi "retorno de la inversion",
+alq "valor alquiler del establecimiento",
+// variables ambientales
+rl "nivel de renovabilidad: emergia",
+gei "gases efecto invernadero",
+deg "indice degradacion",
+et "riesgo ecotoxicologico",
+// umbrales
+al "aspiration level. nombre anterior ue_cota",
+ala"aspiration level adjusted. umbral aspiracional ajustado por ambiente",
+eth "enviromental thereshold. nombre anterior ua_cota",
+rlth  "Umbral renovabilidad",
+eth   "umbral ecotoxicologico",
+geith "umbral gases efecto invernadero",
+
+// resultados
+uae "cantidad de campañas sin cumplir ua",
+uao "cantidad de campañas que cumple ua",
+uee "cantidad de campañas sin cumplir ue",
+ueo "cantidad de campañas que cumple ue"
+}
+}
+
+
+//Paso 1A: Calculo Ambiental
+STEP Paso1A {
+precondition : { Paso0 }
+	//Calculo de valores ambientales (renovabilidad,ecotoxicologia, gases efecto invernadero)
+	value: "	rl 	:=  (((0,0)lu1/ 100) * #(renovability_lu1)) + 
+					(((0,0)lu2/ 100) * #(renovability_lu2)) + 
+					(((0,0)lu3/ 100) * #(renovability_lu3));
+				gei :=  (((0,0)lu1/ 100) * #(gasesEI_lu1)) + 
+					(((0,0)lu2/ 100) * #(gasesEI_lu2)) + 
+					(((0,0)lu3/ 100) * #(gasesEI_lu3))	;
+				et :=  (((0,0)lu1/ 100) * #(ecotoxicology_lu1)) + 
+					(((0,0)lu2/ 100) * #(ecotoxicology_lu2)) + 
+					(((0,0)lu3/ 100) * #(ecotoxicology_lu3))"
+	condition: ""				
+}
+
+//Paso 1B: Calculo Economico
+STEP Paso1B {
+precondition : { Paso1A }
+	//Calculo economico.
+	value: "	pro 	:=  (((0,0)lu1/ 100) * ((#(rinde_lu1) * #(precio_lu1)) - #(costo_lu1))) + 
+					(((0,0)lu2/ 100) * ((#(rinde_lu2) * #(precio_lu2)) - #(costo_lu2))) + 
+					(((0,0)lu3/ 100) * (((#(rinde_lu4) * #(precio_lu4)) + (#(rinde_lu5) * #(precio_lu2))) - #(costo_lu3))) 
+					- if (typ = #(propietario), 0, (0,0)alq * (#(precio_lu2)));
+				% profit / costos	
+				roi := ((((0,0)lu1/ 100) * ((#(rinde_lu1) * #(precio_lu1)) - #(costo_lu1))) + 
+					(((0,0)lu2/ 100) * ((#(rinde_lu2) * #(precio_lu2)) - #(costo_lu2))) + 
+					(((0,0)lu3/ 100) * (((#(rinde_lu4) * #(precio_lu4)) + (#(rinde_lu5) * #(precio_lu2))) - #(costo_lu3))) 
+					- if (typ = #(propietario), 0, (0,0)alq * (#(precio_lu2)))) / 
+						(#(costo_lu1)+#(costo_lu2)+#(costo_lu3) + if (typ = #(propietario), 0, (0,0)alq * (#(precio_lu2))))
+					
+					"
+	condition: ""				
+}
+
+//Paso 2: Calculo Umbral Aspiracional Ajustado por Ambiente
+STEP Paso2 {
+precondition : { Paso1B }
+	//Calculo de Umbral Aspiracional Ajustado por Ambiente.
+	value: "	ala 	:= ((0,0)al + ((0,0)al * #(ajuste_ambiente))) "
+	condition: ""				
+}
+
+//Paso 3: Analisis de umbral y decision de cultivo.
+STEP Paso3 {
+precondition : { Paso2 }
+	//Calculo de Umbral Aspiracional Ajustado por Ambiente.
+	value: "	ala 	:= ((0,0)al + ((0,0)al * #(ajuste_ambiente))) "
+	condition: ""				
+}
+
+
