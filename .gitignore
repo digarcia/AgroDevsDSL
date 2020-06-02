@@ -48,6 +48,7 @@ Thumbs.db
 # CellDEVS output files #
 #########################
 *.log*
+*.drw
 
 # Binaries #
 #########################

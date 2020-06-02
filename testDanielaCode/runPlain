@@ -4,12 +4,13 @@
 # parametros
 # archivos
 SIM=agro
+MA=lifeTest.ma
 #MA=undefBugTest.ma
-MA=agro_reduced2.ma
+#MA=agro_reduced2.ma
 #MA=agro.ma
 #MA=agro_fixed.ma
 #EV=$SIM.ev
-EV=./153/$SIM.ev
+#EV=./153/$SIM.ev
 LOG=./logs/$SIM.log
 OUT=./out/$SIM.out
 #LOG_FULL=$LOG.full
@@ -97,7 +98,37 @@ STEP=00:00:00:100
 
 # grafica puertos
 
-PORT=pro
+#PORT=pro
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+
+#PORT=port0
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+#PORT=port1
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+#PORT=port2
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+PORT=value
+COM=life
 DRWVALUE=${SIM}_${PORT}.drw
 echo Running drawlog port $PORT
-#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
+echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT
+$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+PORT=port0
+COM=life
+DRWVALUE=${SIM}_${PORT}.drw
+echo Running drawlog port $PORT
+echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT
+$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT > ${DRWDIR}/${DRWVALUE}
