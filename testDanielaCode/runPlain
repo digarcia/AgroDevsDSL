@@ -1,0 +1,103 @@
+#!/bin/sh
+#
+
+# parametros
+# archivos
+SIM=agro
+#MA=undefBugTest.ma
+MA=agro_reduced2.ma
+#MA=agro.ma
+#MA=agro_fixed.ma
+#EV=$SIM.ev
+EV=./153/$SIM.ev
+LOG=./logs/$SIM.log
+OUT=./out/$SIM.out
+#LOG_FULL=$LOG.full
+# componente a graficar (CELLDEVS)
+COM=campo
+PARSEINFO=true
+#HELP=true
+
+
+
+# ejecutables
+#SIMU_DIR=/home/daniela/sed/cd++
+#SIMU_DIR=/home/d/SED/Tesis/ModelosCellDevs/bin
+
+#Version de mi VM
+#SIMU_DIR=/home/d/SED/Tesis/cdpp/cd++
+
+
+#Version de Server AgroDevs
+SIMU_DIR=/home/d/SED/SimuSanti/CDPP_ExtendedStates-codename-Santi/src/bin
+#SIMU_DIR=/home/d/SED/Tesis/AgroDevsDSL/SimuladorVersionOK/cd++.git
+echo "**************************************************"
+echo $SIMU_DIR
+
+
+SIMU=$SIMU_DIR/cd++
+DRAWLOG=$SIMU_DIR/drawlog
+
+
+DRWN=drw
+DRWDIR=./${DRWN}
+#echo $SIM
+#echo $DRWN
+#echo $DRWDIR
+#echo $(man mkdir)
+echo $DRWN
+$(mkdir $DRWN )  
+
+
+
+#SIMU_DIR=$HOME/sed/cd++
+#DRW=$DRW/$SIM.drw
+#LOGBUFFER=$SIMU_DIR/logbuffer
+
+# tiempos
+TIME=00:00:10:000
+STEP=00:00:00:001
+
+#DEBUG="-p$SIM.parser -v$SIM.eval -r"
+
+echo "******************************"
+#echo  ${DRWDIR}/*.drw $OUT
+rm -f $LOG* ${DRWDIR}/*.drw $OUT
+
+SIMU_ARGS="-m$MA"
+[ -n "$TIME" ]  &&  SIMU_ARGS="$SIMU_ARGS -t$TIME"
+[ -n "$EV" ]    &&  SIMU_ARGS="$SIMU_ARGS -e$EV"
+[ -n "$LOG" ]   &&  SIMU_ARGS="$SIMU_ARGS -l$LOG"
+[ -n "$OUT" ]   &&  SIMU_ARGS="$SIMU_ARGS -o$OUT"
+[ -n "$DEBUG" ] &&  SIMU_ARGS="$SIMU_ARGS $DEBUG"
+[ -n "$PARSEINFO" ] &&  SIMU_ARGS="$SIMU_ARGS -pparseinfo.info"
+[ -n "$HELP" ] &&  SIMU_ARGS="$SIMU_ARGS -h"
+
+#./bin/cd++ -mTwoStepPrototype-syntaxDemo.ma -l./logs/TwoStepPrototype-syntaxDemo.log -o./logs/TwoStepPrototype-syntaxDemo.out -t00:00:00:400
+# -magro_reduced.ma -t00:00:10:000 -eagro.ev -l/logs/agro.log -o/logs/agro.out
+
+
+
+
+echo $SIMU_ARGS
+echo $DEBUGGER
+#-magro_reduced.ma -t00:00:10:000 -eagro.ev -lagro.log -oagro.out
+
+
+if [ -z "$DEBUGGER" ]; then
+    time $SIMU $SIMU_ARGS
+else
+    $DEBUGGER $SIMU --pargs $SIMU_ARGS
+fi
+
+
+# drawlog
+# tiempos
+STEP=00:00:00:100
+
+# grafica puertos
+
+PORT=pro
+DRWVALUE=${SIM}_${PORT}.drw
+echo Running drawlog port $PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}

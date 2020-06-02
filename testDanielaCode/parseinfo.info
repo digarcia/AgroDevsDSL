@@ -1,0 +1,76 @@
+********* BUFFER ********
+ { ~amb := (0,-1)~amb; ~prv_amb := 25 ; ~prv_amb0 := (0,-1)~amb!0; ~prv_amb1 := (0,-1)~amb!1; ~etapa := 1; } { $cam := $cam + 1; } 0 { (0,0) ~etapa = 0 } { ~amb := (-1,0)~amb; ~prv_amb := (-1,0)~amb; ~prv_amb0 := (-1,0)~amb!0; ~prv_amb1 := (-1,0)~amb!1; ~etapa := 1; } { $cam := $cam + 1; } 0 { (0,0) ~etapa = 0 } { } { } 0 { t }
+String 'amb' parsed.
+OP_ASSIGN parsed
+Number 0 analyzed
+Number -1 analyzed
+String 'amb' parsed.
+String 'prv_amb' parsed.
+OP_ASSIGN parsed
+Number 25 analyzed
+String 'prv_amb0' parsed.
+OP_ASSIGN parsed
+Number 0 analyzed
+Number -1 analyzed
+String 'amb' parsed.
+Number 0 analyzed
+String 'prv_amb1' parsed.
+OP_ASSIGN parsed
+Number 0 analyzed
+Number -1 analyzed
+String 'amb' parsed.
+Number 1 analyzed
+String 'etapa' parsed.
+OP_ASSIGN parsed
+Number 1 analyzed
+State Variable cam parsed.
+OP_ASSIGN parsed
+State Variable cam parsed.
+OP_ADD_SUB parsed (+)
+Number 1 analyzed
+Number 0 analyzed
+Number 0 analyzed
+Number 0 analyzed
+String 'etapa' parsed.
+OP_EQ parsed (=)
+Number 0 analyzed
+String 'amb' parsed.
+OP_ASSIGN parsed
+Number -1 analyzed
+Number 0 analyzed
+String 'amb' parsed.
+String 'prv_amb' parsed.
+OP_ASSIGN parsed
+Number -1 analyzed
+Number 0 analyzed
+String 'amb' parsed.
+String 'prv_amb0' parsed.
+OP_ASSIGN parsed
+Number -1 analyzed
+Number 0 analyzed
+String 'amb' parsed.
+Number 0 analyzed
+String 'prv_amb1' parsed.
+OP_ASSIGN parsed
+Number -1 analyzed
+Number 0 analyzed
+String 'amb' parsed.
+Number 1 analyzed
+String 'etapa' parsed.
+OP_ASSIGN parsed
+Number 1 analyzed
+State Variable cam parsed.
+OP_ASSIGN parsed
+State Variable cam parsed.
+OP_ADD_SUB parsed (+)
+Number 1 analyzed
+Number 0 analyzed
+Number 0 analyzed
+Number 0 analyzed
+String 'etapa' parsed.
+OP_EQ parsed (=)
+Number 0 analyzed
+Number 0 analyzed
+BOOL parsed (t)
+********* BUFFER (for PortIn Transition) ********
+ { ~amb := portvalue(thisport); ~prv_amb := 25 ; ~prv_amb0 := 26; ~prv_amb1 := 27; ~etapa := 1; } { $cam := $cam + 1; } 0 { t }
