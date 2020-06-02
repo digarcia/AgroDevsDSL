@@ -45,4 +45,11 @@ Thumbs.db
 *Listener.java
 *Parser.java
 
+# CellDEVS output files #
+#########################
+*.log*
 
+# Binaries #
+#########################
+/SimuladorVersionOK/*
+/AgroDevsCellDevs/bin/*
