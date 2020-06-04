@@ -3,7 +3,7 @@
 
 # parametros
 # archivos
-SIM=agro
+SIM=changetest
 #MA=lifeTest.ma
 MA=changeTest.ma
 #MA=undefBugTest.ma
@@ -16,7 +16,7 @@ LOG=./logs/$SIM.log
 OUT=./out/$SIM.out
 #LOG_FULL=$LOG.full
 # componente a graficar (CELLDEVS)
-COM=life
+COM=changetest
 PARSEINFO=true
 #HELP=true
 
@@ -120,20 +120,49 @@ STEP=00:00:00:100
 #echo Running drawlog port $PORT
 #$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
 
+#---------------life--------------
+#PORT=value
+#COM=life
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+
+#PORT=port0
+#COM=life
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+#--------------------------------
+
+
+#PORT=value
+#COM=clife2
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT > ${DRWDIR}/${DRWVALUE}
+
 PORT=value
-COM=life
+COM=changetest
 DRWVALUE=${SIM}_${PORT}.drw
 echo Running drawlog port $PORT
 echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT
 $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT > ${DRWDIR}/${DRWVALUE}
 
 
-PORT=port0
-COM=life
-DRWVALUE=${SIM}_${PORT}.drw
-echo Running drawlog port $PORT
-echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT
-$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT > ${DRWDIR}/${DRWVALUE}
+#PORT=port0
+#COM=changeTest
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+
+
 
 #PORT=port1
 #COM=life
