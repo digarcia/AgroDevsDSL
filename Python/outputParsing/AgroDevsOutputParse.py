@@ -10,18 +10,20 @@ import os
 #import csv
 import pandas as pd
 
-AGRODEVS_OUTPUT_DIR='./output'
-OUTPUT_PARSER_RESULTS_DIR='./output'
+AGRODEVS_OUTPUT_DIR='./output/'
+OUTPUT_PARSER_RESULTS_DIR='./outputResults/'
 DRAWLOG_FILE_EXTENSION='.drw'
 
 AGRODEVS_PREFIX="agro_"
+
+AGRODEVS_SKIP_PORTS=["etapa"]
 
 AGRODEVS_LINES=10
 AGRODEVS_COLUMNS=10
 
 
-def filterDrawLogFiles(fileName, dirName = OUTPUT_PARSER_RESULTS_DIR):
-   if os.path.isfile(dirName+"/"+fileName) and  fileName.endswith(DRAWLOG_FILE_EXTENSION):
+def filterDrawLogFiles(fileName, dirName = AGRODEVS_OUTPUT_DIR):
+   if os.path.isfile(dirName+fileName) and  fileName.endswith(DRAWLOG_FILE_EXTENSION):
       return True
    else:
       return False
@@ -80,14 +82,20 @@ def obtieneDatos(linea):
     
 def processAgroDevsDrwFiles(id_test, agrodevs_drw_files,filas, columnas):   
     #Parsing agrodevs drawlog files.
-        print("Parsing agrodevs drawlog file:")  
-        agroDevsExDF = pd.DataFrame()
-    #for drw_file in agrodevs_drw_files:
+    print("Parsing agrodevs drawlog file:")  
+    groupedData_columns=['id_test','id_puerto','fila','columna','tiempo','valor']
+    agroDevsExDF = pd.DataFrame(columns=groupedData_columns)
+    for drw_file in agrodevs_drw_files:
         #drw_file=agrodevs_drw_files[0]
         #drw_file='agro_lu1.drw'
         print(" Processing  "+drw_file)
         puerto = remove_sufix(remove_prefix(drw_file,AGRODEVS_PREFIX),DRAWLOG_FILE_EXTENSION)
-        f = open(OUTPUT_PARSER_RESULTS_DIR+"/"+drw_file, "r")
+        if puerto in AGRODEVS_SKIP_PORTS:
+            #This port is internal, should not be in the output
+            print("Skiping "+puerto+" internal port")
+            continue
+        
+        f = open(AGRODEVS_OUTPUT_DIR+drw_file, "r")
         print(" Opening  "+drw_file)
         for linea in f:
             if (linea[0:4]== 'Line'):
@@ -99,7 +107,7 @@ def processAgroDevsDrwFiles(id_test, agrodevs_drw_files,filas, columnas):
             #TODO:Ver si se puede skipear automaticamente hasta el +----
             #Inicializa agrupador_resultados con los headers
             agrupador_resultados=[]
-            agrupador_resultados_columns=['id_test','id_puerto','fila','columna','tiempo','valor']
+           
             fila=0
             for linea_grilla in f:
                 fila=fila+1
@@ -133,13 +141,18 @@ def processAgroDevsDrwFiles(id_test, agrodevs_drw_files,filas, columnas):
             #print("Grouped table data id_test:"+id_test+" puerto"+puerto)
             #print(agrupador_resultados)
             #Convert Groupped table data to pandas dataFrame
-            grouppedDataDF=pd.DataFrame(agrupador_resultados,columns=agrupador_resultados_columns)
+            grouppedDataDF=pd.DataFrame(agrupador_resultados,columns=groupedData_columns)
             print("Grouped table dataFrame id_test:"+id_test+" puerto"+puerto)\
             #output=grouppedDataDF.to_string(max_rows=None)
             display(grouppedDataDF)
-            break
+            agroDevsExDF = agroDevsExDF.append(grouppedDataDF,ignore_index=True)
+            #display(agroDevsExDF)
+            #break
             next(f)           
         
-        f.close()
         
+        f.close()
+    display(agroDevsExDF)
+    agroDevsExDF.to_csv(OUTPUT_PARSER_RESULTS_DIR+id_test+"_results.csv",index=False)
+    
 processAgroDevsDrwFiles("test1",agrodevs_drw_output_files,AGRODEVS_LINES,AGRODEVS_COLUMNS)
