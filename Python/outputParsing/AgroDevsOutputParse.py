@@ -6,6 +6,8 @@ Created on Mon Jun  1 16:34:03 2020
 """
 
 import os
+#from io import StringIO
+#import csv
 import pandas as pd
 
 AGRODEVS_OUTPUT_DIR='./output'
@@ -13,6 +15,10 @@ OUTPUT_PARSER_RESULTS_DIR='./output'
 DRAWLOG_FILE_EXTENSION='.drw'
 
 AGRODEVS_PREFIX="agro_"
+
+AGRODEVS_LINES=10
+AGRODEVS_COLUMNS=10
+
 
 def filterDrawLogFiles(fileName, dirName = OUTPUT_PARSER_RESULTS_DIR):
    if os.path.isfile(dirName+"/"+fileName) and  fileName.endswith(DRAWLOG_FILE_EXTENSION):
@@ -28,6 +34,14 @@ def remove_prefix(text, prefix):
     if text.startswith(prefix):
         return text[len(prefix):]
     return text  # or whatever
+
+def remove_sufix(text, sufix):
+    if text.endswith(sufix):
+        return text[:-len(sufix)]
+    return text  # or whatever
+
+
+
 
 agrodevs_output_files = os.listdir(AGRODEVS_OUTPUT_DIR)
 print(agrodevs_output_files)
@@ -47,16 +61,85 @@ print("agrodevs_drw_output_files2:")
 for drw_file in agrodevs_drw_output_files:
     print (drw_file)
   
-#Parsing agrodevs drawlog files.
-print("Parsing agrodevs drawlog file:")  
-for drw_file in agrodevs_drw_output_files:
-    print(" Processing  "+drw_file)
-    puerto = remove_prefix (drw_file,AGRODEVS_PREFIX)
-    f = open(OUTPUT_PARSER_RESULTS_DIR+"/"+drw_file, "r")
-    print(" Opening  "+drw_file)
-    for linea in f:
-        if (linea[0:4]== 'Line'):
-            time = linea[-13:-1]
-            print(drw_file+" Line Header "+time)
     
-    f.close()
+#def processAgroDevsDrwPandas(agrodevs_drw_files,filas, columnas):  
+#    #Parsing agrodevs drawlog files.
+#    print("Parsing agrodevs drawlog file:") 
+#    #for drw_file in agrodevs_drw_files:
+#    drw_file=agrodevs_drw_files[0]
+#    df= pd.read_csv(OUTPUT_PARSER_RESULTS_DIR+"/"+drw_file,header= None)
+#    df_2= df.iloc[(df.loc[df[0]=='Line'].index[0]+1):, :].reset_index(drop = True)
+ 
+    
+def obtieneDatos(linea):
+    print("Processing single line")
+    arreglo_datos=linea.split()
+    print("Line as array"+str(arreglo_datos))
+    return arreglo_datos
+    
+    
+def processAgroDevsDrwFiles(id_test, agrodevs_drw_files,filas, columnas):   
+    #Parsing agrodevs drawlog files.
+        print("Parsing agrodevs drawlog file:")  
+        agroDevsExDF = pd.DataFrame()
+    #for drw_file in agrodevs_drw_files:
+        #drw_file=agrodevs_drw_files[0]
+        #drw_file='agro_lu1.drw'
+        print(" Processing  "+drw_file)
+        puerto = remove_sufix(remove_prefix(drw_file,AGRODEVS_PREFIX),DRAWLOG_FILE_EXTENSION)
+        f = open(OUTPUT_PARSER_RESULTS_DIR+"/"+drw_file, "r")
+        print(" Opening  "+drw_file)
+        for linea in f:
+            if (linea[0:4]== 'Line'):
+                time = linea[-13:-1]
+                print(drw_file+" Line Header "+time)
+                # discard the empty header lines
+            next(f)
+            next(f)
+            #TODO:Ver si se puede skipear automaticamente hasta el +----
+            #Inicializa agrupador_resultados con los headers
+            agrupador_resultados=[]
+            agrupador_resultados_columns=['id_test','id_puerto','fila','columna','tiempo','valor']
+            fila=0
+            for linea_grilla in f:
+                fila=fila+1
+                if (fila <= filas):
+                        print("linea_grilla nro("+str(fila)+") de ("+str(filas)+"): "+linea_grilla)
+                    		#$inicio			= strpos($linea, '|');
+								#$fin			= strrpos($linea, '|');
+								#$total			= strlen($linea) - $inicio - (strlen($linea) - $fin) - 1;
+								#$linea 			= substr($linea, $inicio+1, $total);
+								#$datos_columnas	= $this->obtiene_datos($linea);
+                        inicio =    linea_grilla.find('|')   
+                        fin =       linea_grilla.rfind('|')  
+                        linea_grilla_data = linea_grilla[inicio+1:fin]
+                        print("linea_grilla_data pos:"+str(inicio)+" "+str(fin))
+                        print("linea_grilla_data:"+linea_grilla_data)
+                        datos_columnas=obtieneDatos(linea_grilla_data)
+                        if(len(datos_columnas)==columnas):
+                            print("Processing column data")
+                            columna=0
+                            for dato in datos_columnas:
+                                columna=columna+1
+                                test_contenido = [id_test,puerto,fila,columna,time,dato]
+                                agrupador_resultados=agrupador_resultados+[test_contenido]
+                            #df1.append(df2, ignore_index = True) 
+                        else:
+                            print("ERR: Different quantity of columns, time:"+time+" line:"+str(fila))
+                    
+                else:
+                    break
+            
+            #print("Grouped table data id_test:"+id_test+" puerto"+puerto)
+            #print(agrupador_resultados)
+            #Convert Groupped table data to pandas dataFrame
+            grouppedDataDF=pd.DataFrame(agrupador_resultados,columns=agrupador_resultados_columns)
+            print("Grouped table dataFrame id_test:"+id_test+" puerto"+puerto)\
+            #output=grouppedDataDF.to_string(max_rows=None)
+            display(grouppedDataDF)
+            break
+            next(f)           
+        
+        f.close()
+        
+processAgroDevsDrwFiles("test1",agrodevs_drw_output_files,AGRODEVS_LINES,AGRODEVS_COLUMNS)

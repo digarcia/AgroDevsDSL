@@ -4,6 +4,18 @@ class Archivos {
 
 	function procesa_drw($id_test, $datos){
 			//.....
+			
+			/*
+			
+			$datos_parametro = $this->object->archivos_model->_datos_por_parametro($datos['id_parametro']);
+				if (count($datos_parametro) > 0) {
+						$filas 		= $datos_parametro[0]['filas'];
+						$columnas 	= $datos_parametro[0]['columnas'];
+					}
+			
+			*/
+			
+			
 			$puertos = $this->object->archivos_model->_puertos();
 			for ($i=0; $i<count($puertos); $i++) {
 				$archivo			= "agro_".$puertos[$i]['puerto'].".drw";
