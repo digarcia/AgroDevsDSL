@@ -7,6 +7,7 @@ Created on Mon Jun  1 16:34:03 2020
 
 import os
 import io
+import csv
 #from io import StringIO
 #import csv
 import pandas as pd
@@ -69,7 +70,7 @@ def generate_val_file(id_test,lines,columns):
     lines : int
     columns : int
     """
-    print("generateValFile")
+    print("generate_val_file")
     val_file_name=id_test+".val"
     f = io.open(INPUT_PARSER_RESULTS_DIR+val_file_name, "w",newline='\n')
     inverse_count=0
@@ -81,8 +82,49 @@ def generate_val_file(id_test,lines,columns):
     f.close()        
             
 
+def generate_ev_file(id_test):
+    """
+    generate event file (id_test.ev) based on an event csv descripcion
+    Allows several external events (but must be supported by the ma model)
+    
+    
+    Parameters
+    ----------
+    id_test : str
+    """
+    print("generate_ev_file")
+    ev_output_file_name=id_test+".ev"
+    ev_input_file_name=id_test+"_events.csv"
+    f_output = io.open(INPUT_PARSER_RESULTS_DIR+ev_output_file_name, "w",newline='\n')
+    f_input = io.open(AGRODEVS_INPUT_DIR+ev_input_file_name, "r")
+    
+    input_reader = csv.reader(f_input, delimiter=',')
+    field_names_list = next(input_reader)
+    if (field_names_list[0]!="campaign"):
+        print("First field of events file input should be 'campaing' but is:"+field_names_list[0])
+        print("Cannot generate event file")
+        return
+    else:
+        print(field_names_list)
+        for line in input_reader:
+            #generate timestamp for campaign
+            #campania = int(int(ms)/100)+int(ss)*10+int(mm)*600+int(hh)*36000
+            campaign = int(line[0])
+            ms = (campaign*100)%1000
+            ss = ((campaign*100)//1000)%60
+            mm = ((campaign*100)//60000)%60
+            hh = ((campaign*100)//360000)
+            timeFormat = "{:0>2d}"
+            msFormat = "{:0>3d}"
+            timestamp = str(timeFormat.format(hh))+":"+ \
+                        str(timeFormat.format(mm))+":"+ \
+                        str(timeFormat.format(ss))+":"+ \
+                        str(msFormat.format(ms))
+            print("timestamp:   "+timestamp)
+
+
 current_test="test1"    
         
-generate_val_file(current_test,AGRODEVS_LINES,AGRODEVS_COLUMNS)    
+#generate_val_file(current_test,AGRODEVS_LINES,AGRODEVS_COLUMNS)    
+generate_ev_file(current_test)
 
-#processAgroDevsDrwFiles("test1",agrodevs_drw_output_files,AGRODEVS_LINES,AGRODEVS_COLUMNS)
