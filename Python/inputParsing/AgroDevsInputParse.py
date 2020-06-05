@@ -23,6 +23,8 @@ AGRODEVS_SKIP_PORTS=["etapa"]
 AGRODEVS_LINES=10
 AGRODEVS_COLUMNS=10
 
+CELL_DEVS_EXTERNAL_EVENT_BEGIN='in_m_'
+CELL_DEVS_EXTERNAL_EVENT_ENDS='done_m_'
 
 def filterCSVFiles(fileName, dirName = AGRODEVS_INPUT_DIR):
    if os.path.isfile(dirName+fileName) and  fileName.endswith(CSV_FILE_EXTENSION):
@@ -93,6 +95,7 @@ def generate_ev_file(id_test):
     id_test : str
     """
     print("generate_ev_file")
+      
     ev_output_file_name=id_test+".ev"
     ev_input_file_name=id_test+"_events.csv"
     f_output = io.open(INPUT_PARSER_RESULTS_DIR+ev_output_file_name, "w",newline='\n')
@@ -116,12 +119,45 @@ def generate_ev_file(id_test):
             hh = ((campaign*100)//360000)
             timeFormat = "{:0>2d}"
             msFormat = "{:0>3d}"
-            timestamp = str(timeFormat.format(hh))+":"+ \
+            timestamp_begin_event = str(timeFormat.format(hh))+":"+ \
                         str(timeFormat.format(mm))+":"+ \
                         str(timeFormat.format(ss))+":"+ \
                         str(msFormat.format(ms))
-            print("timestamp:   "+timestamp)
-
+            timestamp_end_event = str(timeFormat.format(hh))+":"+ \
+                        str(timeFormat.format(mm))+":"+ \
+                        str(timeFormat.format(ss))+":"+ \
+                        str(msFormat.format(ms+1))
+                         
+            print("timestamp generated:   "+timestamp_begin_event)
+        
+            #generate events
+            #begin events
+            
+            
+            port_idx =0
+            for event_port in line[1:]:
+                port_idx=port_idx+1
+                #print("processing port: "+str(field_names_list[port_idx]))
+                begin_event=CELL_DEVS_EXTERNAL_EVENT_BEGIN+ \
+                            field_names_list[port_idx]+ \
+                            " "+str(line[port_idx])
+                
+                f_output.write(timestamp_begin_event+" "+begin_event+"\n")
+            
+            #end events
+            port_idx=0
+            for event_port in line[1:]:
+                port_idx=port_idx+1
+                #print("processing port: "+str(field_names_list[port_idx]))
+                end_event=CELL_DEVS_EXTERNAL_EVENT_ENDS+ \
+                          field_names_list[port_idx]+ \
+                          " "+str(line[port_idx])
+                f_output.write(timestamp_end_event+" "+end_event+"\n")
+            
+            
+            
+    f_input.close()
+    f_output.close()
 
 current_test="test1"    
         
