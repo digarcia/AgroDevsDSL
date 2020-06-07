@@ -18,13 +18,20 @@ CSV_FILE_EXTENSION='.csv'
 
 AGRODEVS_PREFIX="agro_"
 
-AGRODEVS_SKIP_PORTS=["etapa"]
+
 
 AGRODEVS_LINES=10
 AGRODEVS_COLUMNS=10
 
+#for generate_ev_file
 CELL_DEVS_EXTERNAL_EVENT_BEGIN='in_m_'
 CELL_DEVS_EXTERNAL_EVENT_ENDS='done_m_'
+
+#for generate_inicialization_file
+AGRODEVS_INTERNAL_USAGE_PORTS=["etapa"]
+DEFAULT_INITIAL_CELL_VALUE= -0.5
+
+
 
 def filterCSVFiles(fileName, dirName = AGRODEVS_INPUT_DIR):
    if os.path.isfile(dirName+fileName) and  fileName.endswith(CSV_FILE_EXTENSION):
@@ -159,8 +166,74 @@ def generate_ev_file(id_test):
     f_input.close()
     f_output.close()
 
+def generate_inicialization_file(id_test,lines,columns):
+    """
+    generate event file (inicializacion.inc) based on cell content csv input
+    Allows dinamic definitions of input variables(ports)
+    (but must be supported by the ma model)
+    
+    
+    Parameters
+    ----------
+    id_test : str
+    lines : int
+    columns : int    
+    """
+  
+    def _generate_cell_initialization(outputFile,inputLine,fieldNames):
+        print("_generate_cell_initialization")
+        outputFile.write("\n")
+        outputFile.write("rule : { \n")
+        port_idx =0
+        for fieldName in fieldNames[1:]:
+            port_idx=port_idx+1
+            print("Writing "+str(fieldName+" for agent "+str(inputLine[0])))
+            outputFile.write("\t\t~"+str(fieldName)+"\t\t:= "+str(inputLine[port_idx].strip())+";\n")
+    
+        outputFile.write("    } \n")
+        outputFile.write("     0 \n")
+        outputFile.write("    { \n")
+        outputFile.write("\t\t(0,0)~"+fieldNames[1]+"\t = -"+ \
+                         str(inputLine[0])+"\n")
+                         #str(DEFAULT_INITIAL_CELL_VALUE))
+        outputFile.write("    } \n")
+        #outputFile.write()
+    
+    
+    print("generate_inicialization_file")
+    initialization_output_file_name="inicializacion.inc"
+    initialization_input_file_name=id_test+"_initialization.csv"
+    f_output = io.open(INPUT_PARSER_RESULTS_DIR+initialization_output_file_name, "w",newline='\n')
+    f_input = io.open(AGRODEVS_INPUT_DIR+initialization_input_file_name, "r")
+    
+    input_reader = csv.reader(f_input, delimiter=',')
+    field_names_list = next(input_reader)
+    if (field_names_list[0]!="agent"):
+        print("First field of inicialization input file should be 'agent' but is:"+field_names_list[0])
+        print("Cannot generate inicialization file for AgroDevs")
+        return
+    else:
+        print(field_names_list)
+        #Write macro header line
+        f_output.write("#BeginMacro(inicializar) \n")
+                       
+        for line in input_reader:
+            if (line[0]=="default"):
+                #generate default cell initialization
+                print("generating default cell initialization")
+            else:
+                #generate agent cell initialization
+                #print("generate agent cell initialization")
+                _generate_cell_initialization(f_output,line,field_names_list)
+                
+        f_output.write("#EndMacro \n")    
+    f_input.close()
+    f_output.close()      
+
+
+
 current_test="test1"    
         
 #generate_val_file(current_test,AGRODEVS_LINES,AGRODEVS_COLUMNS)    
-generate_ev_file(current_test)
-
+#generate_ev_file(current_test)
+generate_inicialization_file(current_test,AGRODEVS_LINES,AGRODEVS_COLUMNS)   
