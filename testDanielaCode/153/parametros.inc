@@ -111,45 +111,45 @@
 % vecinos igual etapa       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #BeginMacro(vecinosParametrosCalculados) 
-	(isUndefined((-1,0)~etapa!0) 	or (-1,0)~etapa > 1) 	and
-	(isUndefined((-1,1)~etapa!0) 	or (-1,1)~etapa > 1) 	and
-	(isUndefined((0,1)~etapa!0) 	or (0,1)~etapa > 1) 	and
-	(isUndefined((1,1)~etapa!0) 	or (1,1)~etapa > 1) 	and
-	(isUndefined((1,0)~etapa!0) 	or (1,0)~etapa > 1) 	and
-	(isUndefined((1,-1)~etapa!0) 	or (1,-1)~etapa > 1) 	and
-	(isUndefined((0,-1)~etapa!0) 	or (0,-1)~etapa > 1) 	and
-	(isUndefined((-1,-1)~etapa!0) or (-1,-1)~etapa > 1)
+	(((-1,0)~etapa = ?) 	or (-1,0)~etapa > 1) 	and
+	(((-1,1)~etapa = ?) 	or (-1,1)~etapa > 1) 	and
+	(((0,1)~etapa = ?) 	or (0,1)~etapa > 1) 	and
+	(((1,1)~etapa = ?) 	or (1,1)~etapa > 1) 	and
+	(((1,0)~etapa = ?) 	or (1,0)~etapa > 1) 	and
+	(((1,-1)~etapa = ?) 	or (1,-1)~etapa > 1) 	and
+	(((0,-1)~etapa = ?) 	or (0,-1)~etapa > 1) 	and
+	(((-1,-1)~etapa = ?) or (-1,-1)~etapa > 1)
 #EndMacro
 
 #BeginMacro(vecinosUeControlado) 
-	(isUndefined((-1,0)~etapa!0) 	or (-1,0)~etapa > 2) 	and
-	(isUndefined((-1,1)~etapa!0) 	or (-1,1)~etapa > 2) 	and
-	(isUndefined((0,1)~etapa!0) 	or (0,1)~etapa > 2) 	and
-	(isUndefined((1,1)~etapa!0) 	or (1,1)~etapa > 2) 	and
-	(isUndefined((1,0)~etapa!0) 	or (1,0)~etapa > 2) 	and
-	(isUndefined((1,-1)~etapa!0) 	or (1,-1)~etapa > 2) 	and
-	(isUndefined((0,-1)~etapa!0) 	or (0,-1)~etapa > 2) 	and
-	(isUndefined((-1,-1)~etapa!0) or (-1,-1)~etapa > 2)
+	(((-1,0)~etapa = ?) 	or (-1,0)~etapa > 2) 	and
+	(((-1,1)~etapa = ?) 	or (-1,1)~etapa > 2) 	and
+	(((0,1)~etapa = ?) 	or (0,1)~etapa > 2) 	and
+	(((1,1)~etapa = ?) 	or (1,1)~etapa > 2) 	and
+	(((1,0)~etapa = ?) 	or (1,0)~etapa > 2) 	and
+	(((1,-1)~etapa = ?) 	or (1,-1)~etapa > 2) 	and
+	(((0,-1)~etapa = ?) 	or (0,-1)~etapa > 2) 	and
+	(((-1,-1)~etapa = ?) or (-1,-1)~etapa > 2)
 #EndMacro
 
 #BeginMacro(vecinosProcesamiento) 
-	(isUndefined((-1,0)~etapa!0) 	or (-1,0)~etapa > 5) 	and
-	(isUndefined((-1,1)~etapa!0) 	or (-1,1)~etapa > 5) 	and
-	(isUndefined((0,1)~etapa!0) 	or (0,1)~etapa > 5) 	and
-	(isUndefined((1,1)~etapa!0) 	or (1,1)~etapa > 5) 	and
-	(isUndefined((1,0)~etapa!0) 	or (1,0)~etapa > 5) 	and
-	(isUndefined((1,-1)~etapa!0) 	or (1,-1)~etapa > 5) 	and
-	(isUndefined((0,-1)~etapa!0) 	or (0,-1)~etapa > 5) 	and
-	(isUndefined((-1,-1)~etapa!0) or (-1,-1)~etapa > 5)
+	(((-1,0)~etapa = ?) 	or (-1,0)~etapa > 5) 	and
+	(((-1,1)~etapa = ?) 	or (-1,1)~etapa > 5) 	and
+	(((0,1)~etapa = ?) 	or (0,1)~etapa > 5) 	and
+	(((1,1)~etapa = ?) 	or (1,1)~etapa > 5) 	and
+	(((1,0)~etapa = ?) 	or (1,0)~etapa > 5) 	and
+	(((1,-1)~etapa = ?) 	or (1,-1)~etapa > 5) 	and
+	(((0,-1)~etapa = ?) 	or (0,-1)~etapa > 5) 	and
+	(((-1,-1)~etapa = ?) or (-1,-1)~etapa > 5)
 #EndMacro
 
 #BeginMacro(vecinosFinal) 
-	(isUndefined((-1,0)~etapa!0) 	or (-1,0)~etapa = 0 or (-1,0)~etapa = 7) 	and
-	(isUndefined((-1,1)~etapa!0) 	or (-1,1)~etapa = 0 or (-1,1)~etapa = 7) 	and
-	(isUndefined((0,1)~etapa!0) 	or (0,1)~etapa = 0 	or (0,1)~etapa = 7) 	and
-	(isUndefined((1,1)~etapa!0) 	or (1,1)~etapa = 0 	or (1,1)~etapa = 7) 	and
-	(isUndefined((1,0)~etapa!0) 	or (1,0)~etapa = 0 	or (1,0)~etapa = 7) 	and
-	(isUndefined((1,-1)~etapa!0) 	or (1,-1)~etapa = 0 or (1,-1)~etapa = 7) 	and
-	(isUndefined((0,-1)~etapa!0) 	or (0,-1)~etapa = 0 or (0,-1)~etapa = 7) 	and
-	(isUndefined((-1,-1)~etapa!0) or (-1,-1)~etapa = 0 or (-1,-1)~etapa = 7)
+	(((-1,0)~etapa = ?) 	or (-1,0)~etapa = 0 or (-1,0)~etapa = 7) 	and
+	(((-1,1)~etapa = ?) 	or (-1,1)~etapa = 0 or (-1,1)~etapa = 7) 	and
+	(((0,1)~etapa = ?) 	or (0,1)~etapa = 0 	or (0,1)~etapa = 7) 	and
+	(((1,1)~etapa = ?) 	or (1,1)~etapa = 0 	or (1,1)~etapa = 7) 	and
+	(((1,0)~etapa = ?) 	or (1,0)~etapa = 0 	or (1,0)~etapa = 7) 	and
+	(((1,-1)~etapa = ?) 	or (1,-1)~etapa = 0 or (1,-1)~etapa = 7) 	and
+	(((0,-1)~etapa = ?) 	or (0,-1)~etapa = 0 or (0,-1)~etapa = 7) 	and
+	(((-1,-1)~etapa = ?) or (-1,-1)~etapa = 0 or (-1,-1)~etapa = 7)
 #EndMacro

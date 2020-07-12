@@ -3,21 +3,21 @@
 
 # parametros
 # archivos
-SIM=agro
+SIM=changetest
 #MA=lifeTest.ma
 #MA=changeTest.ma
 #MA=undefBugTest.ma
 #MA=agro_reduced2.ma
 #MA=agro.ma
 #MA=agro_fixed.ma
-MA=agro_fixed2.ma
+MA=etapasTest.ma
 #EV=$SIM.ev
 EV=./153/$SIM.ev
 LOG=./logs/$SIM.log
 OUT=./out/$SIM.out
 #LOG_FULL=$LOG.full
 # componente a graficar (CELLDEVS)
-COM=campo
+COM=changetest
 PARSEINFO=true
 #HELP=true
 
@@ -106,11 +106,6 @@ STEP=00:00:00:100
 #$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
 
 
-#PORT=port0
-#DRWVALUE=${SIM}_${PORT}.drw
-#echo Running drawlog port $PORT
-#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
-
 #PORT=port1
 #DRWVALUE=${SIM}_${PORT}.drw
 #echo Running drawlog port $PORT
@@ -138,93 +133,106 @@ STEP=00:00:00:100
 #$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT > ${DRWDIR}/${DRWVALUE}
 
 #--------------------------------
+# Etapas test
 
-
-#PORT=value
-#COM=clife2
-#DRWVALUE=${SIM}_${PORT}.drw
-#echo Running drawlog port $PORT
-#echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT
-#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT > ${DRWDIR}/${DRWVALUE}
-
-PORT=lu1
-COM=campo
+PORT=value
+#COM=changetest
 DRWVALUE=${SIM}_${PORT}.drw
 echo Running drawlog port $PORT
-echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w4 -p0  -n$PORT
-$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w4 -p0  -n$PORT > ${DRWDIR}/${DRWVALUE}
+echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT
+$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0  -n$PORT > ${DRWDIR}/${DRWVALUE}
 
 
-PORT=etapa
+PORT=umbralok
+#COM=changetest
 DRWVALUE=${SIM}_${PORT}.drw
 echo Running drawlog port $PORT
-echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT 
+echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT
 $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
-
-PORT=pro
-DRWVALUE=${SIM}_${PORT}.drw
-echo Running drawlog port $PORT
-echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT
-$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT > ${DRWDIR}/${DRWVALUE}
-
-PORT=ue_cota
-DRWVALUE=${SIM}_${PORT}.drw
-echo Running drawlog port $PORT
-echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT
-$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT > ${DRWDIR}/${DRWVALUE}
 
 PORT=flag_paso
+#COM=changetest
 DRWVALUE=${SIM}_${PORT}.drw
 echo Running drawlog port $PORT
-echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT
-$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT > ${DRWDIR}/${DRWVALUE}
+echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w5 -p1 -n$PORT
+$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w5 -p1 -n$PORT > ${DRWDIR}/${DRWVALUE}
 
-PORT=ua_cota
-DRWVALUE=${SIM}_${PORT}.drw
-echo Running drawlog port $PORT
-$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT > ${DRWDIR}/${DRWVALUE}
-
-PORT=ua_tipo
-DRWVALUE=${SIM}_${PORT}.drw
-echo Running drawlog port $PORT
-$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
-
-PORT=eme
-DRWVALUE=${SIM}_${PORT}.drw
-echo Running drawlog port $PORT
-$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT > ${DRWDIR}/${DRWVALUE}
-
-PORT=uao
-DRWVALUE=${SIM}_${PORT}.drw
-echo Running drawlog port $PORT
-$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w5 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
-
-PORT=uae
-DRWVALUE=${SIM}_${PORT}.drw
-echo Running drawlog port $PORT
-$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w5 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
-
-PORT=ueo
-DRWVALUE=${SIM}_${PORT}.drw
-echo Running drawlog port $PORT
-$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w5 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
-
-PORT=uee
-DRWVALUE=${SIM}_${PORT}.drw
-echo Running drawlog port $PORT
-$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w5 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
+#-----------------------------------------------------
+#PORT=lu1
+#COM=campo
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w4 -p0  -n$PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w4 -p0  -n$PORT > ${DRWDIR}/${DRWVALUE}
 
 
-PORT=amb
-DRWVALUE=${SIM}_${PORT}.drw
-echo Running drawlog port $PORT
-$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w5 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
+#PORT=etapa
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT 
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
 
-PORT=flag_check_bool
-DRWVALUE=${SIM}_${PORT}.drw
-echo Running drawlog port $PORT
-echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT
-$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT > ${DRWDIR}/${DRWVALUE}
+#PORT=pro
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+#PORT=ue_cota
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+#PORT=flag_paso
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+#PORT=ua_cota
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+#PORT=ua_tipo
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w2 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+#PORT=eme
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+#PORT=uao
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w5 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+#PORT=uae
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w5 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+#PORT=ueo
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w5 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+#PORT=uee
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w5 -p0 -n$PORT > ${DRWDIR}/${DRWVALUE}
+
+
+
+
+#PORT=flag_check_bool
+#DRWVALUE=${SIM}_${PORT}.drw
+#echo Running drawlog port $PORT
+#echo $DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT
+#$DRAWLOG -m$MA -c$COM -l$LOG -i$STEP -w10 -p2 -n$PORT > ${DRWDIR}/${DRWVALUE}
 
 #PORT=port0
 #COM=changeTest
