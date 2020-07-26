@@ -69,7 +69,7 @@ in : in_ambiente
 % uee cantidad de campañas sin cumplir ue
 % ueo cantidad de campañas que cumple ue
 % alq valor alquiler del establecimiento
-neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh
+neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso
 link : in_ambiente amb@campo(0,0)
 
 % reglas
@@ -81,6 +81,7 @@ portInTransition : amb@campo(0,0) setAmbiente
 rule: { 
 		~amb 	:= (0,-1)~amb; 
 		#macro(SetEtapaAmbienteRecibido)
+		~flag_paso := 1.1 ;
 	}
 	{
 		$cam := $cam + 1;
@@ -96,6 +97,7 @@ rule: {
 rule: { 
 		~amb 	:= (-1,0)~amb; 	
 		#macro(SetEtapaAmbienteRecibido)
+		~flag_paso := 1.2 ;
 	}
 	{
 		$cam := $cam + 1;
@@ -119,6 +121,7 @@ rule: {
 					(((0,0)~lu2/ 100) * #macro(emergia_lu2)) + 
 					(((0,0)~lu3/ 100) * #macro(emergia_lu3));
 		#macro(SetEtapaParametrosCalculados)
+		~flag_paso := 2.1 ;
 	}
 		0
 	{ 
@@ -133,6 +136,7 @@ rule: {
 		~pro 	:=  ?;
 		~eme 	:=  ?;
 		#macro(SetEtapaParametrosCalculados)
+		~flag_paso := 2.2 ;
 	}
 	 0
 	{ 
@@ -144,6 +148,7 @@ rule: {
 rule: { 
 		~ueo := (0,0)~ueo + 1;
 		#macro(SetEtapaUEOkEsperaVecinos)
+		~flag_paso := 3.1 ;
 	}
 	 0
 	{ 
@@ -158,6 +163,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.11 ;
 	}
 	{
 		$clu 		:= 1;
@@ -190,6 +196,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.12 ;
 	}
 	{
 		$clu 		:= 1;
@@ -221,6 +228,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.13 ;
 	}
 	{
 		$clu 		:= 1;
@@ -252,6 +260,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.14 ;
 	}
 	{
 		$clu 		:= 1;
@@ -283,6 +292,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.15 ;
 	}
 	{
 		$clu 		:= 1;
@@ -314,6 +324,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.16 ;
 	}
 	{
 		$clu 		:= 1;
@@ -345,6 +356,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.17 ;
 	}
 	{
 		$clu 		:= 1;
@@ -376,6 +388,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.18 ;
 	}
 	{
 		$clu 		:= 1;
@@ -409,6 +422,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.19 ;
 	}
 	{
 		$clu 		:= 0;
@@ -423,6 +437,7 @@ rule: {
 % Pasa de etapa cuando todos controlaron UE
 rule: { 
 		#macro(SetEtapaUECumplida)
+		~flag_paso := 5.1 ;
 	}
 	 0
 	{ 
@@ -432,6 +447,7 @@ rule: {
 
 rule: { 
 		#macro(SetEtapaProcesamiento)
+		~flag_paso := 6.1 ;
 	}
 	 0
 	{ 
@@ -444,6 +460,7 @@ rule: {
 rule: { 
 		~uao 		:=  (0,0)~uao + 1;
 		#macro(SetEtapaProcesamiento)
+		~flag_paso := 6.2 ;
 	}
 	{
 		$clu 		:= 0;
@@ -474,6 +491,7 @@ rule: {
 		~deg 		:=  (((0,0)~eme - (0,0)~ua_cota) / (0,0)~ua_cota) * 100;
 		~uae 		:=  (0,0)~uae + 1;		
 		#macro(SetEtapaProcesamiento)
+		~flag_paso := 6.3 ;
 	}
 	{
 		$clu 		:= 0;
@@ -551,6 +569,7 @@ rule: {
 							(0,0)~mgm
 						);
 		#macro(SetEtapaFinal)
+		~flag_paso := 7.1 ;
 	}
 	 0
 	{ 
@@ -565,6 +584,7 @@ rule: {
 rule: { 
 		~amb 	:=  ?;
 		#macro(SetEtapaInicio)
+		~flag_paso := 0.1 ;
 	}
 	{
 		$clu 		:= 0;
@@ -588,6 +608,7 @@ rule: {
 	
 % Default
 rule : { 
+	%~flag_paso := 9.1 ;
 	}
 	{ }
 	 0 
