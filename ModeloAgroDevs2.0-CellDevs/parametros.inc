@@ -39,7 +39,7 @@
 #EndMacro
 
 #BeginMacro(UEErrorEsperaVecinos) 
-	~etapa = 4
+	~etapa = 4.1
 #EndMacro
 
 #BeginMacro(UECumplida) 
@@ -74,7 +74,7 @@
 #EndMacro
 
 #BeginMacro(SetEtapaUEErrorEsperaVecinos) 
-	~etapa	:= 4;
+	~etapa	:= 4.1;
 #EndMacro
 
 #BeginMacro(SetEtapaUECumplida) 
