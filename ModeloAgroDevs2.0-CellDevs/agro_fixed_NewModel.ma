@@ -6,7 +6,10 @@
 
 #include(153/parametros.inc)
 #include(153/tablas.inc)
-#include(153/NewModelComp1.inc)
+%inicializacion
+%#include(153/NewModelComp1.inc)
+%#include(153/inicializacion13profit.inc)
+#include(153/inicializacionTestCopia.inc)
 
 
 
@@ -19,8 +22,8 @@ link : out@ambiente in_ambiente@campo
 
 [campo]
 type : cell 
-%dim : (5, 5)
-dim : (10, 10)
+dim : (5, 5)
+%dim : (10, 10)
 delay : transport
 defaultDelayTime : 0
 border : nowrapped
@@ -31,8 +34,8 @@ neighbors : campo(1,-1)   campo(1,0)   campo(1,1)
 % -0.5 = valor que no se usa en .val
 % En particular se ponen con valor -1 a -n en .val
 initialvalue : -0.5
-%initialCellsvalue : val-ej5x5.val
-initialCellsvalue : 153/agro.val
+initialCellsvalue : val-ej5x5.val
+%initialCellsvalue : 153/agro.val
 
 % variables
 % cam cantidad de campañas procesadas
@@ -45,8 +48,8 @@ initialCellsvalue : 153/agro.val
 % clu3 valor a copiar en lu3
 % cue_cota valor a copiar en ue_cota
 % cmgm valor a copiar en mgm
-StateVariables: cam sum_deg clu aju clu1 clu2 clu3 cue_cota cmgm
-StateValues: 0 0 0 0 ? ? ? ? ?
+StateVariables: cam sum_deg clu aju clu1 clu2 clu3 cue_cota cmgm  copia_ae cae_aju cae_lu1 cae_lu2 cae_lu3 cae_ue_cota cae_mgm 
+StateValues: 0 0 0 0 ? ? ? ? ?  ? ? ? ? ? ? ? 
 
 % puertos
 in : in_ambiente
@@ -69,7 +72,7 @@ in : in_ambiente
 % uee cantidad de campañas sin cumplir ue
 % ueo cantidad de campañas que cumple ue
 % alq valor alquiler del establecimiento
-neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso
+neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value
 link : in_ambiente amb@campo(0,0)
 
 % reglas
@@ -112,6 +115,7 @@ rule: {
 
 % Procesamiento
 % 1 - Calculo Profit / Emergia
+% TODO: sacar inicializacion flag_cae
 rule: { 
 		~pro 	:=  (((0,0)~lu1/ 100) * ((#macro(rinde_lu1) * #macro(precio_lu1)) - #macro(costo_lu1))) + 
 					(((0,0)~lu2/ 100) * ((#macro(rinde_lu2) * #macro(precio_lu2)) - #macro(costo_lu2))) + 
@@ -122,6 +126,9 @@ rule: {
 					(((0,0)~lu3/ 100) * #macro(emergia_lu3));
 		#macro(SetEtapaParametrosCalculados)
 		~flag_paso := 2.1 ;
+		%~flag_cae := 0;		
+		~flag_cae := (0,0)~lu1;
+
 	}
 		0
 	{ 
@@ -137,6 +144,7 @@ rule: {
 		~eme 	:=  ?;
 		#macro(SetEtapaParametrosCalculados)
 		~flag_paso := 2.2 ;
+		~flag_cae := 55.2;
 	}
 	 0
 	{ 
@@ -149,6 +157,7 @@ rule: {
 		~ueo := (0,0)~ueo + 1;
 		#macro(SetEtapaUEOkEsperaVecinos)
 		~flag_paso := 3.1 ;
+		~flag_cae := 3.1 ;
 	}
 	 0
 	{ 
@@ -156,6 +165,68 @@ rule: {
 		(0,0)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente)))
 	}	
 
+% 4.3 - Copia vecinos economico y ambiental	
+rule: { 
+		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
+		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.31 ;
+		%~flag_cae := 4.31 ;
+		%~flag_cae := 55.31;
+	}
+	{
+		$copia_ae 		:= 1;
+		$cae_aju 		:= 3;
+		$cae_lu1	 	:= (-1,0)~lu1;
+		$cae_lu2 		:= (-1,0)~lu2;
+		$cae_lu3	 	:= (-1,0)~lu3;
+		$cae_ue_cota 	:= (-1,0)~ue_cota;
+		$cae_mgm 		:= (-1,0)~mgm;
+	}
+	 0
+	{ 
+		(0,0)#macro(parametrosCalculados) 		and
+		(#macro(vecinosParametrosCalculados)) 	and
+		(not isUndefined((-1,0)~pro))	 		and
+		(not isUndefined((-1,0)~eme))	 		and
+		(
+			(-1,0)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente))) and
+			(-1,0)~eme > ((0,0)~ua_cota) and
+			(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (-1,0)~pro)	and
+			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (-1,0)~pro)	and
+			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (-1,0)~pro)	and
+			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (-1,0)~pro)	and
+			(isUndefined((1,-1)~pro) or  (1,-1)~pro 	<= (-1,0)~pro)	and
+			(isUndefined((0,-1)~pro) or  (0,-1)~pro 	<= (-1,0)~pro)	and
+			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (-1,0)~pro)	
+			and
+			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (-1,0)~eme)	and
+			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (-1,0)~eme)	and
+			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (-1,0)~eme)	and
+			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (-1,0)~eme)	and
+			(isUndefined((1,-1)~eme) or  (1,-1)~eme 	<= (-1,0)~eme)	and
+			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (-1,0)~eme)	and
+			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (-1,0)~eme)						
+		)
+	}
+
+
+% Ningun vecino cumple la condicion de mejor economico y ambiental
+rule: { 
+		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
+		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.39 ;
+		~flag_cae := 4.39;
+	}
+	{
+		$copia_ae 		:= 0;
+		$cae_aju 		:= 2;
+	}
+		0
+	{ 
+		(0,0)#macro(parametrosCalculados)		and
+		#macro(vecinosParametrosCalculados) 	
+	}	
+	
 % 3 - Control UE No cumplido
 % Prepara cmgmio %LU
 % Prepara adaptacion UE al contexto
@@ -176,7 +247,7 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(parametrosCalculados) 		and
+		(0,0)#macro(CampFallidaCopiaEcYAmb) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((-1,0)~pro))	 		and
 		(
@@ -209,7 +280,7 @@ rule: {
 	}
 		0
 	{ 
-		(0,0)#macro(parametrosCalculados) 		and
+		(0,0)#macro(CampFallidaCopiaEcYAmb) 		and
 		#macro(vecinosParametrosCalculados) 	and
 		(not isUndefined((-1,1)~pro)) 			and
 		(
@@ -241,7 +312,7 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(parametrosCalculados)	 	and
+		(0,0)#macro(CampFallidaCopiaEcYAmb)	 	and
 		#macro(vecinosParametrosCalculados) 	and
 		(not isUndefined((0,1)~pro)) 			and
 		(
@@ -273,7 +344,7 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(parametrosCalculados) 		and
+		(0,0)#macro(CampFallidaCopiaEcYAmb) 		and
 		#macro(vecinosParametrosCalculados) 	and
 		(not isUndefined((1,1)~pro)) 			and
 		(
@@ -305,7 +376,7 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(parametrosCalculados) 		and
+		(0,0)#macro(CampFallidaCopiaEcYAmb) 		and
 		#macro(vecinosParametrosCalculados) 	and
 		(not isUndefined((1,0)~pro)) 			and
 		(
@@ -337,7 +408,7 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(parametrosCalculados) 		and
+		(0,0)#macro(CampFallidaCopiaEcYAmb) 		and
 		#macro(vecinosParametrosCalculados) 	and
 		(not isUndefined((1,-1)~pro)) 			and
 		(
@@ -369,7 +440,7 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(parametrosCalculados) 		and
+		(0,0)#macro(CampFallidaCopiaEcYAmb) 		and
 		#macro(vecinosParametrosCalculados) 	and
 		(not isUndefined((0,-1)~pro)) 			and
 		(
@@ -401,7 +472,7 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(parametrosCalculados) 		and
+		(0,0)#macro(CampFallidaCopiaEcYAmb) 		and
 		#macro(vecinosParametrosCalculados) 	and
 		(not isUndefined((-1,-1)~pro)) 			and
 		(
@@ -430,7 +501,7 @@ rule: {
 	}
 		0
 	{ 
-		(0,0)#macro(parametrosCalculados)		and
+		(0,0)#macro(CampFallidaCopiaEcYAmb)		and
 		#macro(vecinosParametrosCalculados) 	
 	}
 
@@ -574,9 +645,58 @@ rule: {
 	 0
 	{ 
 		(0,0)#macro(Procesamiento) 		and
+		#macro(vecinosProcesamiento) 	and $clu = 1
+	}	
+
+%Copia ambiental y economica
+rule: { 
+		%~lu1 		:= 	if ($copia_ae = 1, $cae_lu1, (0,0)~lu1);
+		~lu1 		:= 	150;
+		~lu2 		:= 	if ($copia_ae = 1, $cae_lu2, (0,0)~lu2);
+		~lu3 		:= 	if ($copia_ae = 1, $cae_lu3, (0,0)~lu3);
+		~ue_cota	:= 	if ($cae_aju  = 0, (0,0)~ue_cota, 0) +
+						if ($cae_aju  = 3, 
+							if (((0.45 * ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente)))) + (0.55 * (0,0)~pro)) > 0, (0.45 * ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente)))) + (0.55 * (0,0)~pro), 0), 
+							0) ;
+		~mgm 		:= 	if (#macro(hay_MGM_adaptativo) = 1, 
+							if ((0,0)~pro > #macro(wc_maximo_mgm_3), 
+								3, 
+								if ((0,0)~pro > #macro(wc_maximo_mgm_2), 
+									2, 
+									1
+								)
+							),
+							(0,0)~mgm
+						);
+		#macro(SetEtapaFinal)
+		~flag_paso := 7.2 ;
+		~flag_value := (0,0)~lu1;
+	}
+	 0
+	{ 
+		(0,0)#macro(Procesamiento) 		and
+		#macro(vecinosProcesamiento) 	and $copia_ae = 1
+	}
+	
+%Cuando no hubo copia
+rule: { 
+		~lu1 		:= 	(0,0)~lu1;
+		~lu2 		:= 	(0,0)~lu2;
+		~lu3 		:= 	(0,0)~lu3;
+		~ue_cota	:= 	(0,0)~ue_cota;
+		~mgm 		:= 	(0,0)~mgm;
+		#macro(SetEtapaFinal)
+		~flag_paso := 7.3 ;
+	}
+	 0
+	{ 
+		(0,0)#macro(Procesamiento) 		and
 		#macro(vecinosProcesamiento) 	
 	}	
 
+
+	
+	
 % 6 - Cierre ciclo
 % Vuelve a Inicio cuando todos terminan
 % Antes de ir al inicio se pone amb en nulo
@@ -584,7 +704,7 @@ rule: {
 rule: { 
 		~amb 	:=  ?;
 		#macro(SetEtapaInicio)
-		~flag_paso := 0.1 ;
+		%~flag_paso := 0.1 ;
 	}
 	{
 		$clu 		:= 0;
@@ -600,6 +720,27 @@ rule: {
 		(0,0)#macro(Final) 		and
 		#macro(vecinosFinal) 	
 	}		
+	
+rule: { 
+		~amb 	:=  ?;
+		#macro(SetEtapaInicio)
+		%~flag_paso := 0.2 ;
+	}
+	{
+		$clu 		:= 0;
+		$aju 		:= 0;
+		$clu1	 	:= ?;
+		$clu2 		:= ?;
+		$clu3	 	:= ?;
+		$cue_cota 	:= ?;
+		$cmgm 		:= ?;
+	}
+		0
+	{ 
+		(0,0)#macro(Final) 	
+	}		
+	
+	
 % Procesamiento FIN
 
 
