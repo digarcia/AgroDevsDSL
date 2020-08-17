@@ -195,13 +195,13 @@ rule: {
 		(
 			(-1,0)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente))) and
 			(-1,0)~eme > ((0,0)~ua_cota) and
-			(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (-1,0)~pro)	and
-			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (-1,0)~pro)	and
-			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (-1,0)~pro)	and
-			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (-1,0)~pro)	and
-			(isUndefined((1,-1)~pro) or  (1,-1)~pro 	<= (-1,0)~pro)	and
-			(isUndefined((0,-1)~pro) or  (0,-1)~pro 	<= (-1,0)~pro)	and
-			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (-1,0)~pro)	
+			(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (-1,0)~pro	or ( (-1,1)~pro > (-1,0)~pro and (-1,1)~eme < (0,0)~ua_cota)) and			
+			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (-1,0)~pro   or ( (0,1)~pro  > (-1,0)~pro  and (0,1)~eme < (0,0)~ua_cota)) and
+			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (-1,0)~pro   or ( (1,1)~pro 	> (-1,0)~pro and  (1,1)~eme < (0,0)~ua_cota)) and
+			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (-1,0)~pro   or ( (1,0)~pro 	> (-1,0)~pro and  (1,0)~eme < (0,0)~ua_cota)) and
+			(isUndefined((1,-1)~pro) or  (1,-1)~pro 	<= (-1,0)~pro 	or ( (1,-1)~pro > (-1,0)~pro and  (1,-1)~eme < (0,0)~ua_cota)) and
+			(isUndefined((0,-1)~pro) or  (0,-1)~pro 	<= (-1,0)~pro   or ( (0,-1)~pro > (-1,0)~pro and  (0,-1)~eme < (0,0)~ua_cota)) and
+			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (-1,0)~pro   or ( (-1,-1)~pro > (-1,0)~pro and (-1,-1)~eme < (0,0)~ua_cota)) 
 			and
 			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (-1,0)~eme)	and
 			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (-1,0)~eme)	and
@@ -236,13 +236,13 @@ rule: {
 		(
 			(-1,1)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente))) and
 			(-1,1)~eme > ((0,0)~ua_cota) and
-			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (-1,1)~pro)	and
-			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (-1,1)~pro)	and
-			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (-1,1)~pro)	and
-			(isUndefined((1,-1)~pro) or  (1,-1)~pro 	<= (-1,1)~pro)	and
-			(isUndefined((0,-1)~pro) or  (0,-1)~pro 	<= (-1,1)~pro)	and
-			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (-1,1)~pro)	and	
-			(isUndefined((-1,0)~pro) or  (-1,0)~pro 	<= (-1,1)~pro)
+			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (-1,1)~pro or ( (0,1)~pro > (-1,1)~pro	and (0,1)~eme 	< (0,0)~ua_cota)) and	
+			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (-1,1)~pro or ( (1,1)~pro > (-1,1)~pro	and (1,1)~eme 	< (0,0)~ua_cota)) and
+			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (-1,1)~pro or ( (1,0)~pro > (-1,1)~pro	and (1,0)~eme 	< (0,0)~ua_cota)) and
+			(isUndefined((1,-1)~pro) or  (1,-1)~pro 	<= (-1,1)~pro or ( (1,-1)~pro > (-1,1)~pro	and (1,-1)~eme 	< (0,0)~ua_cota)) and
+			(isUndefined((0,-1)~pro) or  (0,-1)~pro 	<= (-1,1)~pro or ( (0,-1)~pro > (-1,1)~pro	and (0,-1)~eme 	< (0,0)~ua_cota)) and
+			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (-1,1)~pro or ( (-1,-1)~pro > (-1,1)~pro	and (-1,-1)~eme < (0,0)~ua_cota)) and	
+			(isUndefined((-1,0)~pro) or  (-1,0)~pro 	<= (-1,1)~pro or ( (-1,0)~pro  > (-1,1)~pro	and (-1,0)~eme  < (0,0)~ua_cota)) 
 			and
 			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (-1,1)~eme)	and
 			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (-1,1)~eme)	and
@@ -279,14 +279,13 @@ rule: {
 		(
 			(0,1)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente))) and
 			(0,1)~eme > ((0,0)~ua_cota) and			
-			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (0,1)~pro)	and
-			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (0,1)~pro)	and
-			(isUndefined((1,-1)~pro) or  (1,-1)~pro		<= (0,1)~pro)	and
-			(isUndefined((0,-1)~pro) or  (0,-1)~pro		<= (0,1)~pro)	and
-			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (0,1)~pro)	and	
-			(isUndefined((-1,0)~pro) or  (-1,0)~pro		<= (0,1)~pro)	and
-			%(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (0,1)~pro)
-			(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (0,1)~pro or ( ((-1,1)~pro	> (0,1)~pro) and ((-1,1)~eme < (0,0)~ua_cota)))			
+			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (0,1)~pro or ( (1,1)~pro 	> (0,1)~pro	and (1,1)~eme  < (0,0)~ua_cota)) and
+			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (0,1)~pro or ( (1,0)~pro 	> (0,1)~pro	and (1,0)~eme  < (0,0)~ua_cota)) and
+			(isUndefined((1,-1)~pro) or  (1,-1)~pro		<= (0,1)~pro or ( (1,-1)~pro 	> (0,1)~pro	and (1,-1)~eme < (0,0)~ua_cota)) and
+			(isUndefined((0,-1)~pro) or  (0,-1)~pro		<= (0,1)~pro or ( (0,-1)~pro 	> (0,1)~pro	and (0,-1)~eme < (0,0)~ua_cota)) and
+			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (0,1)~pro or ( (-1,-1)~pro 	> (0,1)~pro	and (-1,-1)~eme < (0,0)~ua_cota)) and	
+			(isUndefined((-1,0)~pro) or  (-1,0)~pro		<= (0,1)~pro or ( (-1,0)~pro   	> (0,1)~pro	and (-1,0)~eme < (0,0)~ua_cota)) and  
+			(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (0,1)~pro or ( (-1,1)~pro	> (0,1)~pro and (-1,1)~eme < (0,0)~ua_cota))		
 			and
 			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (0,1)~eme)	and
 			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (0,1)~eme)	and
@@ -323,13 +322,13 @@ rule: {
 		(
 			(1,1)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente))) and
 			(1,1)~eme > ((0,0)~ua_cota) and			
-			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (1,1)~pro)	and
-			(isUndefined((1,-1)~pro) or  (1,-1)~pro 	<= (1,1)~pro)	and
-			(isUndefined((0,-1)~pro) or  (0,-1)~pro 	<= (1,1)~pro)	and
-			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (1,1)~pro)	and	
-			(isUndefined((-1,0)~pro) or  (-1,0)~pro 	<= (1,1)~pro)	and
-			(isUndefined((-1,1)~pro) or  (-1,1)~pro 	<= (1,1)~pro)	and
-			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (1,1)~pro)
+			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (1,1)~pro or ( (1,0)~pro 	> (1,1)~pro	and (1,0)~eme 	< (0,0)~ua_cota)) and
+			(isUndefined((1,-1)~pro) or  (1,-1)~pro 	<= (1,1)~pro or ( (1,-1)~pro 	> (1,1)~pro	and (1,-1)~eme 	< (0,0)~ua_cota)) and
+			(isUndefined((0,-1)~pro) or  (0,-1)~pro 	<= (1,1)~pro or ( (0,-1)~pro 	> (1,1)~pro	and (0,-1)~eme 	< (0,0)~ua_cota)) and
+			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (1,1)~pro or ( (-1,-1)~pro 	> (1,1)~pro	and (-1,-1)~eme < (0,0)~ua_cota)) and
+			(isUndefined((-1,0)~pro) or  (-1,0)~pro 	<= (1,1)~pro or ( (-1,0)~pro   	> (1,1)~pro	and (-1,0)~eme  < (0,0)~ua_cota)) and
+			(isUndefined((-1,1)~pro) or  (-1,1)~pro 	<= (1,1)~pro or ( (-1,1)~pro	> (1,1)~pro and (-1,1)~eme 	< (0,0)~ua_cota)) and  
+			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (1,1)~pro or ( (0,1)~pro 	> (1,1)~pro and (0,1) ~eme 	< (0,0)~ua_cota))
 			and
 			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (1,1)~eme)	and
 			(isUndefined((1,-1)~eme) or  (1,-1)~eme 	<= (1,1)~eme)	and
@@ -367,13 +366,13 @@ rule: {
 		(
 			(1,0)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente))) and	
 			(1,0)~eme > ((0,0)~ua_cota) and			
-			(isUndefined((1,-1)~pro) or  (1,-1)~pro		<= (1,0)~pro)   and
-			(isUndefined((0,-1)~pro) or  (0,-1)~pro		<= (1,0)~pro)	and
-			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (1,0)~pro)	and	
-			(isUndefined((-1,0)~pro) or  (-1,0)~pro		<= (1,0)~pro)	and
-			(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (1,0)~pro)	and
-			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (1,0)~pro)	and
-			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (1,0)~pro)	
+			(isUndefined((1,-1)~pro) or  (1,-1)~pro		<= (1,0)~pro or ( (1,-1)~pro 	> (1,0)~pro	and (1,-1)~eme 	< (0,0)~ua_cota)) and
+			(isUndefined((0,-1)~pro) or  (0,-1)~pro		<= (1,0)~pro or ( (0,-1)~pro 	> (1,0)~pro	and (0,-1)~eme 	< (0,0)~ua_cota)) and
+			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (1,0)~pro or ( (-1,-1)~pro 	> (1,0)~pro	and (-1,-1)~eme < (0,0)~ua_cota)) and	
+			(isUndefined((-1,0)~pro) or  (-1,0)~pro		<= (1,0)~pro or ( (-1,0)~pro   	> (1,0)~pro	and (-1,0)~eme  < (0,0)~ua_cota)) and  
+			(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (1,0)~pro or ( (-1,1)~pro	> (1,0)~pro and (-1,1)~eme 	< (0,0)~ua_cota)) and
+			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (1,0)~pro or ( (0,1)~pro 	> (1,0)~pro and (0,1) ~eme 	< (0,0)~ua_cota)) and
+			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (1,0)~pro or ( (1,1)~pro 	> (1,0)~pro and (1,1) ~eme 	< (0,0)~ua_cota))	
 			and
 			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (1,0)~eme)	and
 			(isUndefined((0,-1)~eme) or  (0,-1)~eme		<= (1,0)~eme)	and
@@ -412,13 +411,13 @@ rule: {
 		(
 			(1,-1)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente))) and	
 			(1,-1)~eme > ((0,0)~ua_cota) and			
-			(isUndefined((0,-1)~pro) or  (0,-1)~pro 	<= (1,-1)~pro)	and
-			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (1,-1)~pro)	and	
-			(isUndefined((-1,0)~pro) or  (-1,0)~pro 	<= (1,-1)~pro)	and
-			(isUndefined((-1,1)~pro) or  (-1,1)~pro 	<= (1,-1)~pro)	and
-			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (1,-1)~pro)	and
-			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (1,-1)~pro)	and
-			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (1,-1)~pro)
+			(isUndefined((0,-1)~pro) or  (0,-1)~pro 	<= (1,-1)~pro or ( (0,-1)~pro 	> (1,-1)~pro and  (0,-1)~eme  < (0,0)~ua_cota)) and
+			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (1,-1)~pro or ( (-1,-1)~pro 	> (1,-1)~pro and  (-1,-1)~eme < (0,0)~ua_cota)) and	
+			(isUndefined((-1,0)~pro) or  (-1,0)~pro 	<= (1,-1)~pro or ( (-1,0)~pro   > (1,-1)~pro and (-1,0)~eme   < (0,0)~ua_cota)) and
+			(isUndefined((-1,1)~pro) or  (-1,1)~pro 	<= (1,-1)~pro or ( (-1,1)~pro	> (1,-1)~pro and (-1,1)~eme   < (0,0)~ua_cota)) and 
+			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (1,-1)~pro or ( (0,1)~pro 	> (1,-1)~pro and (0,1) ~eme   < (0,0)~ua_cota)) and
+			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (1,-1)~pro or ( (1,1)~pro 	> (1,-1)~pro and (1,1) ~eme   < (0,0)~ua_cota)) and
+			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (1,-1)~pro or ( (1,0)~pro  	> (1,-1)~pro and (1,0) ~eme   < (0,0)~ua_cota))
 			and
 			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (1,-1)~eme)	and
 			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (1,-1)~eme)	and	
@@ -455,13 +454,13 @@ rule: {
 		(
 			(0,-1)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente))) and
 			(0,-1)~eme > ((0,0)~ua_cota) and			
-			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (0,-1)~pro)	and	
-			(isUndefined((-1,0)~pro) or  (-1,0)~pro		<= (0,-1)~pro)	and
-			(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (0,-1)~pro)	and
-			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (0,-1)~pro)	and
-			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (0,-1)~pro)	and
-			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (0,-1)~pro)	and
-			(isUndefined((1,-1)~pro) or  (1,-1)~pro		<= (0,-1)~pro)
+			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (0,-1)~pro or ( (-1,-1)~pro 	> (0,-1)~pro and (-1,-1)~eme < (0,0)~ua_cota)) and	
+			(isUndefined((-1,0)~pro) or  (-1,0)~pro		<= (0,-1)~pro or ( (-1,0)~pro   > (0,-1)~pro and (-1,0)~eme  < (0,0)~ua_cota)) and 
+			(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (0,-1)~pro or ( (-1,1)~pro	> (0,-1)~pro and (-1,1)~eme  < (0,0)~ua_cota)) and  
+			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (0,-1)~pro or ( (0,1)~pro 	> (0,-1)~pro and (0,1) ~eme  < (0,0)~ua_cota)) and
+			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (0,-1)~pro or ( (1,1)~pro 	> (0,-1)~pro and (1,1) ~eme  < (0,0)~ua_cota)) and
+			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (0,-1)~pro or ( (1,0)~pro  	> (0,-1)~pro and (1,0) ~eme  < (0,0)~ua_cota)) and
+			(isUndefined((1,-1)~pro) or  (1,-1)~pro		<= (0,-1)~pro or ( (1,-1)~pro	> (0,-1)~pro and (1,-1) ~eme < (0,0)~ua_cota))
 			and
 			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (0,-1)~eme)	and	
 			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (0,-1)~eme)	and
@@ -498,13 +497,13 @@ rule: {
 		(
 			(-1,-1)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente))) and
 			(-1,-1)~eme > ((0,0)~ua_cota) and			
-			(isUndefined((-1,0)~pro) or  (-1,0)~pro		<= (-1,-1)~pro)	and
-			(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (-1,-1)~pro)	and
-			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (-1,-1)~pro)	and
-			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (-1,-1)~pro)	and
-			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (-1,-1)~pro)	and
-			(isUndefined((1,-1)~pro) or  (1,-1)~pro		<= (-1,-1)~pro)	and	
-			(isUndefined((0,-1)~pro) or  (0,-1)~pro		<= (-1,-1)~pro)	
+			(isUndefined((-1,0)~pro) or  (-1,0)~pro		<= (-1,-1)~pro or ( (-1,0)~pro > (-1,-1)~pro and (-1,0)~eme  < (0,0)~ua_cota)) and     
+			(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (-1,-1)~pro or ( (-1,1)~pro > (-1,-1)~pro and (-1,1)~eme  < (0,0)~ua_cota)) and  
+			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (-1,-1)~pro or ( (0,1)~pro  > (-1,-1)~pro and (0,1) ~eme  < (0,0)~ua_cota)) and
+			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (-1,-1)~pro or ( (1,1)~pro  > (-1,-1)~pro and (1,1) ~eme  < (0,0)~ua_cota)) and
+			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (-1,-1)~pro or ( (1,0)~pro  > (-1,-1)~pro and (1,0) ~eme  < (0,0)~ua_cota)) and
+			(isUndefined((1,-1)~pro) or  (1,-1)~pro		<= (-1,-1)~pro or ( (1,-1)~pro > (-1,-1)~pro and (1,-1) ~eme < (0,0)~ua_cota)) and	
+			(isUndefined((0,-1)~pro) or  (0,-1)~pro		<= (-1,-1)~pro or ( (0,-1)~pro > (-1,-1)~pro and (0,-1) ~eme < (0,0)~ua_cota))
 			and
 			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (-1,-1)~eme)	and
 			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (-1,-1)~eme)	and
