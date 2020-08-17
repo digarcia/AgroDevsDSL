@@ -9,7 +9,7 @@
 %inicializacion
 %#include(153/NewModelComp1.inc)
 %#include(153/inicializacion13profit.inc)
-#include(153/inicializacionTestCopia.inc)
+#include(153/inicializacionCopiaEconomicaAmbiental.inc)
 
 
 
@@ -285,7 +285,8 @@ rule: {
 			(isUndefined((0,-1)~pro) or  (0,-1)~pro		<= (0,1)~pro)	and
 			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (0,1)~pro)	and	
 			(isUndefined((-1,0)~pro) or  (-1,0)~pro		<= (0,1)~pro)	and
-			(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (0,1)~pro)
+			%(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (0,1)~pro)
+			(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (0,1)~pro or ( ((-1,1)~pro	> (0,1)~pro) and ((-1,1)~eme < (0,0)~ua_cota)))			
 			and
 			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (0,1)~eme)	and
 			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (0,1)~eme)	and
@@ -366,7 +367,7 @@ rule: {
 		(
 			(1,0)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente))) and	
 			(1,0)~eme > ((0,0)~ua_cota) and			
-			(isUndefined((1,-1)~pro) or  (1,-1)~pro		<= (1,0)~pro)	and
+			(isUndefined((1,-1)~pro) or  (1,-1)~pro		<= (1,0)~pro)   and
 			(isUndefined((0,-1)~pro) or  (0,-1)~pro		<= (1,0)~pro)	and
 			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (1,0)~pro)	and	
 			(isUndefined((-1,0)~pro) or  (-1,0)~pro		<= (1,0)~pro)	and
@@ -521,7 +522,8 @@ rule: {
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.39 ;
-		%~flag_cae := 4.39;
+		%~flag_cae := (1,-1)~etapa;
+		%~flag_cae := (1,-1)~eme	;
 	}
 	{
 		$copia_ae 		:= 0;
@@ -814,7 +816,7 @@ rule: {
 % Pasa de etapa cuando todos controlaron UE
 rule: { 
 		#macro(SetEtapaUECumplida)
-		~flag_paso := 5.1 ;	
+		%~flag_paso := 5.1 ;	
 	}
 	 0
 	{ 
@@ -987,7 +989,7 @@ rule: {
 							(0,0)~mgm
 						);
 		#macro(SetEtapaFinal)
-		~flag_paso := 7.2 ;
+		%~flag_paso := 7.2 ;
 		%~flag_value := (0,0)~lu1;
 	}
 	 0
@@ -1004,7 +1006,7 @@ rule: {
 		~ue_cota	:= 	(0,0)~ue_cota;
 		~mgm 		:= 	(0,0)~mgm;
 		#macro(SetEtapaFinal)
-		~flag_paso := 7.3 ;
+		%~flag_paso := 7.3 ;
 		%~flag_value := 7.3;
 	}
 	 0
