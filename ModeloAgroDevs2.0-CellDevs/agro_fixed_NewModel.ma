@@ -203,13 +203,13 @@ rule: {
 			(isUndefined((0,-1)~pro) or  (0,-1)~pro 	<= (-1,0)~pro   or ( (0,-1)~pro > (-1,0)~pro and  (0,-1)~eme < (0,0)~ua_cota)) and
 			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (-1,0)~pro   or ( (-1,-1)~pro > (-1,0)~pro and (-1,-1)~eme < (0,0)~ua_cota)) 
 			and
-			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (-1,0)~eme)	and
-			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (-1,0)~eme)	and
-			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (-1,0)~eme)	and
-			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (-1,0)~eme)	and
-			(isUndefined((1,-1)~eme) or  (1,-1)~eme 	<= (-1,0)~eme)	and
-			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (-1,0)~eme)	and
-			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (-1,0)~eme)						
+			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (-1,0)~eme or ((-1,1)~eme  > (-1,0)~eme  and (-1,0)~pro > (-1,1)~pro )) and	
+			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (-1,0)~eme or ((0,1)~eme   > (-1,0)~eme  and (-1,0)~pro > (0,1)~pro  )) and	
+			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (-1,0)~eme or ((1,1)~eme   > (-1,0)~eme  and (-1,0)~pro > (1,1)~pro  )) and
+			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (-1,0)~eme or ((1,0)~eme   > (-1,0)~eme  and (-1,0)~pro > (1,0)~pro  )) and	 
+			(isUndefined((1,-1)~eme) or  (1,-1)~eme 	<= (-1,0)~eme or ((1,-1)~eme  > (-1,0)~eme  and (-1,0)~pro > (1,-1)~pro )) and
+			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (-1,0)~eme or ((0,-1)~eme  > (-1,0)~eme  and (-1,0)~pro > (0,-1)~pro )) and
+			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (-1,0)~eme or ((-1,-1)~eme > (-1,0)~eme  and (-1,0)~pro > (-1,-1)~pro))						
 		)
 	}
 
@@ -244,13 +244,13 @@ rule: {
 			(isUndefined((-1,-1)~pro) or  (-1,-1)~pro 	<= (-1,1)~pro or ( (-1,-1)~pro > (-1,1)~pro	and (-1,-1)~eme < (0,0)~ua_cota)) and	
 			(isUndefined((-1,0)~pro) or  (-1,0)~pro 	<= (-1,1)~pro or ( (-1,0)~pro  > (-1,1)~pro	and (-1,0)~eme  < (0,0)~ua_cota)) 
 			and
-			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (-1,1)~eme)	and
-			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (-1,1)~eme)	and
-			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (-1,1)~eme)	and
-			(isUndefined((1,-1)~eme) or  (1,-1)~eme 	<= (-1,1)~eme)	and
-			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (-1,1)~eme)	and
-			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (-1,1)~eme)	and	
-			(isUndefined((-1,0)~eme) or  (-1,0)~eme 	<= (-1,1)~eme)			
+			(isUndefined((0,1)~eme)  or   (0,1)~eme  <= (-1,1)~eme or ((0,1)~eme   > (-1,1)~eme  and (-1,1)~pro > (0,1)~pro   )) and
+			(isUndefined((1,1)~eme)  or   (1,1)~eme  <= (-1,1)~eme or ((1,1)~eme   > (-1,1)~eme  and (-1,1)~pro > (1,1)~pro   )) and
+			(isUndefined((1,0)~eme)  or   (1,0)~eme  <= (-1,1)~eme or ((1,0)~eme   > (-1,1)~eme  and (-1,1)~pro > (1,0)~pro   )) and
+			(isUndefined((1,-1)~eme) or  (1,-1)~eme  <= (-1,1)~eme or ((1,-1)~eme  > (-1,1)~eme  and (-1,1)~pro > (1,-1)~pro  )) and
+			(isUndefined((0,-1)~eme) or  (0,-1)~eme  <= (-1,1)~eme or ((0,-1)~eme  > (-1,1)~eme  and (-1,1)~pro > (0,-1)~pro  )) and
+			(isUndefined((-1,-1)~eme) or (-1,-1)~eme <= (-1,1)~eme or ((-1,-1)~eme > (-1,1)~eme  and (-1,1)~pro > (-1,-1)~pro )) and	
+			(isUndefined((-1,0)~eme) or  (-1,0)~eme  <= (-1,1)~eme or ((-1,0)~eme  > (-1,1)~eme  and (-1,1)~pro > (-1,0)~pro  ))			
 		)									
 	}
 
@@ -287,13 +287,13 @@ rule: {
 			(isUndefined((-1,0)~pro) or  (-1,0)~pro		<= (0,1)~pro or ( (-1,0)~pro   	> (0,1)~pro	and (-1,0)~eme < (0,0)~ua_cota)) and  
 			(isUndefined((-1,1)~pro) or  (-1,1)~pro		<= (0,1)~pro or ( (-1,1)~pro	> (0,1)~pro and (-1,1)~eme < (0,0)~ua_cota))		
 			and
-			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (0,1)~eme)	and
-			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (0,1)~eme)	and
-			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (0,1)~eme)	and
-			(isUndefined((0,-1)~eme) or  (0,-1)~eme		<= (0,1)~eme)	and
-			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (0,1)~eme)	and	
-			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (0,1)~eme)	and
-			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (0,1)~eme)			
+			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (0,1)~eme or ((1,1)~eme 	> (0,1)~eme  and   (0,1)~pro > 	(1,1)~pro   )) and
+			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (0,1)~eme or ((1,0)~eme 	> (0,1)~eme  and   (0,1)~pro > 	(1,0)~pro   )) and
+			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (0,1)~eme or ((1,-1)~eme > (0,1)~eme  and   (0,1)~pro > 	(1,-1)~pro  )) and
+			(isUndefined((0,-1)~eme) or  (0,-1)~eme		<= (0,1)~eme or ((0,-1)~eme > (0,1)~eme  and   (0,1)~pro > 	(0,-1)~pro  )) and
+			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (0,1)~eme or ((-1,-1)~eme > (0,1)~eme  and   (0,1)~pro > (-1,-1)~pro )) and 
+			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (0,1)~eme or ((-1,0)~eme  > (0,1)~eme  and   (0,1)~pro > (-1,0)~pro  )) and
+			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (0,1)~eme or ((-1,1)~eme  > (0,1)~eme  and   (0,1)~pro > (-1,1)~pro  ))		
 			
 		)
 	}
@@ -330,13 +330,13 @@ rule: {
 			(isUndefined((-1,1)~pro) or  (-1,1)~pro 	<= (1,1)~pro or ( (-1,1)~pro	> (1,1)~pro and (-1,1)~eme 	< (0,0)~ua_cota)) and  
 			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (1,1)~pro or ( (0,1)~pro 	> (1,1)~pro and (0,1) ~eme 	< (0,0)~ua_cota))
 			and
-			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (1,1)~eme)	and
-			(isUndefined((1,-1)~eme) or  (1,-1)~eme 	<= (1,1)~eme)	and
-			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (1,1)~eme)	and
-			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (1,1)~eme)	and	
-			(isUndefined((-1,0)~eme) or  (-1,0)~eme 	<= (1,1)~eme)	and
-			(isUndefined((-1,1)~eme) or  (-1,1)~eme 	<= (1,1)~eme)	and
-			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (1,1)~eme)			
+			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (1,1)~eme or ((1,0)~eme 	 > (1,1)~eme  and   (1,1)~pro > (1,0)~pro   )) and
+			(isUndefined((1,-1)~eme) or  (1,-1)~eme 	<= (1,1)~eme or ((1,-1)~eme  > (1,1)~eme  and   (1,1)~pro > (1,-1)~pro  )) and
+			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (1,1)~eme or ((0,-1)~eme  > (1,1)~eme  and   (1,1)~pro > (0,-1)~pro  )) and
+			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (1,1)~eme or ((-1,-1)~eme > (1,1)~eme  and   (1,1)~pro > (-1,-1)~pro )) and
+			(isUndefined((-1,0)~eme) or  (-1,0)~eme 	<= (1,1)~eme or ((-1,0)~eme  > (1,1)~eme  and   (1,1)~pro > (-1,0)~pro  )) and
+			(isUndefined((-1,1)~eme) or  (-1,1)~eme 	<= (1,1)~eme or ((-1,1)~eme  > (1,1)~eme  and   (1,1)~pro > (-1,1)~pro  )) and
+			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (1,1)~eme or ((0,1)~eme   >  (1,1)~eme and   (1,1)~pro > (0,1)~pro   ))		
 			
 		)
 	}
@@ -374,13 +374,13 @@ rule: {
 			(isUndefined((0,1)~pro) or  (0,1)~pro 		<= (1,0)~pro or ( (0,1)~pro 	> (1,0)~pro and (0,1) ~eme 	< (0,0)~ua_cota)) and
 			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (1,0)~pro or ( (1,1)~pro 	> (1,0)~pro and (1,1) ~eme 	< (0,0)~ua_cota))	
 			and
-			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (1,0)~eme)	and
-			(isUndefined((0,-1)~eme) or  (0,-1)~eme		<= (1,0)~eme)	and
-			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (1,0)~eme)	and	
-			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (1,0)~eme)	and
-			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (1,0)~eme)	and
-			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (1,0)~eme)	and
-			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (1,0)~eme)				
+			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (1,0)~eme or ((1,-1)~eme 	> (1,0)~eme  and   (1,0)~pro > 	(1,-1)~pro )) and	
+			(isUndefined((0,-1)~eme) or  (0,-1)~eme		<= (1,0)~eme or ((0,-1)~eme 	> (1,0)~eme  and   (1,0)~pro > 	(0,-1)~pro )) and
+			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (1,0)~eme or ((-1,-1)~eme > (1,0)~eme  and   (1,0)~pro > 	(-1,-1)~pro )) and 
+			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (1,0)~eme or ((-1,0)~eme  > (1,0)~eme  and   (1,0)~pro > 	(-1,0)~pro )) and
+			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (1,0)~eme or ((-1,1)~eme  > (1,0)~eme  and   (1,0)~pro > 	(-1,1)~pro )) and
+			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (1,0)~eme or ((0,1)~eme  >  (1,0)~eme  and   (1,0)~pro > 	(0,1)~pro )) and
+			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (1,0)~eme or ((1,1)~eme   > (1,0)~eme  and   (1,0)~pro > 	(1,1)~pro ))			
 		)
 	}
 
@@ -419,13 +419,13 @@ rule: {
 			(isUndefined((1,1)~pro) or  (1,1)~pro 		<= (1,-1)~pro or ( (1,1)~pro 	> (1,-1)~pro and (1,1) ~eme   < (0,0)~ua_cota)) and
 			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (1,-1)~pro or ( (1,0)~pro  	> (1,-1)~pro and (1,0) ~eme   < (0,0)~ua_cota))
 			and
-			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (1,-1)~eme)	and
-			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (1,-1)~eme)	and	
-			(isUndefined((-1,0)~eme) or  (-1,0)~eme 	<= (1,-1)~eme)	and
-			(isUndefined((-1,1)~eme) or  (-1,1)~eme 	<= (1,-1)~eme)	and
-			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (1,-1)~eme)	and
-			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (1,-1)~eme)	and
-			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (1,-1)~eme)			
+			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (1,-1)~eme or ((0,-1)~eme > (1,-1)~eme   and  (1,-1)~pro > 	(0,-1)~pro  )) and
+			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (1,-1)~eme or ((-1,-1)~eme > (1,-1)~eme  and  (1,-1)~pro > 	(-1,-1)~pro )) and 
+			(isUndefined((-1,0)~eme) or  (-1,0)~eme 	<= (1,-1)~eme or ((-1,0)~eme  > (1,-1)~eme  and  (1,-1)~pro > 	(-1,0)~pro  )) and
+			(isUndefined((-1,1)~eme) or  (-1,1)~eme 	<= (1,-1)~eme or ((-1,1)~eme  > (1,-1)~eme  and  (1,-1)~pro > 	(-1,1)~pro  )) and
+			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (1,-1)~eme or ((0,1)~eme  >  (1,-1)~eme  and  (1,-1)~pro > 	(0,1)~pro   )) and
+			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (1,-1)~eme or ((1,1)~eme   > (1,-1)~eme  and  (1,-1)~pro > 	(1,1)~pro   )) and 
+			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (1,-1)~eme or ((1,0)~eme   > (1,-1)~eme  and  (1,-1)~pro > 	(1,0)~pro   ))				
 		)
 	}
 
@@ -462,13 +462,13 @@ rule: {
 			(isUndefined((1,0)~pro) or  (1,0)~pro 		<= (0,-1)~pro or ( (1,0)~pro  	> (0,-1)~pro and (1,0) ~eme  < (0,0)~ua_cota)) and
 			(isUndefined((1,-1)~pro) or  (1,-1)~pro		<= (0,-1)~pro or ( (1,-1)~pro	> (0,-1)~pro and (1,-1) ~eme < (0,0)~ua_cota))
 			and
-			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (0,-1)~eme)	and	
-			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (0,-1)~eme)	and
-			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (0,-1)~eme)	and
-			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (0,-1)~eme)	and
-			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (0,-1)~eme)	and
-			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (0,-1)~eme)	and
-			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (0,-1)~eme)			
+			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (0,-1)~eme or ((-1,-1)~eme > (0,-1)~eme  and  (0,-1)~pro > (-1,-1)~pro )) and 
+			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (0,-1)~eme or ((-1,0)~eme  > (0,-1)~eme  and  (0,-1)~pro > (-1,0)~pro  )) and
+			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (0,-1)~eme or ((-1,1)~eme  > (0,-1)~eme  and  (0,-1)~pro > (-1,1)~pro  )) and
+			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (0,-1)~eme or ((0,1)~eme   > (0,-1)~eme  and  (0,-1)~pro > (0,1)~pro   )) and
+			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (0,-1)~eme or ((1,1)~eme   > (0,-1)~eme  and  (0,-1)~pro > (1,1)~pro   )) and 
+			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (0,-1)~eme or ((1,0)~eme   > (0,-1)~eme  and  (0,-1)~pro > (1,0)~pro   )) and
+			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (0,-1)~eme or ((1,-1)~eme  > (0,-1)~eme  and  (0,-1)~pro > (1,-1)~pro  )) 		
 		)
 	}
 
@@ -505,13 +505,13 @@ rule: {
 			(isUndefined((1,-1)~pro) or  (1,-1)~pro		<= (-1,-1)~pro or ( (1,-1)~pro > (-1,-1)~pro and (1,-1) ~eme < (0,0)~ua_cota)) and	
 			(isUndefined((0,-1)~pro) or  (0,-1)~pro		<= (-1,-1)~pro or ( (0,-1)~pro > (-1,-1)~pro and (0,-1) ~eme < (0,0)~ua_cota))
 			and
-			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (-1,-1)~eme)	and
-			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (-1,-1)~eme)	and
-			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (-1,-1)~eme)	and
-			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (-1,-1)~eme)	and
-			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (-1,-1)~eme)	and
-			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (-1,-1)~eme)	and	
-			(isUndefined((0,-1)~eme) or  (0,-1)~eme		<= (-1,-1)~eme)							
+			(isUndefined((-1,0)~eme) or  (-1,0)~eme	<= (-1,-1)~eme or ((-1,0)~eme  > (0,-1)~eme  and  (0,-1)~pro > 	(-1,0)~pro )) and
+			(isUndefined((-1,1)~eme) or  (-1,1)~eme	<= (-1,-1)~eme or ((-1,1)~eme  > (0,-1)~eme  and  (0,-1)~pro > 	(-1,1)~pro )) and
+			(isUndefined((0,1)~eme) or  (0,1)~eme 	<= (-1,-1)~eme or ((0,1)~eme   > (0,-1)~eme  and  (0,-1)~pro > 	(0,1)~pro )) and
+			(isUndefined((1,1)~eme) or  (1,1)~eme 	<= (-1,-1)~eme or ((1,1)~eme   > (0,-1)~eme  and  (0,-1)~pro > 	(1,1)~pro )) and 
+			(isUndefined((1,0)~eme) or  (1,0)~eme 	<= (-1,-1)~eme or ((1,0)~eme   > (0,-1)~eme  and  (0,-1)~pro > 	(1,0)~pro )) and 
+			(isUndefined((1,-1)~eme) or  (1,-1)~eme	<= (-1,-1)~eme or ((1,-1)~eme  > (-1,-1)~eme  and  (-1,-1)~pro > (1,-1)~pro )) and
+			(isUndefined((0,-1)~eme) or  (0,-1)~eme	<= (-1,-1)~eme or ((0,-1)~eme  > (-1,-1)~eme  and  (-1,-1)~pro > (0,-1)~pro))							
 		)
 	}
 	
