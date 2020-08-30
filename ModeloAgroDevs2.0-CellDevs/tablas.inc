@@ -2,14 +2,40 @@
 % Precios                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%Tres formas de uso de suelo
+%lu1:"porcentaje de lu tipo maiz"
+%lu2:"porcentaje de lu tipo soja de primera"
+%lu3:"porcentaje de lu tipo trigo/soja(de segunda)"
+
+%Costo de cada uno
+%costo_lu1: costo maiz
+%costo_lu2: costo soja de primera
+%costo_lu3: costo trigo/soja de segunda (seria como tener sumado costo_lu4+costo_lu5, pero se usa junto)
+
+%Rinde (en kg)
+%rinde_lu1: rinde maiz
+%rinde_lu2: rinde soja de primera
+%rinde_lu4: rinde trigo
+%rinde_lu5: rinde soja de segunda
+
+%Precios
+%precio_lu1: precio del maiz
+%precio_lu2: precio de soja (de primera y de segunda)
+%precio_lu4: precio del trigo
+
+
+
+%lu1:"precio de venta de  maiz"
 #BeginMacro(precio_lu1) 
 ( 207.000 ) 
 #EndMacro
 
+%lu2:"precio de venta de soja"
 #BeginMacro(precio_lu2) 
 ( 286.000 ) 
 #EndMacro
 
+%lu4:"porcentaje de "
 #BeginMacro(precio_lu4) 
 ( 179.000 ) 
 #EndMacro
