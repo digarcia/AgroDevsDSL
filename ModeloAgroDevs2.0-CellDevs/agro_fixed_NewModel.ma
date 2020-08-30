@@ -101,9 +101,12 @@ portInTransition : curr_lu2_price@campo(0,0) setPrecioLu2
 portInTransition : curr_lu4_price@campo(0,0) setPrecioLu4
 
 [cell-rule]
-% Propagacion Ambiente
+% Propagacion Ambiente y precios
 rule: { 
 		~amb 	:= (0,-1)~amb; 
+		~curr_lu1_price := (0,-1)~curr_lu1_price; 
+		~curr_lu2_price := (0,-1)~curr_lu2_price; 
+		~curr_lu4_price := (0,-1)~curr_lu4_price; 
 		#macro(SetEtapaAmbienteRecibido)
 		~flag_paso := 1.1 ;
 		~flag_cae := 1.1;	
@@ -122,6 +125,9 @@ rule: {
 
 rule: { 
 		~amb 	:= (-1,0)~amb; 	
+		~curr_lu1_price := (-1,0)~curr_lu1_price; 
+		~curr_lu2_price := (-1,0)~curr_lu2_price; 
+		~curr_lu4_price := (-1,0)~curr_lu4_price; 
 		#macro(SetEtapaAmbienteRecibido)
 		~flag_paso := 1.2 ;
 		~flag_cae := 1.2;	
