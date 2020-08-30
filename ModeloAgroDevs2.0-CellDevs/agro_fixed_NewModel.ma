@@ -14,10 +14,8 @@
 
 
 [top]
-components : campo ambiente@Queue curr_lu1_price@Queue
-%curr_lu2_price@Queue curr_lu4_price@Queue
-in: in_m_amb done_m_amb in_curr_lu1_price done_curr_lu1_price 
-%in_curr_lu2_price done_curr_lu2_price in_curr_lu4_price done_curr_lu4_price
+components : campo ambiente@Queue curr_lu1_price@Queue curr_lu2_price@Queue curr_lu4_price@Queue
+in: in_m_amb done_m_amb in_curr_lu1_price done_curr_lu1_price in_curr_lu2_price done_curr_lu2_price in_curr_lu4_price done_curr_lu4_price
 link : in_m_amb in@ambiente 
 link : done_m_amb done@ambiente
 link : out@ambiente in_ambiente@campo
@@ -26,13 +24,13 @@ link: in_curr_lu1_price in@curr_lu1_price
 link: done_curr_lu1_price done@curr_lu1_price
 link: out@curr_lu1_price  in_curr_lu1_price@campo
 
-%link: in_curr_lu2_price in@curr_lu2_price
-%link: done_curr_lu2_price done@curr_lu2_price
-%link: out@curr_lu2_price  in_curr_lu2_price@campo
+link: in_curr_lu2_price in@curr_lu2_price
+link: done_curr_lu2_price done@curr_lu2_price
+link: out@curr_lu2_price  in_curr_lu2_price@campo
 
-%link: in_curr_lu4_price in@curr_lu4_price
-%link: done_curr_lu4_price done@curr_lu4_price
-%link: out@curr_lu4_price  in_curr_lu4_price@campo
+link: in_curr_lu4_price in@curr_lu4_price
+link: done_curr_lu4_price done@curr_lu4_price
+link: out@curr_lu4_price  in_curr_lu4_price@campo
 
 [campo]
 type : cell 
@@ -69,8 +67,7 @@ StateValues: 0 0 0 0 ? ? ? ? ?  ? ? ? ? ? ? ?  ? ? ? ? ? ? ?
 				
 
 % puertos
-in : in_ambiente in_curr_lu1_price
-% in_curr_lu2_price in_curr_lu4_price
+in : in_ambiente in_curr_lu1_price in_curr_lu2_price in_curr_lu4_price
 % representan valores externos
 % amb ambiente (1 Muy malo, 2 Malo, 3 Medio, 4 Bueno, 5 Muy bueno)
 % representan perfil productor
@@ -93,13 +90,15 @@ in : in_ambiente in_curr_lu1_price
 neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price
 link : in_ambiente amb@campo(0,0)
 link : in_curr_lu1_price curr_lu1_price@campo(0,0)
-%link : in_curr_lu2_price curr_lu2_price@campo(0,0)
-%link : in_curr_lu4_price curr_lu4_price@campo(0,0)
+link : in_curr_lu2_price curr_lu2_price@campo(0,0)
+link : in_curr_lu4_price curr_lu4_price@campo(0,0)
 
 % reglas
 localtransition : cell-rule
 portInTransition : amb@campo(0,0) setAmbiente
-portInTransition : curr_lu1_price@campo(0,0) setPrecio
+portInTransition : curr_lu1_price@campo(0,0) setPrecioLu1
+portInTransition : curr_lu2_price@campo(0,0) setPrecioLu2
+portInTransition : curr_lu4_price@campo(0,0) setPrecioLu4
 
 [cell-rule]
 % Propagacion Ambiente
@@ -1442,12 +1441,36 @@ rule : {
  	 0
 	{ t }
 
-[setPrecio]
+[setPrecioLu1]
 % Procesa el precio externo recibido
 % No hace nada pero si hubiera procesamiento va aca
 rule : { 
 		~curr_lu1_price := portValue(thisPort);
 		~flag_cae := 0.91;	
+		#macro(SetEtapaAmbienteRecibido)
+
+	}
+ 	 0
+	{ t }	
+	
+[setPrecioLu2]
+% Procesa el precio externo recibido
+% No hace nada pero si hubiera procesamiento va aca
+rule : { 
+		~curr_lu2_price := portValue(thisPort);
+		~flag_cae := 0.92;	
+		#macro(SetEtapaAmbienteRecibido)
+
+	}
+ 	 0
+	{ t }	
+
+[setPrecioLu4]
+% Procesa el precio externo recibido
+% No hace nada pero si hubiera procesamiento va aca
+rule : { 
+		~curr_lu4_price := portValue(thisPort);
+		~flag_cae := 0.94;	
 		#macro(SetEtapaAmbienteRecibido)
 
 	}
@@ -1461,4 +1484,10 @@ rule : {
 preparation : 00:00:00:001
 
 [curr_lu1_price]
+preparation : 00:00:00:001
+
+[curr_lu2_price]
+preparation : 00:00:00:001
+
+[curr_lu4_price]
 preparation : 00:00:00:001

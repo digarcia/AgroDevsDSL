@@ -35,7 +35,7 @@
 ( 286.000 ) 
 #EndMacro
 
-%lu4:"porcentaje de "
+%lu4:"precio de venta de trigo "
 #BeginMacro(precio_lu4) 
 ( 179.000 ) 
 #EndMacro
