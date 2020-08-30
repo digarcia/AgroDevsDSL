@@ -42,6 +42,9 @@
 	~etapa = 4.3
 #EndMacro
 
+#BeginMacro(CampFallidaCopiaAmb) 
+	~etapa = 4.2
+#EndMacro
 
 #BeginMacro(UEErrorEsperaVecinos) 
 	~etapa = 4.1
@@ -80,6 +83,10 @@
 
 #BeginMacro(SetEtapaCampFallidaCopiaEcYAmb) 
 	~etapa	:= 4.3;
+#EndMacro
+
+#BeginMacro(SetEtapaCampFallidaCopiaAmb) 
+	~etapa	:= 4.2;
 #EndMacro
 
 #BeginMacro(SetEtapaUEErrorEsperaVecinos) 
