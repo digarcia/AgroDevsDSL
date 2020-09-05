@@ -87,7 +87,7 @@ in : in_ambiente in_curr_lu1_price in_curr_lu2_price in_curr_lu4_price
 % uee cantidad de campañas sin cumplir ue
 % ueo cantidad de campañas que cumple ue
 % alq valor alquiler del establecimiento
-neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price
+neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price 
 link : in_ambiente amb@campo(0,0)
 link : in_curr_lu1_price curr_lu1_price@campo(0,0)
 link : in_curr_lu2_price curr_lu2_price@campo(0,0)
@@ -104,6 +104,11 @@ portInTransition : curr_lu4_price@campo(0,0) setPrecioLu4
 % Propagacion Ambiente y precios
 rule: { 
 		~amb 	:= (0,-1)~amb; 
+		%saves previous price
+		~prev_lu1_price  := (0,0)~curr_lu1_price;
+		~prev_lu2_price  := (0,0)~curr_lu2_price;
+		~prev_lu4_price  := (0,0)~curr_lu4_price;
+		%propagates price
 		~curr_lu1_price := (0,-1)~curr_lu1_price; 
 		~curr_lu2_price := (0,-1)~curr_lu2_price; 
 		~curr_lu4_price := (0,-1)~curr_lu4_price; 
@@ -125,6 +130,11 @@ rule: {
 
 rule: { 
 		~amb 	:= (-1,0)~amb; 	
+		%saves previous price
+		~prev_lu1_price  := (0,0)~curr_lu1_price;
+		~prev_lu2_price  := (0,0)~curr_lu2_price;
+		~prev_lu4_price  := (0,0)~curr_lu4_price;
+		%propagates price
 		~curr_lu1_price := (-1,0)~curr_lu1_price; 
 		~curr_lu2_price := (-1,0)~curr_lu2_price; 
 		~curr_lu4_price := (-1,0)~curr_lu4_price; 
@@ -1451,6 +1461,9 @@ rule : {
 % Procesa el precio externo recibido
 % No hace nada pero si hubiera procesamiento va aca
 rule : { 
+		%saves previous price
+		~prev_lu1_price  := (0,0)~curr_lu1_price;
+		%receive the new price
 		~curr_lu1_price := portValue(thisPort);
 		~flag_cae := 0.91;	
 		#macro(SetEtapaAmbienteRecibido)
@@ -1463,7 +1476,11 @@ rule : {
 % Procesa el precio externo recibido
 % No hace nada pero si hubiera procesamiento va aca
 rule : { 
+		%saves previous price
+		~prev_lu2_price  := (0,0)~curr_lu2_price;
+		%receive the new price
 		~curr_lu2_price := portValue(thisPort);
+
 		~flag_cae := 0.92;	
 		#macro(SetEtapaAmbienteRecibido)
 
@@ -1475,7 +1492,11 @@ rule : {
 % Procesa el precio externo recibido
 % No hace nada pero si hubiera procesamiento va aca
 rule : { 
+		%saves previous price
+		~prev_lu4_price  := (0,0)~curr_lu4_price;
+		%receive the new price
 		~curr_lu4_price := portValue(thisPort);
+		
 		~flag_cae := 0.94;	
 		#macro(SetEtapaAmbienteRecibido)
 

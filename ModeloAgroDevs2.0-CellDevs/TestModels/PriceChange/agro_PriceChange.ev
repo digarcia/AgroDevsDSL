@@ -6,8 +6,14 @@
 00:00:00:012 done_curr_lu2_price 200
 00:00:00:013 done_curr_lu4_price 150
 00:00:00:014 done_m_amb 1
-00:00:00:100 in_m_amb 5
-00:00:00:101 done_m_amb 1
+00:00:00:101 in_curr_lu1_price 141
+00:00:00:102 in_curr_lu2_price 277
+00:00:00:103 in_curr_lu4_price 153
+00:00:00:104 in_m_amb 5
+00:00:00:111 done_curr_lu1_price 141
+00:00:00:112 done_curr_lu2_price 277
+00:00:00:113 done_curr_lu4_price 153
+00:00:00:114 done_m_amb 1
 00:00:00:200 in_m_amb 5
 00:00:00:201 done_m_amb 1
 00:00:00:300 in_m_amb 5
