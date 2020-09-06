@@ -18,6 +18,8 @@
 	~deg := if (((0,0)~ua_tipo = 1 and (0,0)~eme < (0,0)~ua_cota) or ((0,0)~ua_tipo = 2 and (0,0)~eme = (0,0)~ua_cota) or ((0,0)~ua_tipo = 3 and (0,0)~eme > (0,0)~ua_cota), 0, (((0,0)~eme - (0,0)~ua_cota) / (0,0)~ua_cota) * 100);
 #EndMacro
 	
+
+	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Valores y nombre para     %
 % las etapas                %
@@ -28,6 +30,10 @@
 
 #BeginMacro(ambienteRecibido) 
 	~etapa = 1
+#EndMacro
+
+#BeginMacro(ajusteLandUse) 
+	~etapa = 1.1
 #EndMacro
 
 #BeginMacro(parametrosCalculados) 
@@ -71,6 +77,10 @@
 
 #BeginMacro(SetEtapaAmbienteRecibido) 
 	~etapa	:= 1;
+#EndMacro
+
+#BeginMacro(SetAjusteLandUse) 
+	~etapa	:= 1.1;
 #EndMacro
 
 #BeginMacro(SetEtapaParametrosCalculados) 

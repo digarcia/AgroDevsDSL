@@ -113,8 +113,8 @@ rule: {
 		~curr_lu2_price := (0,-1)~curr_lu2_price; 
 		~curr_lu4_price := (0,-1)~curr_lu4_price; 
 		#macro(SetEtapaAmbienteRecibido)
-		~flag_paso := 1.1 ;
-		~flag_cae := 1.1;	
+		~flag_paso := 1.01 ;
+		~flag_cae := 1.01;	
 		~flag_value := $cam;
 	}
 	{
@@ -139,8 +139,8 @@ rule: {
 		~curr_lu2_price := (-1,0)~curr_lu2_price; 
 		~curr_lu4_price := (-1,0)~curr_lu4_price; 
 		#macro(SetEtapaAmbienteRecibido)
-		~flag_paso := 1.2 ;
-		~flag_cae := 1.2;	
+		~flag_paso := 1.02 ;
+		~flag_cae := 1.02;	
 		~flag_value := $cam;
 	}
 	{
@@ -154,6 +154,39 @@ rule: {
 		(0,0)~amb 	!= (-1,0)~amb 
 	}
 
+% Variacion de LandUse por precio
+rule: { 
+	%(lu_nueva_precio-lu_orig_precio)/(lu_orig_precio)		
+
+	~lu1 := if( (((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1) - ((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2) >0.1) or
+				(((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1) - ((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2)  >0.1) ,
+				if ( (((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1) - ((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2) >0.1) and
+				(((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1) - ((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4) >0.1),
+				(0,0)~lu1 * 1.25 ,
+				if ( abs((((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2)) - (((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4)))>0.1,
+				(0,0)~lu1 * 1.125,
+				(0,0)~lu1 * 1.25
+				)
+				),
+				(0,0)~lu1 );
+	
+	
+	%~lu1 := (0,0)~lu1 * 1.20;	
+	#macro(SetAjusteLandUse)
+	~flag_paso := 1.1 ;
+	%~flag_cae := 1.11 ;	
+	%~flag_cae := ((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1);
+	~flag_cae  := ((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2);
+	}
+	 0
+	{ 
+		(0,0)#macro(ambienteRecibido) 	
+
+	}	
+	
+	
+	
+	
 % Procesamiento
 % 1 - Calculo Profit / Emergia
 % TODO: sacar inicializacion flag_cae
@@ -173,7 +206,7 @@ rule: {
 	}
 		0
 	{ 
-		(0,0)#macro(ambienteRecibido) 	and
+		(0,0)#macro(ajusteLandUse) 	and
 		(not isUndefined((0,0)~lu1)) 	and
 		(not isUndefined((0,0)~lu2)) 	and
 		(not isUndefined((0,0)~lu3)) 	and
@@ -189,7 +222,7 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(ambienteRecibido)
+		(0,0)#macro(ajusteLandUse)
 	}
 
 
