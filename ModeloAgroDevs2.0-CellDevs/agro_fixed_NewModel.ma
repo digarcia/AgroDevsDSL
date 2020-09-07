@@ -87,7 +87,7 @@ in : in_ambiente in_curr_lu1_price in_curr_lu2_price in_curr_lu4_price
 % uee cantidad de campañas sin cumplir ue
 % ueo cantidad de campañas que cumple ue
 % alq valor alquiler del establecimiento
-neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price 
+neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price lu_total
 link : in_ambiente amb@campo(0,0)
 link : in_curr_lu1_price curr_lu1_price@campo(0,0)
 link : in_curr_lu2_price curr_lu2_price@campo(0,0)
@@ -194,8 +194,21 @@ rule: {
 				(0,0)~lu2 + (0,0)~lu3 * 0.125),
 				(0,0)~lu2 +  (0,0)~lu1 * 0.125 + (0,0)~lu3 * 0.125			
 				)
-				),
-				(0,0)~lu2 );
+				),			
+				if ( (((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1) - ((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2) >0.1) or 
+					(((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4) - ((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2) >0.1) ,
+					if ( (((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1) - ((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2) >0.1) and 
+						(((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4) - ((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2) >0.1) ,
+						(0,0)~lu2 - (0,0)~lu2 * 0.25,
+						if(abs((((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1)) - (((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4)))>0.1,
+							(0,0)~lu2 - (0,0)~lu2 * 0.125,
+							(0,0)~lu2 - (0,0)~lu2 * 0.25
+							)  ),
+				(0,0)~lu2 )	
+				);
+				
+				
+				
 		~lu3 := if( (((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4) - ((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1) >0.1) or
 				(((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4) - ((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2)  >0.1) ,
 				if ( (((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4) - ((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1) >0.1) and
@@ -208,14 +221,28 @@ rule: {
 				(0,0)~lu3 +  (0,0)~lu1 * 0.125 + (0,0)~lu2 * 0.125					
 				)
 				),
-				(0,0)~lu3 );		
+				if ( (((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1) - ((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4) >0.1) or 
+					(((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2) - ((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4) >0.1) ,
+					if ( (((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1) - ((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4) >0.1) and 
+						(((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2) - ((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4) >0.1) ,
+						(0,0)~lu3 - (0,0)~lu3 * 0.25,
+						if(abs((((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1)) - (((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2)))>0.1,
+							(0,0)~lu3 - (0,0)~lu3 * 0.125,
+							(0,0)~lu3 - (0,0)~lu3 * 0.25
+							)  ),
+				(0,0)~lu3 )					
+				);		
+		~lu_total	:= 	 (0,0)~lu1 +  (0,0)~lu2 +  (0,0)~lu3 ;
 	
 	%~lu1 := (0,0)~lu1 * 1.20;	
 	#macro(SetAjusteLandUse)
 	~flag_paso := 1.1 ;
 	%~flag_cae := 1.11 ;	
 	%~flag_cae := ((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1);
-	~flag_cae  := ((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2);
+	%~flag_cae  := ((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2);
+	%~flag_cae := (0,0)~lu1 * 0.125  ;
+	~flag_cae  :=  (((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1)) - (((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2));	
+	
 	}
 	 0
 	{ 
