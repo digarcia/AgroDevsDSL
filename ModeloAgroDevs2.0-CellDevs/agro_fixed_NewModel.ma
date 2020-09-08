@@ -87,7 +87,12 @@ in : in_ambiente in_curr_lu1_price in_curr_lu2_price in_curr_lu4_price
 % uee cantidad de campañas sin cumplir ue
 % ueo cantidad de campañas que cumple ue
 % alq valor alquiler del establecimiento
-neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price lu_total
+%
+% plu_adj price land use adjustment
+% wlu_adj weather land use adjustment
+% wlu_adj_cro weather land use adjustment crops
+
+neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price lu_total   plu_adj wlu_adj wlu_adj_cro
 link : in_ambiente amb@campo(0,0)
 link : in_curr_lu1_price curr_lu1_price@campo(0,0)
 link : in_curr_lu2_price curr_lu2_price@campo(0,0)
@@ -235,8 +240,8 @@ rule: {
 		~lu_total	:= 	 (0,0)~lu1 +  (0,0)~lu2 +  (0,0)~lu3 ;
 	
 	%~lu1 := (0,0)~lu1 * 1.20;	
-	#macro(SetAjusteLandUse)
-	~flag_paso := 1.1 ;
+	#macro(SetAjusteLandUsePrice)
+	~flag_paso := 1.11 ;
 	%~flag_cae := 1.11 ;	
 	%~flag_cae := ((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1);
 	%~flag_cae  := ((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2);
@@ -247,10 +252,22 @@ rule: {
 	 0
 	{ 
 		(0,0)#macro(ambienteRecibido) 	
+		and ( (0,0)~plu_adj = 1 )
 
 	}	
 	
-	
+rule: { 	
+		%No hace ajuste land use por precio
+		#macro(SetAjusteLandUsePrice)
+		~flag_paso := 1.12;	
+		~flag_cae  := (0,0)~plu_adj ;
+	}
+	 0
+	{ 
+		% if plu_adj is no initialized has the initial cell value (that is negative)
+		(0,0)#macro(ambienteRecibido) 	
+		and (isUndefined((0,0)~plu_adj) or  ((0,0)~plu_adj = 0) or ((0,0)~plu_adj < 0))
+	}	
 	
 	
 % Procesamiento
@@ -272,7 +289,7 @@ rule: {
 	}
 		0
 	{ 
-		(0,0)#macro(ajusteLandUse) 	and
+		(0,0)#macro(ajusteLandUsePrice) 	and
 		(not isUndefined((0,0)~lu1)) 	and
 		(not isUndefined((0,0)~lu2)) 	and
 		(not isUndefined((0,0)~lu3)) 	and
@@ -288,7 +305,7 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(ajusteLandUse)
+		(0,0)#macro(ajusteLandUsePrice)
 	}
 
 
