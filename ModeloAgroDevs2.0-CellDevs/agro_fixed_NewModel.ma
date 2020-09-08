@@ -6,11 +6,19 @@
 
 #include(153/parametros.inc)
 #include(153/tablas.inc)
+
+
 %inicializacion
 %#include(153/NewModelComp1.inc)
 %#include(153/inicializacion13profit.inc)
 %#include(153/inicializacionCopiaEconomicaAmbiental.inc)
-#include(153/inicializacionProfit.inc)
+%#include(153/inicializacionProfit.inc)
+
+
+%inicializacionEscenarios
+%#include(escenarios/inicializacion-modifica-LU-vecinos-clima-x-Maiz.inc)
+#include(escenarios/inicializacion-modifica-LU-vecinos-clima-x-TS.inc)
+
 
 
 [top]
@@ -92,7 +100,11 @@ in : in_ambiente in_curr_lu1_price in_curr_lu2_price in_curr_lu4_price
 % wlu_adj weather land use adjustment
 % wlu_adj_cro weather land use adjustment crops
 
-neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price lu_total   plu_adj wlu_adj wlu_adj_cro
+neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price lu_total   plu_adj wlu_adj wlu_adj_cro  roi rue_cota ptl_adj wtl_adj
+
+
+
+
 link : in_ambiente amb@campo(0,0)
 link : in_curr_lu1_price curr_lu1_price@campo(0,0)
 link : in_curr_lu2_price curr_lu2_price@campo(0,0)
@@ -266,8 +278,78 @@ rule: {
 	{ 
 		% if plu_adj is no initialized has the initial cell value (that is negative)
 		(0,0)#macro(ambienteRecibido) 	
-		and (isUndefined((0,0)~plu_adj) or  ((0,0)~plu_adj = 0) or ((0,0)~plu_adj < 0))
+		and (isUndefined((0,0)~plu_adj) or  ((0,0)~plu_adj = 0) or ((0,0)~plu_adj < 0)) 
 	}	
+	
+rule: { 	
+		%Hace ajuste land use por clima
+		#macro(SetAjusteLandUseWeather)
+		
+		~lu1 := if (  (0,0)~wlu_adj =1   ,  
+						if (  (0,0)~wlu_adj_cro =0  ,
+								if ( (0,0)~amb = 5	,
+										(0,0)~lu1 +  (0,0)~lu2 * 0.25,
+										if ((0,0)~amb = 1,
+											(0,0)~lu1 * 0.75,
+											(0,0)~lu1)	
+										)
+								,(0,0)~lu1)
+						 ,(0,0)~lu1);
+		
+			~lu2 := if (  (0,0)~wlu_adj =1   ,  
+						if (  (0,0)~wlu_adj_cro =0  ,
+								if ( (0,0)~amb = 1	,
+										(0,0)~lu2 +  (0,0)~lu1 * 0.25,
+										if ((0,0)~amb = 5,
+											(0,0)~lu2 * 0.75,
+											(0,0)~lu2)	
+										),
+								if ( (0,0)~wlu_adj_cro =1	,
+									if ( (0,0)~amb = 1	,
+										(0,0)~lu2 +  (0,0)~lu3 * 0.25,
+										if ((0,0)~amb = 5,
+											(0,0)~lu2 * 0.75,
+											(0,0)~lu2)	
+										),
+										(0,0)~lu2)					
+								)
+						 ,(0,0)~lu2);
+						 
+			~lu3 := if (  (0,0)~wlu_adj =1   ,  
+						if (  (0,0)~wlu_adj_cro =1  ,
+								if ( (0,0)~amb = 5	,
+										(0,0)~lu3 +  (0,0)~lu2 * 0.25,
+										if ((0,0)~amb = 1,
+											(0,0)~lu3 * 0.75,
+											(0,0)~lu3)	
+										)
+								,(0,0)~lu3)
+						 ,(0,0)~lu3);			 
+		
+			~lu_total	:= 	 (0,0)~lu1 +  (0,0)~lu2 +  (0,0)~lu3 ;
+		
+		~flag_paso := 1.13;	
+		~flag_cae  := (0,0)~amb;
+	}
+	 0
+	{ 
+		(0,0)#macro(ajusteLandUsePrice) 	
+		% and ( (0,0)~wlu_adj = 1 )
+	}	
+	
+	
+rule: { 	
+		%No hace ajuste land use por clima
+		#macro(SetAjusteLandUseWeather)
+		~flag_paso := 1.14;	
+		%~flag_cae  := (0,0)~wlu_adj ;
+	}
+	 0
+	{ 
+		% if plu_adj is no initialized has the initial cell value (that is negative)
+		(0,0)#macro(ajusteLandUsePrice) 	
+		and (isUndefined((0,0)~wlu_adj) or  ((0,0)~wlu_adj = 0) or ((0,0)~wlu_adj < 0)) 
+	}
 	
 	
 % Procesamiento
@@ -289,7 +371,7 @@ rule: {
 	}
 		0
 	{ 
-		(0,0)#macro(ajusteLandUsePrice) 	and
+		(0,0)#macro(ajusteLandUseWeather) 	and
 		(not isUndefined((0,0)~lu1)) 	and
 		(not isUndefined((0,0)~lu2)) 	and
 		(not isUndefined((0,0)~lu3)) 	and
@@ -305,7 +387,7 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(ajusteLandUsePrice)
+		(0,0)#macro(ajusteLandUseWeather)
 	}
 
 
@@ -1506,13 +1588,35 @@ rule: {
 		%~flag_cae := 0.1;	
 	}
 	{
+		%copia economica reset
 		$clu 		:= 0;
 		$aju 		:= 0;
 		$clu1	 	:= ?;
 		$clu2 		:= ?;
 		$clu3	 	:= ?;
 		$cue_cota 	:= ?;
-		$cmgm 		:= ?;
+		$cmgm 		:= ?;		
+		
+		%copia ambiental economica reset		
+		$copia_ae 		:= 0;
+		$cae_aju 		:= 0;
+		$cae_lu1	 	:= ?;
+		$cae_lu2 		:= ?;
+		$cae_lu3	 	:= ?;
+		$cae_ue_cota 	:= ?;
+		$cae_mgm 		:= ?;	
+		
+				
+		%copia ambiental reset			
+		$copia_a    := 0;
+		$ca_aju 	:= 0;		
+		$ca_lu1     := ?;
+		$ca_lu2     := ?;
+		$ca_lu3     := ?;
+		$ca_ue_cota 	:= ?;
+		$ca_mgm 		:= ?;	
+		
+
 	}
 		0
 	{ 
