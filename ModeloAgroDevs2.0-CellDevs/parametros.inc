@@ -6,7 +6,7 @@
 % Flag para adaptar MGM     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #BeginMacro(hay_MGM_adaptativo) 
-(1)
+(0)
 #EndMacro
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -32,8 +32,20 @@
 	~etapa = 1
 #EndMacro
 
-#BeginMacro(ajusteLandUse) 
+#BeginMacro(ajusteLandUsePrice) 
 	~etapa = 1.1
+#EndMacro
+
+#BeginMacro(ajusteLandUseWeather) 
+	~etapa = 1.2
+#EndMacro
+
+#BeginMacro(ajusteMgmWeather) 
+	~etapa = 1.3
+#EndMacro
+
+#BeginMacro(ajusteMgmPrice) 
+	~etapa = 1.4
 #EndMacro
 
 #BeginMacro(parametrosCalculados) 
@@ -79,8 +91,20 @@
 	~etapa	:= 1;
 #EndMacro
 
-#BeginMacro(SetAjusteLandUse) 
+#BeginMacro(SetAjusteLandUsePrice) 
 	~etapa	:= 1.1;
+#EndMacro
+
+#BeginMacro(SetAjusteLandUseWeather) 
+	~etapa	:= 1.2;
+#EndMacro
+
+#BeginMacro(SetAjusteMgmWeather) 
+	~etapa	:= 1.3;
+#EndMacro
+
+#BeginMacro(SetAjusteMgmPrice) 
+	~etapa	:= 1.4;
 #EndMacro
 
 #BeginMacro(SetEtapaParametrosCalculados) 
@@ -137,14 +161,14 @@
 % vecinos igual etapa       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #BeginMacro(vecinosParametrosCalculados) 
-	(isUndefined((-1,0)~etapa) 	or (-1,0)~etapa > 1) 	and
-	(isUndefined((-1,1)~etapa) 	or (-1,1)~etapa > 1) 	and
-	(isUndefined((0,1)~etapa) 	or (0,1)~etapa > 1) 	and
-	(isUndefined((1,1)~etapa) 	or (1,1)~etapa > 1) 	and
-	(isUndefined((1,0)~etapa) 	or (1,0)~etapa > 1) 	and
-	(isUndefined((1,-1)~etapa) 	or (1,-1)~etapa > 1) 	and
-	(isUndefined((0,-1)~etapa) 	or (0,-1)~etapa > 1) 	and
-	(isUndefined((-1,-1)~etapa) or (-1,-1)~etapa > 1)
+	(isUndefined((-1,0)~etapa) 	or (-1,0)~etapa > 1.9) 	and
+	(isUndefined((-1,1)~etapa) 	or (-1,1)~etapa > 1.9) 	and
+	(isUndefined((0,1)~etapa) 	or (0,1)~etapa > 1.9) 	and
+	(isUndefined((1,1)~etapa) 	or (1,1)~etapa > 1.9) 	and
+	(isUndefined((1,0)~etapa) 	or (1,0)~etapa > 1.9) 	and
+	(isUndefined((1,-1)~etapa) 	or (1,-1)~etapa > 1.9) 	and
+	(isUndefined((0,-1)~etapa) 	or (0,-1)~etapa > 1.9) 	and
+	(isUndefined((-1,-1)~etapa) or (-1,-1)~etapa > 1.9)
 #EndMacro
 
 #BeginMacro(vecinosUeControlado) 

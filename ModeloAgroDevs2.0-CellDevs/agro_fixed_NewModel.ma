@@ -328,7 +328,7 @@ rule: {
 		
 			~lu_total	:= 	 (0,0)~lu1 +  (0,0)~lu2 +  (0,0)~lu3 ;
 		
-		~flag_paso := 1.13;	
+		~flag_paso := 1.21;	
 		~flag_cae  := (0,0)~amb;
 	}
 	 0
@@ -341,15 +341,61 @@ rule: {
 rule: { 	
 		%No hace ajuste land use por clima
 		#macro(SetAjusteLandUseWeather)
-		~flag_paso := 1.14;	
+		~flag_paso := 1.22;	
 		%~flag_cae  := (0,0)~wlu_adj ;
 	}
 	 0
 	{ 
-		% if plu_adj is no initialized has the initial cell value (that is negative)
+		% if wlu_adj is no initialized has the initial cell value (that is negative)
 		(0,0)#macro(ajusteLandUsePrice) 	
 		and (isUndefined((0,0)~wlu_adj) or  ((0,0)~wlu_adj = 0) or ((0,0)~wlu_adj < 0)) 
 	}
+	
+% Variacion Nivel Tecnologico por Clima
+rule: { 	
+		%Hace ajuste nivel tecnologico por clima
+		#macro(SetAjusteMgmWeather)
+		
+		
+		~mgm 		:=  if ( ((0,0)~amb = 4) or ((0,0)~amb = 5 ) ,
+									if ((0,0)~pro > #macro(wc_maximo_mgm_3), 
+										3, 
+										if ((0,0)~pro > #macro(wc_maximo_mgm_2), 
+											2, 
+											1
+										)
+									),
+									if (((0,0)~amb = 1) or ((0,0)~amb =2 )	,
+												if ((0,0)~mgm = 3, 2, 1),
+												(0,0)~mgm)	
+							);
+				
+		
+		~flag_paso := 1.31;	
+		%~flag_cae  := (0,0)~wtl_adj ;
+	}
+	 0
+	{ 
+		(0,0)#macro(ajusteLandUseWeather) 	
+		and ( ((0,0)~wtl_adj = 1) ) 
+	}
+
+rule: { 	
+		%No hace ajuste nivel tecnologico por clima
+		#macro(SetAjusteMgmWeather)
+		~flag_paso := 1.32;	
+		%~flag_cae  := (0,0)~wtl_adj ;
+	}
+	 0
+	{ 
+		% if wtl_adj is no initialized has the initial cell value (that is negative)
+		(0,0)#macro(ajusteLandUseWeather) 	
+		and (isUndefined((0,0)~wtl_adj) or  ((0,0)~wtl_adj = 0) or ((0,0)~wtl_adj < 0)) 
+	}	
+
+% Variacion Nivel Tecnologico por Precio
+	
+	
 	
 	
 % Procesamiento
@@ -371,7 +417,7 @@ rule: {
 	}
 		0
 	{ 
-		(0,0)#macro(ajusteLandUseWeather) 	and
+		(0,0)#macro(ajusteMgmWeather) 	and
 		(not isUndefined((0,0)~lu1)) 	and
 		(not isUndefined((0,0)~lu2)) 	and
 		(not isUndefined((0,0)~lu3)) 	and
@@ -387,7 +433,7 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(ajusteLandUseWeather)
+		(0,0)#macro(ajusteMgmWeather)
 	}
 
 
