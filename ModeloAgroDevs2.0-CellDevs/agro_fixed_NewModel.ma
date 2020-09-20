@@ -17,7 +17,8 @@
 
 %inicializacionEscenarios
 %#include(escenarios/inicializacion-modifica-LU-vecinos-clima-x-Maiz.inc)
-#include(escenarios/inicializacion-modifica-LU-vecinos-clima-x-TS.inc)
+%#include(escenarios/inicializacion-modifica-LU-vecinos-clima-x-TS.inc)
+#include(escenarios/inicializacion-modifica-TL-clima-5.inc)
 
 
 
