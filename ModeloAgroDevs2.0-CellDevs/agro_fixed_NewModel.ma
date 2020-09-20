@@ -1524,6 +1524,7 @@ rule: {
 							),
 							(0,0)~mgm
 						);
+		 ~flag_cae := #macro(hay_MGM_adaptativo)+100 ;				
 		#macro(SetEtapaFinal)
 		~flag_paso := 7.1 ;
 	}
@@ -1554,6 +1555,8 @@ rule: {
 							),
 							(0,0)~mgm
 						);
+						
+		~flag_cae := #macro(hay_MGM_adaptativo) +200 ;					
 		#macro(SetEtapaFinal)
 		%~flag_paso := 7.2 ;
 		%~flag_value := (0,0)~lu1;
@@ -1576,7 +1579,22 @@ rule: {
 						if ($ca_aju  = 3, 
 							if (((0.45 * ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente)))) + (0.55 * (0,0)~pro)) > 0, (0.45 * ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente)))) + (0.55 * (0,0)~pro), 0), 
 							0) ;
-		~mgm 		:= 	$ca_mgm ;
+		%~mgm 		:= 	$ca_mgm ;
+		~mgm 		:= 	if (#macro(hay_MGM_adaptativo) = 1, 
+					if ((0,0)~pro > #macro(wc_maximo_mgm_3), 
+						3, 
+						if ((0,0)~pro > #macro(wc_maximo_mgm_2), 
+							2, 
+							1
+						)
+					),
+					(0,0)~mgm
+				);
+		
+		
+		
+		~flag_cae := #macro(hay_MGM_adaptativo) +300;
+		
 		#macro(SetEtapaFinal)
 		%~flag_paso := 7.3 ;
 		%~flag_value := (0,0)~lu1;
@@ -1595,7 +1613,21 @@ rule: {
 		~lu2 		:= 	(0,0)~lu2;
 		~lu3 		:= 	(0,0)~lu3;
 		~ue_cota	:= 	(0,0)~ue_cota;
-		~mgm 		:= 	(0,0)~mgm;
+		%~mgm 		:= 	(0,0)~mgm;
+		~mgm 		:= 	if (#macro(hay_MGM_adaptativo) = 1, 
+			if ((0,0)~pro > #macro(wc_maximo_mgm_3), 
+				3, 
+				if ((0,0)~pro > #macro(wc_maximo_mgm_2), 
+					2, 
+					1
+				)
+			),
+			(0,0)~mgm
+		);
+		
+		
+		~flag_cae := #macro(hay_MGM_adaptativo) + 400 ;
+		
 		#macro(SetEtapaFinal)
 		%~flag_paso := 7.4 ;
 		%~flag_value := 7.4;

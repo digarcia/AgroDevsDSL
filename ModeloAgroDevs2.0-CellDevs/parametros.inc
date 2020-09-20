@@ -6,7 +6,7 @@
 % Flag para adaptar MGM     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #BeginMacro(hay_MGM_adaptativo) 
-(0)
+(1)
 #EndMacro
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
