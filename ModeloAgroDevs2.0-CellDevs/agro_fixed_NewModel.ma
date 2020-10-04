@@ -546,6 +546,7 @@ rule: {
 	}
 	 0
 	{ 
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and	
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((-1,0)~eme))	 		and
@@ -577,6 +578,7 @@ rule: {
 	}
 		0
 	{ 		
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((-1,1)~eme))	 		and		
@@ -607,7 +609,7 @@ rule: {
 	}
 	 0
 	{ 
-
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((0,1)~eme))	 		and		
@@ -639,7 +641,7 @@ rule: {
 	}
 	 0
 	{ 
-	
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and	
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((1,1)~eme))	 		and						
@@ -670,7 +672,7 @@ rule: {
 	}
 	 0
 	{ 
-		
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((1,0)~eme))	 		and				
@@ -703,7 +705,7 @@ rule: {
 	 0
 	{ 
 
-		
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((1,-1)~eme))	 		and				
@@ -735,7 +737,7 @@ rule: {
 	 0
 	{ 
 
-		
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((0,-1)~eme))	 		and				
@@ -766,7 +768,7 @@ rule: {
 	}
 	 0
 	{ 
-		
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((-1,-1)~eme))	 		and						
@@ -794,6 +796,7 @@ rule: {
 	}
 		0
 	{ 
+		%((0,0)~camp_fullfil_enviromental_beh = 1)   and
 		(0,0)#macro(parametrosCalculados)		and
 		#macro(vecinosParametrosCalculados) 	
 	}		
@@ -819,6 +822,8 @@ rule: {
 	}
 	 0
 	{ 
+		((0,0)~camp_fullfil_economic_beh = 1)   and
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((-1,0)~pro))	 		and
@@ -860,6 +865,8 @@ rule: {
 	}
 		0
 	{ 		
+		((0,0)~camp_fullfil_economic_beh = 1)   and
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and			
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((-1,1)~pro))	 		and
@@ -901,7 +908,8 @@ rule: {
 	}
 	 0
 	{ 
-
+		((0,0)~camp_fullfil_economic_beh = 1)   and
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((0,1)~pro))	 		and
@@ -945,7 +953,8 @@ rule: {
 	}
 	 0
 	{ 
-	
+		((0,0)~camp_fullfil_economic_beh = 1)   and
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and			
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((1,1)~pro))	 		and
@@ -988,7 +997,8 @@ rule: {
 	}
 	 0
 	{ 
-		
+		((0,0)~camp_fullfil_economic_beh = 1)   and
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and				
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((1,0)~pro))	 		and
@@ -1032,8 +1042,8 @@ rule: {
 	}
 	 0
 	{ 
-
-		
+		((0,0)~camp_fullfil_economic_beh = 1)   and
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and				
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((1,-1)~pro))	 		and
@@ -1076,8 +1086,8 @@ rule: {
 	}
 	 0
 	{ 
-
-		
+		((0,0)~camp_fullfil_economic_beh = 1)   and
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((0,-1)~pro))	 		and
@@ -1119,7 +1129,8 @@ rule: {
 	}
 	 0
 	{ 
-		
+		((0,0)~camp_fullfil_economic_beh = 1)   and
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and				
 		(0,0)#macro(parametrosCalculados) 		and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((-1,-1)~pro))	 		and
@@ -1161,9 +1172,14 @@ rule: {
 	}
 		0
 	{ 
+		%((0,0)~camp_fullfil_economic_beh = 1)   and
+		%((0,0)~camp_fullfil_enviromental_beh = 1)   and		
 		(0,0)#macro(parametrosCalculados)		and
 		#macro(vecinosParametrosCalculados) 	
 	}	
+
+
+% Copia vecinos solo en lo economico.
 	
 % 3 - Control UE No cumplido
 % Prepara cmgmio %LU
@@ -1185,7 +1201,8 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(CampFallidaCopiaEcYAmb) 		and
+		((0,0)~camp_fullfil_economic_beh = 1)   and
+		(0,0)#macro(CampFallidaCopiaEcYAmb) 	and
 		(#macro(vecinosParametrosCalculados)) 	and
 		(not isUndefined((-1,0)~pro))	 		and
 		(
@@ -1218,7 +1235,8 @@ rule: {
 	}
 		0
 	{ 
-		(0,0)#macro(CampFallidaCopiaEcYAmb) 		and
+		((0,0)~camp_fullfil_economic_beh = 1)   and
+		(0,0)#macro(CampFallidaCopiaEcYAmb) 	and
 		#macro(vecinosParametrosCalculados) 	and
 		(not isUndefined((-1,1)~pro)) 			and
 		(
@@ -1250,6 +1268,7 @@ rule: {
 	}
 	 0
 	{ 
+		((0,0)~camp_fullfil_economic_beh = 1)   and
 		(0,0)#macro(CampFallidaCopiaEcYAmb)	 	and
 		#macro(vecinosParametrosCalculados) 	and
 		(not isUndefined((0,1)~pro)) 			and
@@ -1282,7 +1301,8 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(CampFallidaCopiaEcYAmb) 		and
+		((0,0)~camp_fullfil_economic_beh = 1)   and
+		(0,0)#macro(CampFallidaCopiaEcYAmb) 	and
 		#macro(vecinosParametrosCalculados) 	and
 		(not isUndefined((1,1)~pro)) 			and
 		(
@@ -1314,7 +1334,8 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(CampFallidaCopiaEcYAmb) 		and
+		((0,0)~camp_fullfil_economic_beh = 1)   and
+		(0,0)#macro(CampFallidaCopiaEcYAmb) 	and
 		#macro(vecinosParametrosCalculados) 	and
 		(not isUndefined((1,0)~pro)) 			and
 		(
@@ -1346,7 +1367,8 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(CampFallidaCopiaEcYAmb) 		and
+		((0,0)~camp_fullfil_economic_beh = 1)   and
+		(0,0)#macro(CampFallidaCopiaEcYAmb) 	and
 		#macro(vecinosParametrosCalculados) 	and
 		(not isUndefined((1,-1)~pro)) 			and
 		(
@@ -1378,7 +1400,8 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(CampFallidaCopiaEcYAmb) 		and
+		((0,0)~camp_fullfil_economic_beh = 1)   and	
+		(0,0)#macro(CampFallidaCopiaEcYAmb) 	and
 		#macro(vecinosParametrosCalculados) 	and
 		(not isUndefined((0,-1)~pro)) 			and
 		(
@@ -1410,7 +1433,8 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(CampFallidaCopiaEcYAmb) 		and
+		((0,0)~camp_fullfil_economic_beh = 1)   and		
+		(0,0)#macro(CampFallidaCopiaEcYAmb) 	and
 		#macro(vecinosParametrosCalculados) 	and
 		(not isUndefined((-1,-1)~pro)) 			and
 		(
@@ -1439,6 +1463,7 @@ rule: {
 	}
 		0
 	{ 
+		%((0,0)~camp_fullfil_economic_beh = 1)   and
 		(0,0)#macro(CampFallidaCopiaEcYAmb)		and
 		#macro(vecinosParametrosCalculados) 	
 	}
