@@ -18,7 +18,11 @@
 %inicializacionEscenarios
 %#include(escenarios/inicializacion-modifica-LU-vecinos-clima-x-Maiz.inc)
 %#include(escenarios/inicializacion-modifica-LU-vecinos-clima-x-TS.inc)
-#include(escenarios/inicializacion-modifica-TL-clima-5.inc)
+%#include(escenarios/inicializacion-modifica-TL-clima-5.inc)
+#include(escenarios/inicializacion-modifica-TL-precio-aumenta.inc)
+
+
+
 
 
 
@@ -259,7 +263,7 @@ rule: {
 	%~flag_cae := ((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1);
 	%~flag_cae  := ((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2);
 	%~flag_cae := (0,0)~lu1 * 0.125  ;
-	~flag_cae  :=  (((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1)) - (((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2));	
+	%~flag_cae  :=  (((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1)) - (((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2));	
 	
 	}
 	 0
@@ -395,9 +399,68 @@ rule: {
 	}	
 
 % Variacion Nivel Tecnologico por Precio
+rule: { 	
+		%Hace ajuste nivel tecnologico por precio
+		#macro(SetAjusteMgmPrice)
+		
+		
+		%~mgm 		:=  (0,0)~mgm;
+				
+		~mgm 		:= if (not isUndefined((0,0)~pro) ,	
+							if ( 
+							(((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1))*((0,0)~lu1/100) + 
+							(((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2))*((0,0)~lu2/100) + 
+							(((((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2))+
+							(((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4)))/2)*((0,0)~lu3/100) > 0.1   ,						
+								if (((0,0)~mgm = 3) or ((0,0)~mgm = 2 ) and 	((0,0)~pro > #macro(wc_maximo_mgm_3)), 
+										3, 
+											if (((0,0)~mgm = 2) or ((0,0)~mgm = 1 ) and ((0,0)~pro > #macro(wc_maximo_mgm_2)), 
+													2, 
+													1
+										)
+									)
+							,		
+							if (
+							(((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1))*((0,0)~lu1/100) + 
+							(((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2))*((0,0)~lu2/100) + 
+							(((((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2))+
+							(((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4)))/2)*((0,0)~lu3/100) < -0.1 
+							,
+								if ( ((0,0)~mgm = 3),
+										2,
+										1
+								),
+								(0,0)~mgm
+							)),
+							(0,0)~mgm);
+		
+		
+		
+		~flag_paso := 1.41;	
+		~flag_cae  := (((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1))*((0,0)~lu1/100) + 
+							(((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2))*((0,0)~lu2/100) + 
+							(((((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2))+
+							(((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4)))/2)*((0,0)~lu3/100) ;
+	}
+	 0
+	{ 
+		(0,0)#macro(ajusteMgmWeather) 	
+		and ( ((0,0)~ptl_adj = 1) ) 
+	}	
 	
+rule: { 	
+		%No hace ajuste nivel tecnologico por precio
+		#macro(SetAjusteMgmPrice)
+		
 	
-	
+		~flag_paso := 1.42;	
+		%~flag_cae  := (0,0)~wtl_adj ;
+	}
+	 0
+	{ 
+		(0,0)#macro(ajusteMgmWeather) 	
+		and (isUndefined((0,0)~ptl_adj) or  ((0,0)~ptl_adj = 0) or ((0,0)~ptl_adj < 0)) 
+	}	
 	
 % Procesamiento
 % 1 - Calculo Profit / Emergia
@@ -418,7 +481,7 @@ rule: {
 	}
 		0
 	{ 
-		(0,0)#macro(ajusteMgmWeather) 	and
+		(0,0)#macro(ajusteMgmPrice) 	and
 		(not isUndefined((0,0)~lu1)) 	and
 		(not isUndefined((0,0)~lu2)) 	and
 		(not isUndefined((0,0)~lu3)) 	and
@@ -434,7 +497,7 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(ajusteMgmWeather)
+		(0,0)#macro(ajusteMgmPrice)
 	}
 
 
@@ -1525,7 +1588,7 @@ rule: {
 							),
 							(0,0)~mgm
 						);
-		 ~flag_cae := #macro(hay_MGM_adaptativo)+100 ;				
+		 %~flag_cae := #macro(hay_MGM_adaptativo)+100 ;				
 		#macro(SetEtapaFinal)
 		~flag_paso := 7.1 ;
 	}
@@ -1557,7 +1620,7 @@ rule: {
 							(0,0)~mgm
 						);
 						
-		~flag_cae := #macro(hay_MGM_adaptativo) +200 ;					
+		%~flag_cae := #macro(hay_MGM_adaptativo) +200 ;					
 		#macro(SetEtapaFinal)
 		%~flag_paso := 7.2 ;
 		%~flag_value := (0,0)~lu1;
@@ -1594,7 +1657,7 @@ rule: {
 		
 		
 		
-		~flag_cae := #macro(hay_MGM_adaptativo) +300;
+		%~flag_cae := #macro(hay_MGM_adaptativo) +300;
 		
 		#macro(SetEtapaFinal)
 		%~flag_paso := 7.3 ;
@@ -1627,7 +1690,7 @@ rule: {
 		);
 		
 		
-		~flag_cae := #macro(hay_MGM_adaptativo) + 400 ;
+		%~flag_cae := #macro(hay_MGM_adaptativo) + 400 ;
 		
 		#macro(SetEtapaFinal)
 		%~flag_paso := 7.4 ;
