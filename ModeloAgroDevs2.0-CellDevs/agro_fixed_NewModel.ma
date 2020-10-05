@@ -527,281 +527,10 @@ rule: {
 	}	
 	
 	
+%------------------------------------------------------------------	
 	
 	
-% 4.2 - Copia vecinos solo ambiental	
-
-rule: { 
-		#macro(SetEtapaUEErrorEsperaVecinos)
-		~flag_paso := 4.21 ;
-	}
-	{
-		$copia_a 		:= 1;
-		$ca_aju 		:= 3;
-		$ca_lu1	 		:= (-1,0)~lu1;
-		$ca_lu2 		:= (-1,0)~lu2;
-		$ca_lu3	 		:= (-1,0)~lu3;
-		$ca_ue_cota 	:= (-1,0)~ue_cota;
-		$ca_mgm 		:= (-1,0)~mgm;
-	}
-	 0
-	{ 
-		((0,0)~camp_fullfil_enviromental_beh = 1)   and	
-		(0,0)#macro(parametrosCalculados) 		and
-		(#macro(vecinosParametrosCalculados)) 	and
-		(not isUndefined((-1,0)~eme))	 		and
-		(
-			(-1,0)~eme > ((0,0)~ua_cota) and
-			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (-1,0)~eme)	and
-			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (-1,0)~eme)	and
-			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (-1,0)~eme)	and
-			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (-1,0)~eme)	and
-			(isUndefined((1,-1)~eme) or  (1,-1)~eme 	<= (-1,0)~eme)	and
-			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (-1,0)~eme)	and
-			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (-1,0)~eme)	
-					
-		)
-	}
-
-rule: { 
-		#macro(SetEtapaUEErrorEsperaVecinos)
-		~flag_paso := 4.22 ;
-	}
-	{
-		$copia_a 		:= 1;
-		$ca_aju 		:= 3;
-		$ca_lu1	 		:= (-1,1)~lu1;
-		$ca_lu2 		:= (-1,1)~lu2;
-		$ca_lu3	 		:= (-1,1)~lu3;
-		$ca_ue_cota 	:= (-1,1)~ue_cota;
-		$ca_mgm 		:= (-1,1)~mgm;
-	}
-		0
-	{ 		
-		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
-		(0,0)#macro(parametrosCalculados) 		and
-		(#macro(vecinosParametrosCalculados)) 	and
-		(not isUndefined((-1,1)~eme))	 		and		
-		(
-			(-1,1)~eme > ((0,0)~ua_cota) and
-			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (-1,1)~eme)	and
-			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (-1,1)~eme)	and
-			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (-1,1)~eme)	and
-			(isUndefined((1,-1)~eme) or  (1,-1)~eme 	<= (-1,1)~eme)	and
-			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (-1,1)~eme)	and
-			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (-1,1)~eme)	and	
-			(isUndefined((-1,0)~eme) or  (-1,0)~eme 	<= (-1,1)~eme)			
-		)									
-	}
-
-rule: { 
-		#macro(SetEtapaUEErrorEsperaVecinos)
-		~flag_paso := 4.23 ;
-	}
-	{	
-		$copia_a 		:= 1;
-		$ca_aju 		:= 3;
-		$ca_lu1	 		:= (0,1)~lu1;
-		$ca_lu2 		:= (0,1)~lu2;
-		$ca_lu3	 		:= (0,1)~lu3;
-		$ca_ue_cota 	:= (0,1)~ue_cota;
-		$ca_mgm 		:= (0,1)~mgm;
-	}
-	 0
-	{ 
-		((0,0)~camp_fullfil_enviromental_beh = 1)   and
-		(0,0)#macro(parametrosCalculados) 		and
-		(#macro(vecinosParametrosCalculados)) 	and
-		(not isUndefined((0,1)~eme))	 		and		
-		
-		(
-			(0,1)~eme > ((0,0)~ua_cota) and	
-			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (0,1)~eme)	and
-			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (0,1)~eme)	and
-			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (0,1)~eme)	and
-			(isUndefined((0,-1)~eme) or  (0,-1)~eme		<= (0,1)~eme)	and
-			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (0,1)~eme)	and	
-			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (0,1)~eme)	and
-			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (0,1)~eme)						
-		)
-	}
-
-rule: { 
-		#macro(SetEtapaUEErrorEsperaVecinos)
-		~flag_paso := 4.24 ;
-	}
-	{
-		$copia_a 		:= 1;
-		$ca_aju 		:= 3;
-		$ca_lu1	 		:= (1,1)~lu1;
-		$ca_lu2 		:= (1,1)~lu2;
-		$ca_lu3	 		:= (1,1)~lu3;
-		$ca_ue_cota 	:= (1,1)~ue_cota;
-		$ca_mgm 		:= (1,1)~mgm;		
-	}
-	 0
-	{ 
-		((0,0)~camp_fullfil_enviromental_beh = 1)   and	
-		(0,0)#macro(parametrosCalculados) 		and
-		(#macro(vecinosParametrosCalculados)) 	and
-		(not isUndefined((1,1)~eme))	 		and						
-		(
-			(1,1)~eme > ((0,0)~ua_cota) and		
-			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (1,1)~eme)	and
-			(isUndefined((1,-1)~eme) or  (1,-1)~eme 	<= (1,1)~eme)	and
-			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (1,1)~eme)	and
-			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (1,1)~eme)	and	
-			(isUndefined((-1,0)~eme) or  (-1,0)~eme 	<= (1,1)~eme)	and
-			(isUndefined((-1,1)~eme) or  (-1,1)~eme 	<= (1,1)~eme)	and
-			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (1,1)~eme)						
-		)
-	}
-
-rule: { 
-		#macro(SetEtapaUEErrorEsperaVecinos)
-		~flag_paso := 4.25 ;
-	}
-	{
-		$copia_a 		:= 1;
-		$ca_aju 		:= 3;
-		$ca_lu1	 		:= (1,0)~lu1;
-		$ca_lu2 		:= (1,0)~lu2;
-		$ca_lu3	 		:= (1,0)~lu3;
-		$ca_ue_cota 	:= (1,0)~ue_cota;
-		$ca_mgm 		:= (1,0)~mgm;			
-	}
-	 0
-	{ 
-		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
-		(0,0)#macro(parametrosCalculados) 		and
-		(#macro(vecinosParametrosCalculados)) 	and
-		(not isUndefined((1,0)~eme))	 		and				
-		(
-			(1,0)~eme > ((0,0)~ua_cota) and		
-			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (1,0)~eme)	and
-			(isUndefined((0,-1)~eme) or  (0,-1)~eme		<= (1,0)~eme)	and
-			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (1,0)~eme)	and	
-			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (1,0)~eme)	and
-			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (1,0)~eme)	and
-			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (1,0)~eme)	and
-			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (1,0)~eme)						
-		)
-	}
-
-rule: { 
-		#macro(SetEtapaUEErrorEsperaVecinos)
-		~flag_paso := 4.26 ;
-	}
-	{	
-		$copia_a 		:= 1;
-		$ca_aju 		:= 3;
-		$ca_lu1	 		:= (1,-1)~lu1;
-		$ca_lu2 		:= (1,-1)~lu2;
-		$ca_lu3	 		:= (1,-1)~lu3;
-		$ca_ue_cota 	:= (1,-1)~ue_cota;
-		$ca_mgm 		:= (1,-1)~mgm;			
-		
-	}
-	 0
-	{ 
-
-		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
-		(0,0)#macro(parametrosCalculados) 		and
-		(#macro(vecinosParametrosCalculados)) 	and
-		(not isUndefined((1,-1)~eme))	 		and				
-		(
-			(1,-1)~eme > ((0,0)~ua_cota) and	
-			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (1,-1)~eme)	and
-			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (1,-1)~eme)	and	
-			(isUndefined((-1,0)~eme) or  (-1,0)~eme 	<= (1,-1)~eme)	and
-			(isUndefined((-1,1)~eme) or  (-1,1)~eme 	<= (1,-1)~eme)	and
-			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (1,-1)~eme)	and
-			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (1,-1)~eme)	and
-			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (1,-1)~eme)			
-		)
-	}
-
-rule: { 
-		#macro(SetEtapaUEErrorEsperaVecinos)
-		~flag_paso := 4.27 ;
-	}
-	{		
-		$copia_a 		:= 1;
-		$ca_aju 		:= 3;
-		$ca_lu1	 		:= (0,-1)~lu1;
-		$ca_lu2 		:= (0,-1)~lu2;
-		$ca_lu3	 		:= (0,-1)~lu3;
-		$ca_ue_cota 	:= (0,-1)~ue_cota;
-		$ca_mgm 		:= (0,-1)~mgm;		
-	}
-	 0
-	{ 
-
-		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
-		(0,0)#macro(parametrosCalculados) 		and
-		(#macro(vecinosParametrosCalculados)) 	and
-		(not isUndefined((0,-1)~eme))	 		and				
-		(
-			(0,-1)~eme > ((0,0)~ua_cota) and	
-			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (0,-1)~eme)	and	
-			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (0,-1)~eme)	and
-			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (0,-1)~eme)	and
-			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (0,-1)~eme)	and
-			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (0,-1)~eme)	and
-			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (0,-1)~eme)	and
-			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (0,-1)~eme)				
-		)
-	}
-
-rule: { 
-		#macro(SetEtapaUEErrorEsperaVecinos)
-		~flag_paso := 4.28 ;
-	}
-	{
-		$copia_a 		:= 1;
-		$ca_aju 		:= 3;
-		$ca_lu1		 	:= (-1,-1)~lu1;
-		$ca_lu2 		:= (-1,-1)~lu2;
-		$ca_lu3	 		:= (-1,-1)~lu3;
-		$ca_ue_cota 	:= (-1,-1)~ue_cota;
-		$ca_mgm 		:= (-1,-1)~mgm;	
-	}
-	 0
-	{ 
-		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
-		(0,0)#macro(parametrosCalculados) 		and
-		(#macro(vecinosParametrosCalculados)) 	and
-		(not isUndefined((-1,-1)~eme))	 		and						
-		(
-			(-1,-1)~eme > ((0,0)~ua_cota) and	
-			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (-1,-1)~eme)	and
-			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (-1,-1)~eme)	and
-			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (-1,-1)~eme)	and
-			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (-1,-1)~eme)	and
-			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (-1,-1)~eme)	and
-			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (-1,-1)~eme)	and	
-			(isUndefined((0,-1)~eme) or  (0,-1)~eme		<= (-1,-1)~eme)				
-		)
-	}
-	
-
-% Ningun vecino cumple la condicion de mejor ambiental
-rule: { 
-		#macro(SetEtapaUEErrorEsperaVecinos)
-		~flag_paso := 4.29 ;
-	}
-	{
-		$copia_a 		:= 0;
-		$ca_aju 		:= 2;
-	}
-		0
-	{ 
-		%((0,0)~camp_fullfil_enviromental_beh = 1)   and
-		(0,0)#macro(parametrosCalculados)		and
-		#macro(vecinosParametrosCalculados) 	
-	}		
-	
-	
+%------------------------------------------------------------------		
 	
 % 4.3 - Copia vecinos economico y ambiental	
 rule: { 
@@ -1160,8 +889,8 @@ rule: {
 
 % Ningun vecino cumple la condicion de mejor economico y ambiental
 rule: { 
-		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
-		#macro(SetEtapaUEErrorEsperaVecinos)
+		#macro(SetEtapaCampFallidaCopiaEcYAmb)
+		%#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.39 ;
 		%~flag_cae := (1,-1)~etapa;
 		%~flag_cae := (1,-1)~eme	;
@@ -1188,6 +917,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		%#macro(SetEtapaCampFallidaCopiaEc)		
 		~flag_paso := 4.11 ;
 	}
 	{
@@ -1222,6 +952,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		%#macro(SetEtapaCampFallidaCopiaEc)			
 		~flag_paso := 4.12 ;
 	}
 	{
@@ -1255,6 +986,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		%#macro(SetEtapaCampFallidaCopiaEc)			
 		~flag_paso := 4.13 ;
 	}
 	{
@@ -1288,6 +1020,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		%#macro(SetEtapaCampFallidaCopiaEc)			
 		~flag_paso := 4.14 ;
 	}
 	{
@@ -1321,6 +1054,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		%#macro(SetEtapaCampFallidaCopiaEc)			
 		~flag_paso := 4.15 ;
 	}
 	{
@@ -1354,6 +1088,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		%#macro(SetEtapaCampFallidaCopiaEc)			
 		~flag_paso := 4.16 ;
 	}
 	{
@@ -1387,6 +1122,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		%#macro(SetEtapaCampFallidaCopiaEc)	
 		~flag_paso := 4.17 ;
 	}
 	{
@@ -1420,6 +1156,7 @@ rule: {
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
+		%#macro(SetEtapaCampFallidaCopiaEc)			
 		~flag_paso := 4.18 ;
 	}
 	{
@@ -1454,7 +1191,8 @@ rule: {
 rule: { 
 		~uee 		:= (0,0)~uee + 1;						
 		#macro(actualizaCantidadUADegrada)
-		#macro(SetEtapaUEErrorEsperaVecinos)
+		%#macro(SetEtapaUEErrorEsperaVecinos)
+		#macro(SetEtapaCampFallidaCopiaEc)	
 		~flag_paso := 4.19 ;
 	}
 	{
@@ -1468,6 +1206,290 @@ rule: {
 		#macro(vecinosParametrosCalculados) 	
 	}
 
+%------------------------------------------------------------------		
+
+
+% 4.2 - Copia vecinos solo ambiental	
+
+rule: { 
+		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.21 ;
+	}
+	{
+		$copia_a 		:= 1;
+		$ca_aju 		:= 3;
+		$ca_lu1	 		:= (-1,0)~lu1;
+		$ca_lu2 		:= (-1,0)~lu2;
+		$ca_lu3	 		:= (-1,0)~lu3;
+		$ca_ue_cota 	:= (-1,0)~ue_cota;
+		$ca_mgm 		:= (-1,0)~mgm;
+	}
+	 0
+	{ 
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and	
+		(0,0)#macro(CampFallidaCopiaEc) 		and
+		(#macro(vecinosParametrosCalculados)) 	and
+		(not isUndefined((-1,0)~eme))	 		and
+		(
+			(-1,0)~eme > ((0,0)~ua_cota) and
+			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (-1,0)~eme)	and
+			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (-1,0)~eme)	and
+			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (-1,0)~eme)	and
+			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (-1,0)~eme)	and
+			(isUndefined((1,-1)~eme) or  (1,-1)~eme 	<= (-1,0)~eme)	and
+			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (-1,0)~eme)	and
+			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (-1,0)~eme)	
+					
+		)
+	}
+
+rule: { 
+		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.22 ;
+	}
+	{
+		$copia_a 		:= 1;
+		$ca_aju 		:= 3;
+		$ca_lu1	 		:= (-1,1)~lu1;
+		$ca_lu2 		:= (-1,1)~lu2;
+		$ca_lu3	 		:= (-1,1)~lu3;
+		$ca_ue_cota 	:= (-1,1)~ue_cota;
+		$ca_mgm 		:= (-1,1)~mgm;
+	}
+		0
+	{ 		
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
+		(0,0)#macro(CampFallidaCopiaEc) 		and
+		(#macro(vecinosParametrosCalculados)) 	and
+		(not isUndefined((-1,1)~eme))	 		and		
+		(
+			(-1,1)~eme > ((0,0)~ua_cota) and
+			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (-1,1)~eme)	and
+			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (-1,1)~eme)	and
+			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (-1,1)~eme)	and
+			(isUndefined((1,-1)~eme) or  (1,-1)~eme 	<= (-1,1)~eme)	and
+			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (-1,1)~eme)	and
+			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (-1,1)~eme)	and	
+			(isUndefined((-1,0)~eme) or  (-1,0)~eme 	<= (-1,1)~eme)			
+		)									
+	}
+
+rule: { 
+		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.23 ;
+	}
+	{	
+		$copia_a 		:= 1;
+		$ca_aju 		:= 3;
+		$ca_lu1	 		:= (0,1)~lu1;
+		$ca_lu2 		:= (0,1)~lu2;
+		$ca_lu3	 		:= (0,1)~lu3;
+		$ca_ue_cota 	:= (0,1)~ue_cota;
+		$ca_mgm 		:= (0,1)~mgm;
+	}
+	 0
+	{ 
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and
+		(0,0)#macro(CampFallidaCopiaEc) 		and
+		(#macro(vecinosParametrosCalculados)) 	and
+		(not isUndefined((0,1)~eme))	 		and		
+		
+		(
+			(0,1)~eme > ((0,0)~ua_cota) and	
+			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (0,1)~eme)	and
+			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (0,1)~eme)	and
+			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (0,1)~eme)	and
+			(isUndefined((0,-1)~eme) or  (0,-1)~eme		<= (0,1)~eme)	and
+			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (0,1)~eme)	and	
+			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (0,1)~eme)	and
+			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (0,1)~eme)						
+		)
+	}
+
+rule: { 
+		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.24 ;
+	}
+	{
+		$copia_a 		:= 1;
+		$ca_aju 		:= 3;
+		$ca_lu1	 		:= (1,1)~lu1;
+		$ca_lu2 		:= (1,1)~lu2;
+		$ca_lu3	 		:= (1,1)~lu3;
+		$ca_ue_cota 	:= (1,1)~ue_cota;
+		$ca_mgm 		:= (1,1)~mgm;		
+	}
+	 0
+	{ 
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and	
+		(0,0)#macro(CampFallidaCopiaEc) 		and
+		(#macro(vecinosParametrosCalculados)) 	and
+		(not isUndefined((1,1)~eme))	 		and						
+		(
+			(1,1)~eme > ((0,0)~ua_cota) and		
+			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (1,1)~eme)	and
+			(isUndefined((1,-1)~eme) or  (1,-1)~eme 	<= (1,1)~eme)	and
+			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (1,1)~eme)	and
+			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (1,1)~eme)	and	
+			(isUndefined((-1,0)~eme) or  (-1,0)~eme 	<= (1,1)~eme)	and
+			(isUndefined((-1,1)~eme) or  (-1,1)~eme 	<= (1,1)~eme)	and
+			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (1,1)~eme)						
+		)
+	}
+
+rule: { 
+		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.25 ;
+	}
+	{
+		$copia_a 		:= 1;
+		$ca_aju 		:= 3;
+		$ca_lu1	 		:= (1,0)~lu1;
+		$ca_lu2 		:= (1,0)~lu2;
+		$ca_lu3	 		:= (1,0)~lu3;
+		$ca_ue_cota 	:= (1,0)~ue_cota;
+		$ca_mgm 		:= (1,0)~mgm;			
+	}
+	 0
+	{ 
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
+		(0,0)#macro(CampFallidaCopiaEc) 		and
+		(#macro(vecinosParametrosCalculados)) 	and
+		(not isUndefined((1,0)~eme))	 		and				
+		(
+			(1,0)~eme > ((0,0)~ua_cota) and		
+			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (1,0)~eme)	and
+			(isUndefined((0,-1)~eme) or  (0,-1)~eme		<= (1,0)~eme)	and
+			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (1,0)~eme)	and	
+			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (1,0)~eme)	and
+			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (1,0)~eme)	and
+			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (1,0)~eme)	and
+			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (1,0)~eme)						
+		)
+	}
+
+rule: { 
+		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.26 ;
+	}
+	{	
+		$copia_a 		:= 1;
+		$ca_aju 		:= 3;
+		$ca_lu1	 		:= (1,-1)~lu1;
+		$ca_lu2 		:= (1,-1)~lu2;
+		$ca_lu3	 		:= (1,-1)~lu3;
+		$ca_ue_cota 	:= (1,-1)~ue_cota;
+		$ca_mgm 		:= (1,-1)~mgm;			
+		
+	}
+	 0
+	{ 
+
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
+		(0,0)#macro(CampFallidaCopiaEc) 		and
+		(#macro(vecinosParametrosCalculados)) 	and
+		(not isUndefined((1,-1)~eme))	 		and				
+		(
+			(1,-1)~eme > ((0,0)~ua_cota) and	
+			(isUndefined((0,-1)~eme) or  (0,-1)~eme 	<= (1,-1)~eme)	and
+			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (1,-1)~eme)	and	
+			(isUndefined((-1,0)~eme) or  (-1,0)~eme 	<= (1,-1)~eme)	and
+			(isUndefined((-1,1)~eme) or  (-1,1)~eme 	<= (1,-1)~eme)	and
+			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (1,-1)~eme)	and
+			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (1,-1)~eme)	and
+			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (1,-1)~eme)			
+		)
+	}
+
+rule: { 
+		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.27 ;
+	}
+	{		
+		$copia_a 		:= 1;
+		$ca_aju 		:= 3;
+		$ca_lu1	 		:= (0,-1)~lu1;
+		$ca_lu2 		:= (0,-1)~lu2;
+		$ca_lu3	 		:= (0,-1)~lu3;
+		$ca_ue_cota 	:= (0,-1)~ue_cota;
+		$ca_mgm 		:= (0,-1)~mgm;		
+	}
+	 0
+	{ 
+
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
+		(0,0)#macro(CampFallidaCopiaEc) 		and
+		(#macro(vecinosParametrosCalculados)) 	and
+		(not isUndefined((0,-1)~eme))	 		and				
+		(
+			(0,-1)~eme > ((0,0)~ua_cota) and	
+			(isUndefined((-1,-1)~eme) or  (-1,-1)~eme 	<= (0,-1)~eme)	and	
+			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (0,-1)~eme)	and
+			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (0,-1)~eme)	and
+			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (0,-1)~eme)	and
+			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (0,-1)~eme)	and
+			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (0,-1)~eme)	and
+			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (0,-1)~eme)				
+		)
+	}
+
+rule: { 
+		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.28 ;
+	}
+	{
+		$copia_a 		:= 1;
+		$ca_aju 		:= 3;
+		$ca_lu1		 	:= (-1,-1)~lu1;
+		$ca_lu2 		:= (-1,-1)~lu2;
+		$ca_lu3	 		:= (-1,-1)~lu3;
+		$ca_ue_cota 	:= (-1,-1)~ue_cota;
+		$ca_mgm 		:= (-1,-1)~mgm;	
+	}
+	 0
+	{ 
+		((0,0)~camp_fullfil_enviromental_beh = 1)   and		
+		(0,0)#macro(CampFallidaCopiaEc) 		and
+		(#macro(vecinosParametrosCalculados)) 	and
+		(not isUndefined((-1,-1)~eme))	 		and						
+		(
+			(-1,-1)~eme > ((0,0)~ua_cota) and	
+			(isUndefined((-1,0)~eme) or  (-1,0)~eme		<= (-1,-1)~eme)	and
+			(isUndefined((-1,1)~eme) or  (-1,1)~eme		<= (-1,-1)~eme)	and
+			(isUndefined((0,1)~eme) or  (0,1)~eme 		<= (-1,-1)~eme)	and
+			(isUndefined((1,1)~eme) or  (1,1)~eme 		<= (-1,-1)~eme)	and
+			(isUndefined((1,0)~eme) or  (1,0)~eme 		<= (-1,-1)~eme)	and
+			(isUndefined((1,-1)~eme) or  (1,-1)~eme		<= (-1,-1)~eme)	and	
+			(isUndefined((0,-1)~eme) or  (0,-1)~eme		<= (-1,-1)~eme)				
+		)
+	}
+	
+
+% Ningun vecino cumple la condicion de mejor ambiental
+rule: { 
+		#macro(SetEtapaUEErrorEsperaVecinos)
+		~flag_paso := 4.29 ;
+	}
+	{
+		$copia_a 		:= 0;
+		$ca_aju 		:= 2;
+	}
+		0
+	{ 
+		%((0,0)~camp_fullfil_enviromental_beh = 1)   and
+		(0,0)#macro(CampFallidaCopiaEc)		and
+		#macro(vecinosParametrosCalculados) 	
+	}		
+
+	
+	
+%------------------------------------------------------------------		
+	
+	
+	
+	
+	
+	
 % Pasa de etapa cuando todos controlaron UE
 rule: { 
 		#macro(SetEtapaUECumplida)
