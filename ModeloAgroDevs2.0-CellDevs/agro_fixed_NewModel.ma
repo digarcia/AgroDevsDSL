@@ -4,11 +4,11 @@
 %#include(tablas.inc)
 %#include(inicializacion.inc)
 
-#include(153/parametros.inc)
-#include(153/tablas.inc)
+%#include(153/parametros.inc)
+%#include(153/tablas.inc)
 
-%#include(pergamino2020/parametros.inc)
-%#include(pergamino2020/tablas.inc)
+#include(pergamino2020/parametros.inc)
+#include(pergamino2020/tablas.inc)
 
 
 %inicializacion
@@ -22,10 +22,15 @@
 %#include(escenarios/inicializacion-modifica-LU-vecinos-clima-x-Maiz.inc)
 %#include(escenarios/inicializacion-modifica-LU-vecinos-clima-x-TS.inc)
 %#include(escenarios/inicializacion-modifica-TL-clima-5.inc)
-#include(escenarios/inicializacion-modifica-TL-precio-aumenta.inc)
+%#include(escenarios/inicializacion-modifica-TL-precio-aumenta.inc)
 %#include(pergamino2020/inicializacionModeloDaniela.inc)
 %#include(pergamino2020/inicializacion-Ejemplo-5x5.inc)
 %#include(pergamino2020/inicializacionPergamino2020CopiaEcyAmb.inc)
+
+%#include(pergamino2020/inicializacionPruebaUmbralEc_EcoyAmb.inc)
+%#include(pergamino2020/inicializacionPruebaEcoyambCambia1erAgente.inc)
+%#include(pergamino2020/inicializacionPruebaEcoyambCambia1erAgentey17-18.inc)
+#include(pergamino2020/inicializacionPruebaEcoyambCambia1erAgenty19-20-24.inc)
 
 
 
@@ -73,9 +78,9 @@ neighbors : campo(1,-1)   campo(1,0)   campo(1,1)
 % -0.5 = valor que no se usa en .val
 % En particular se ponen con valor -1 a -n en .val
 initialvalue : -0.5
-initialCellsvalue : val-ej5x5.val
+%initialCellsvalue : val-ej5x5.val
 %initialCellsvalue : 153/agro.val
-%initialCellsvalue : pergamino2020/agro.val
+initialCellsvalue : pergamino2020/agro.val
 %initialCellsvalue :  pergamino2020/agro25x25.val
 
 
@@ -962,6 +967,29 @@ rule: {
 		#macro(vecinosParametrosCalculados) 	
 	}	
 
+	
+%---------------------
+
+% 2 - Control UE cumplido, cuando fallo la copia economica y ambiental
+% - Si da ue ok, no hace copia economica.
+rule: { 
+		~ueo := (0,0)~ueo + 1;
+		#macro(SetEtapaUEOkEsperaVecinos)
+		~flag_paso := 4.10 ;
+		%~flag_cae := 4.10 ;
+	}
+	 0
+	{ 
+		(0,0)#macro(CampFallidaCopiaEcYAmb) 	and
+		(0,0)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente))) and
+		((0,0)~camp_fullfil_economic_beh = 1)     
+	}	
+
+
+
+%-------------------------	
+	
+	
 
 % Copia vecinos solo en lo economico.
 	
@@ -1262,6 +1290,23 @@ rule: {
 	}
 
 %------------------------------------------------------------------		
+
+% 2a - Control UA cumplida, cuando fallo la copia economica
+% - Si da ua ok, no hace copia ambiental.
+rule: { 
+		%~ueo := (0,0)~ueo + 1;
+		#macro(SetEtapaUEOkEsperaVecinos)
+		~flag_paso := 4.20 ;
+	}
+	 0
+	{ 
+		(0,0)#macro(parametrosCalculados) 		and
+		(0,0)~eme >  ((0,0)~ua_cota)  			and
+		((0,0)~camp_fullfil_enviromental_beh = 1)   			
+	}	
+
+%---------------------
+
 
 
 % 4.2 - Copia vecinos solo ambiental	
@@ -1690,9 +1735,10 @@ rule: {
 							),
 							(0,0)~mgm
 						);
-		 %~flag_cae := #macro(hay_MGM_adaptativo)+100 ;				
+		 %~flag_cae := #macro(hay_MGM_adaptativo)+100 ;
+		 ~flag_cae := $aju ;	 
 		#macro(SetEtapaFinal)
-		~flag_paso := 7.1 ;
+		%~flag_paso := 7.1 ;
 	}
 	 0
 	{ 
