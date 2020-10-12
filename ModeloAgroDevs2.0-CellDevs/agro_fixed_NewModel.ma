@@ -7,6 +7,9 @@
 #include(153/parametros.inc)
 #include(153/tablas.inc)
 
+%#include(pergamino2020/parametros.inc)
+%#include(pergamino2020/tablas.inc)
+
 
 %inicializacion
 %#include(153/NewModelComp1.inc)
@@ -20,6 +23,16 @@
 %#include(escenarios/inicializacion-modifica-LU-vecinos-clima-x-TS.inc)
 %#include(escenarios/inicializacion-modifica-TL-clima-5.inc)
 #include(escenarios/inicializacion-modifica-TL-precio-aumenta.inc)
+%#include(pergamino2020/inicializacionModeloDaniela.inc)
+%#include(pergamino2020/inicializacion-Ejemplo-5x5.inc)
+%#include(pergamino2020/inicializacionPergamino2020CopiaEcyAmb.inc)
+
+
+
+
+
+
+
 
 
 
@@ -49,6 +62,7 @@ link: out@curr_lu4_price  in_curr_lu4_price@campo
 type : cell 
 dim : (5, 5)
 %dim : (10, 10)
+%dim : (25, 25)
 delay : transport
 defaultDelayTime : 0
 border : nowrapped
@@ -61,6 +75,9 @@ neighbors : campo(1,-1)   campo(1,0)   campo(1,1)
 initialvalue : -0.5
 initialCellsvalue : val-ej5x5.val
 %initialCellsvalue : 153/agro.val
+%initialCellsvalue : pergamino2020/agro.val
+%initialCellsvalue :  pergamino2020/agro25x25.val
+
 
 % variables
 % cam cantidad de campañas procesadas
@@ -501,18 +518,38 @@ rule: {
 	}
 
 
+% 2 - Control UE y UA cumplido
+rule: { 
+		~ueo := (0,0)~ueo + 1;
+		#macro(SetEtapaUEOkEsperaVecinos)
+		~flag_paso := 3.1 ;
+		%~flag_cae := 3.1 ;
+	}
+	 0
+	{ 
+		(0,0)#macro(parametrosCalculados) 		and
+		(0,0)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente))) and
+		(0,0)~eme >  ((0,0)~ua_cota)  and		
+		((0,0)~camp_fullfil_economic_beh = 1)   and
+		((0,0)~camp_fullfil_enviromental_beh = 1)   
+	}	
+
+
 % 2 - Control UE cumplido
-%rule: { 
-%		~ueo := (0,0)~ueo + 1;
-%		#macro(SetEtapaUEOkEsperaVecinos)
-%		~flag_paso := 3.1 ;
-%		%~flag_cae := 3.1 ;
-%	}
-%	 0
-%	{ 
-%		(0,0)#macro(parametrosCalculados) 		and
-%		(0,0)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente)))
-%	}	
+rule: { 
+		~ueo := (0,0)~ueo + 1;
+		#macro(SetEtapaUEOkEsperaVecinos)
+		~flag_paso := 3.11 ;
+		%~flag_cae := 3.11 ;
+	}
+	 0
+	{ 
+		(0,0)#macro(parametrosCalculados) 		and
+		(0,0)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente))) and
+		((0,0)~camp_fullfil_economic_beh = 1)   and
+		((0,0)~camp_fullfil_enviromental_beh = 0)   
+	}	
+
 
 % 2a - Control UA cumplida
 rule: { 
@@ -523,8 +560,26 @@ rule: {
 	 0
 	{ 
 		(0,0)#macro(parametrosCalculados) 		and
-		(0,0)~eme >  ((0,0)~ua_cota) 
+		(0,0)~eme >  ((0,0)~ua_cota)  			and
+		((0,0)~camp_fullfil_economic_beh = 0 )   and
+		((0,0)~camp_fullfil_enviromental_beh = 1)   			
 	}	
+	
+% no tiene activado ningun flag, nunca copia.	
+	rule: { 
+		%~ueo := (0,0)~ueo + 1;
+		#macro(SetEtapaUEOkEsperaVecinos)
+		~flag_paso := 3.13 ;
+	}
+	 0
+	{ 
+		(0,0)#macro(parametrosCalculados) 		and
+		((0,0)~camp_fullfil_economic_beh = 0  or isUndefined((0,0)~camp_fullfil_economic_beh) )   and
+		((0,0)~camp_fullfil_enviromental_beh = 0 or isUndefined((0,0)~camp_fullfil_enviromental_beh ) )   			
+	}	
+	
+
+	
 	
 	
 %------------------------------------------------------------------	
@@ -1723,7 +1778,50 @@ rule: {
 		~lu1 		:= 	(0,0)~lu1;
 		~lu2 		:= 	(0,0)~lu2;
 		~lu3 		:= 	(0,0)~lu3;
-		~ue_cota	:= 	(0,0)~ue_cota;
+		%~ue_cota	:= 	(0,0)~ue_cota;
+		~ue_cota	:= 	if ($aju = 0, (0,0)~ue_cota, 0) +
+						if ($aju = 1, 
+							if (((0.45 * ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente)))) + (0.55 * (0,0)~pro)) > 0, (0.45 * ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente)))) + (0.55 * (0,0)~pro), 0), 
+							0) +
+						if ($aju = 2, 
+							if (((0.55 * ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente)))) + (0.45 * (0,0)~pro)) > 0, (0.55 * ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente)))) + (0.45 * (0,0)~pro), 0), 
+							0) +
+						if ($aju = 3, 
+							if ((($cue_cota + ($cue_cota * #macro(ajuste_ambiente))) + 
+								(
+									($cue_cota + ($cue_cota * #macro(ajuste_ambiente))) * 
+									(
+										if (#macro(hay_MGM_adaptativo) = 1, 
+											if ((0,0)~pro > #macro(wc_maximo_mgm_3), 
+												#macro(ajuste_entorno_mgm_3), 
+												if ((0,0)~pro > #macro(wc_maximo_mgm_2), 
+													#macro(ajuste_entorno_mgm_2), 
+													#macro(ajuste_entorno_mgm_1)
+												)
+											),
+											#macro(ajuste_entorno)
+										)									
+									)
+								) > 0), 
+								($cue_cota + ($cue_cota * #macro(ajuste_ambiente))) + 
+								(
+									($cue_cota + ($cue_cota * #macro(ajuste_ambiente))) * 
+									( 	
+										if (#macro(hay_MGM_adaptativo) = 1, 
+											if ((0,0)~pro > #macro(wc_maximo_mgm_3), 
+												#macro(ajuste_entorno_mgm_3), 
+												if ((0,0)~pro > #macro(wc_maximo_mgm_2), 
+													#macro(ajuste_entorno_mgm_2), 
+													#macro(ajuste_entorno_mgm_1)
+												)
+											),
+											#macro(ajuste_entorno)
+										)									
+									)
+								), 
+								0),
+							0);
+		
 		%~mgm 		:= 	(0,0)~mgm;
 		~mgm 		:= 	if (#macro(hay_MGM_adaptativo) = 1, 
 			if ((0,0)~pro > #macro(wc_maximo_mgm_3), 
