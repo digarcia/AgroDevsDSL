@@ -9,7 +9,7 @@
 
 #include(pergamino2020/parametros.inc)
 #include(pergamino2020/tablas.inc)
-
+%#include(pergamino2020/tablaremake.inc)
 
 %inicializacion
 %#include(153/NewModelComp1.inc)
@@ -23,20 +23,38 @@
 %#include(escenarios/inicializacion-modifica-LU-vecinos-clima-x-TS.inc)
 %#include(escenarios/inicializacion-modifica-TL-clima-5.inc)
 %#include(escenarios/inicializacion-modifica-TL-precio-aumenta.inc)
-%#include(pergamino2020/inicializacionModeloDaniela.inc)
+#include(pergamino2020/inicializacionModeloDaniela.inc)
 %#include(pergamino2020/inicializacion-Ejemplo-5x5.inc)
 %#include(pergamino2020/inicializacionPergamino2020CopiaEcyAmb.inc)
 
 
 %#include(pergamino2020/inicializacionPergamino2020PropietariosEcoyAmb_RestoEc.inc)
 %#include(pergamino2020/inicializacionPergamino2020Ec_CambioLUClimatexCrop0.inc)
-#include(pergamino2020/inicializacionPergamino2020Ec_CambioLUandTLClimatexCrop0.inc)
+%#include(pergamino2020/inicializacionPergamino2020Ec_CambioLUandTLClimatexCrop0.inc)
 %#include(pergamino2020/inicializacionPergamino2020IncEc_PropEcAmb_CambioLUandTLClimatexCrop0.inc)
 
 
 %#include(pergamino2020/inicializacionPergamino2020Ec_TLClimate.inc)
 
+%#include(pergamino2020/inicializacionPergamino2020SoloAmb.inc)
+%#include(pergamino2020/inicializacionPergamino2020ClimatexLUxcrop1.inc)
 
+%#include(pergamino2020/inicializacionPergamino2020propAmbClimatexLUxcrop1.inc)
+
+%#include(pergamino2020/inicializacionPergamino2020pruebainidesdeexcel.inc)
+%#include(pergamino2020/inicializacionPergamino2020pruebainiEXCELecoamb.inc)
+
+%#include(pergamino2020/R32.inc)
+%#include(pergamino2020/R24.inc)
+%#include(pergamino2020/R2.inc)
+%#include(pergamino2020/R12.inc)
+%#include(pergamino2020/R080.inc)
+
+%#include(pergamino2020/OT10.inc)
+%#include(pergamino2020/OT30.inc)
+%#include(pergamino2020/OT50.inc)
+%#include(pergamino2020/OT70.inc)
+%#include(pergamino2020/OT90.inc)
 
 
 
