@@ -23,7 +23,9 @@
 %#include(escenarios/inicializacion-modifica-LU-vecinos-clima-x-TS.inc)
 %#include(escenarios/inicializacion-modifica-TL-clima-5.inc)
 %#include(escenarios/inicializacion-modifica-TL-precio-aumenta.inc)
-#include(pergamino2020/inicializacionModeloDaniela.inc)
+%#include(pergamino2020/inicializacionModeloDaniela.inc)
+#include(pergamino2020/inicializacionModeloDaniela5x5.inc)
+
 %#include(pergamino2020/inicializacion-Ejemplo-5x5.inc)
 %#include(pergamino2020/inicializacionPergamino2020CopiaEcyAmb.inc)
 
@@ -94,9 +96,9 @@ link: out@curr_lu4_price  in_curr_lu4_price@campo
 
 [campo]
 type : cell 
-%dim : (5, 5)
+dim : (5, 5)
 %dim : (10, 10)
-dim : (25, 25)
+%dim : (25, 25)
 delay : transport
 defaultDelayTime : 0
 border : nowrapped
@@ -109,8 +111,8 @@ neighbors : campo(1,-1)   campo(1,0)   campo(1,1)
 initialvalue : -0.5
 %initialCellsvalue : val-ej5x5.val
 %initialCellsvalue : 153/agro.val
-%initialCellsvalue : pergamino2020/agro.val
-initialCellsvalue :  pergamino2020/agro25x25.val
+initialCellsvalue : pergamino2020/agro5x5.val
+%initialCellsvalue :  pergamino2020/agro25x25.val
 
 
 % variables
@@ -124,10 +126,10 @@ initialCellsvalue :  pergamino2020/agro25x25.val
 % clu3 valor a copiar en lu3
 % cue_cota valor a copiar en ue_cota
 % cmgm valor a copiar en mgm
-StateVariables: cam sum_deg clu aju clu1 clu2 clu3 cue_cota cmgm  copia_ae cae_aju cae_lu1 cae_lu2 cae_lu3 cae_ue_cota cae_mgm copia_a ca_aju ca_lu1 ca_lu2 ca_lu3 ca_ue_cota ca_mgm 
-StateValues: 0 0 0 0 ? ? ? ? ?  ? ? ? ? ? ? ?  ? ? ? ? ? ? ?
+StateVariables: cam sum_deg clu aju clu1 clu2 clu3 cue_cota cmgm  copia_ae cae_aju cae_lu1 cae_lu2 cae_lu3 cae_ue_cota cae_mgm copia_a ca_aju ca_lu1 ca_lu2 ca_lu3 ca_ue_cota ca_mgm  	cae_camp_fullfil_economic_beh cae_camp_fullfil_enviromental_beh	cae_plu_adj cae_wlu_adj cae_wlu_adj_cro	cae_ptl_adj cae_wtl_adj		c_camp_fullfil_economic_beh c_camp_fullfil_enviromental_beh c_plu_adj  c_wlu_adj c_wlu_adj_cro c_ptl_adj  c_wtl_adj  ca_camp_fullfil_economic_beh ca_camp_fullfil_enviromental_beh ca_plu_adj  ca_wlu_adj ca_wlu_adj_cro ca_ptl_adj ca_wtl_adj 
+StateValues: 0 0 0 0 ? ? ? ? ?  ? ? ? ? ? ? ?  ? ? ? ? ? ? ?     ? ? ? ? ? ? ?    ? ? ? ? ? ? ?    ? ? ? ? ? ? ?   
 
-
+					
 				
 
 % puertos
@@ -156,7 +158,7 @@ in : in_ambiente in_curr_lu1_price in_curr_lu2_price in_curr_lu4_price
 % wlu_adj weather land use adjustment
 % wlu_adj_cro weather land use adjustment crops
 
-neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price lu_total   plu_adj wlu_adj wlu_adj_cro  roi rue_cota ptl_adj wtl_adj
+neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price lu_total   plu_adj wlu_adj wlu_adj_cro  roi rue_cota ptl_adj wtl_adj initial_corner_cell cont_failed_campaign cont_succesfull_campaign
 
 
 
@@ -174,6 +176,23 @@ portInTransition : curr_lu2_price@campo(0,0) setPrecioLu2
 portInTransition : curr_lu4_price@campo(0,0) setPrecioLu4
 
 [cell-rule]
+
+
+% Copia de previous price para la celda (0,0)
+rule: { 
+		%saves previous price
+		~prev_lu1_price  := (0,0)~curr_lu1_price;
+		~prev_lu2_price  := (0,0)~curr_lu2_price;
+		~prev_lu4_price  := (0,0)~curr_lu4_price;
+		~flag_cae := 1.99 ;
+	}
+	0
+	{
+	(0,0)#macro(inicio) 	
+	and (0,0)~initial_corner_cell = 1 
+	}
+	
+
 % Propagacion Ambiente y precios
 rule: { 
 		~amb 	:= (0,-1)~amb; 
@@ -198,7 +217,8 @@ rule: {
 		(0,0)#macro(inicio) 	and
 		(not isUndefined((0,-1)~amb)) 	and
 		(0,-1)#macro(ambienteRecibido)	and
-		(0,0)~amb	 	!= (0,-1)~amb
+		(0,0)~amb	 	!= (0,-1)~amb   
+		%and 1 != 1
 	}
 
 rule: { 
@@ -224,9 +244,12 @@ rule: {
 		(0,0)#macro(inicio) 			and
 		(not isUndefined((-1,0)~amb)) 	and
 		(-1,0)#macro(ambienteRecibido)	and
-		(0,0)~amb 	!= (-1,0)~amb 
+		(0,0)~amb 	!= (-1,0)~amb		
+		%and 1 != 1
 	}
 
+	
+	
 % Variacion de LandUse por precio
 rule: { 
 	%(lu_nueva_precio-lu_orig_precio)/(lu_orig_precio)		
@@ -328,7 +351,7 @@ rule: {
 		%No hace ajuste land use por precio
 		#macro(SetAjusteLandUsePrice)
 		~flag_paso := 1.12;	
-		~flag_cae  := (0,0)~plu_adj ;
+		%~flag_cae  := (0,0)~plu_adj ;
 	}
 	 0
 	{ 
@@ -521,6 +544,7 @@ rule: {
 					(((0,0)~lu2/ 100) * ((#macro(rinde_lu2) * #macro(precio_lu2)) - #macro(costo_lu2))) + 
 					(((0,0)~lu3/ 100) * (((#macro(rinde_lu4) * #macro(precio_lu4)) + (#macro(rinde_lu5) * #macro(precio_lu2))) - #macro(costo_lu3))) -
 					((0,0)~alq * (#macro(precio_lu2)));
+					
 		~eme 	:=  (((0,0)~lu1/ 100) * #macro(emergia_lu1)) + 
 					(((0,0)~lu2/ 100) * #macro(emergia_lu2)) + 
 					(((0,0)~lu3/ 100) * #macro(emergia_lu3));
@@ -555,6 +579,12 @@ rule: {
 % 2 - Control UE y UA cumplido
 rule: { 
 		~ueo := (0,0)~ueo + 1;
+		
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:=  0;
+		~cont_succesfull_campaign	:=  (0,0)~cont_succesfull_campaign + 1;	
+		
+		
 		#macro(SetEtapaUEOkEsperaVecinos)
 		~flag_paso := 3.1 ;
 		%~flag_cae := 3.1 ;
@@ -572,6 +602,11 @@ rule: {
 % 2 - Control UE cumplido
 rule: { 
 		~ueo := (0,0)~ueo + 1;
+		
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:=  0;
+		~cont_succesfull_campaign	:=  (0,0)~cont_succesfull_campaign + 1;			
+		
 		#macro(SetEtapaUEOkEsperaVecinos)
 		~flag_paso := 3.11 ;
 		%~flag_cae := 3.11 ;
@@ -587,7 +622,14 @@ rule: {
 
 % 2a - Control UA cumplida
 rule: { 
+		% correcto no contar ueo ya que cumplio solo el ambiental.
 		%~ueo := (0,0)~ueo + 1;
+		
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:=  0;
+		~cont_succesfull_campaign	:=  (0,0)~cont_succesfull_campaign + 1;			
+		
+		
 		#macro(SetEtapaUEOkEsperaVecinos)
 		~flag_paso := 3.12 ;
 	}
@@ -623,6 +665,12 @@ rule: {
 	
 % 4.3 - Copia vecinos economico y ambiental	
 rule: { 
+
+
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+		
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.31 ;
@@ -637,6 +685,14 @@ rule: {
 		$cae_lu3	 	:= (-1,0)~lu3;
 		$cae_ue_cota 	:= (-1,0)~ue_cota;
 		$cae_mgm 		:= (-1,0)~mgm;
+		
+		$cae_camp_fullfil_economic_beh 					:= (-1,0)~camp_fullfil_economic_beh ;
+		$cae_camp_fullfil_enviromental_beh				:= (-1,0)~camp_fullfil_enviromental_beh ;
+		$cae_plu_adj 									:= (-1,0)~plu_adj ;
+		$cae_wlu_adj									:= (-1,0)~wlu_adj ;
+		$cae_wlu_adj_cro								:= (-1,0)~wlu_adj_cro ;
+		$cae_ptl_adj 									:= (-1,0)~ptl_adj ;
+		$cae_wtl_adj									:= (-1,0)~wtl_adj ;		
 	}
 	 0
 	{ 
@@ -668,6 +724,11 @@ rule: {
 	}
 
 rule: { 
+
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.32 ;
@@ -680,6 +741,15 @@ rule: {
 		$cae_lu3	 	:= (-1,1)~lu3;
 		$cae_ue_cota 	:= (-1,1)~ue_cota;
 		$cae_mgm 		:= (-1,1)~mgm;
+		
+		$cae_camp_fullfil_economic_beh 					:= (-1,1)~camp_fullfil_economic_beh ;
+		$cae_camp_fullfil_enviromental_beh				:= (-1,1)~camp_fullfil_enviromental_beh ;
+		$cae_plu_adj 									:= (-1,1)~plu_adj ;
+		$cae_wlu_adj									:= (-1,1)~wlu_adj ;
+		$cae_wlu_adj_cro								:= (-1,1)~wlu_adj_cro ;
+		$cae_ptl_adj 									:= (-1,1)~ptl_adj ;
+		$cae_wtl_adj									:= (-1,1)~wtl_adj ;				
+		
 	}
 		0
 	{ 		
@@ -711,6 +781,11 @@ rule: {
 	}
 
 rule: { 
+
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.33 ;
@@ -723,6 +798,15 @@ rule: {
 		$cae_lu3	 	:= (0,1)~lu3;
 		$cae_ue_cota 	:= (0,1)~ue_cota;
 		$cae_mgm 		:= (0,1)~mgm;
+		
+		$cae_camp_fullfil_economic_beh 					:= (0,1)~camp_fullfil_economic_beh ;
+		$cae_camp_fullfil_enviromental_beh				:= (0,1)~camp_fullfil_enviromental_beh ;
+		$cae_plu_adj 									:= (0,1)~plu_adj ;
+		$cae_wlu_adj									:= (0,1)~wlu_adj ;
+		$cae_wlu_adj_cro								:= (0,1)~wlu_adj_cro ;
+		$cae_ptl_adj 									:= (0,1)~ptl_adj ;
+		$cae_wtl_adj									:= (0,1)~wtl_adj ;	
+		
 	}
 	 0
 	{ 
@@ -756,6 +840,11 @@ rule: {
 	}
 
 rule: { 
+
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.34 ;
@@ -768,6 +857,15 @@ rule: {
 		$cae_lu3	 	:= (1,1)~lu3;
 		$cae_ue_cota 	:= (1,1)~ue_cota;
 		$cae_mgm 		:= (1,1)~mgm;		
+		
+		$cae_camp_fullfil_economic_beh 					:= (1,1)~camp_fullfil_economic_beh ;
+		$cae_camp_fullfil_enviromental_beh				:= (1,1)~camp_fullfil_enviromental_beh ;
+		$cae_plu_adj 									:= (1,1)~plu_adj ;
+		$cae_wlu_adj									:= (1,1)~wlu_adj ;
+		$cae_wlu_adj_cro								:= (1,1)~wlu_adj_cro ;
+		$cae_ptl_adj 									:= (1,1)~ptl_adj ;
+		$cae_wtl_adj									:= (1,1)~wtl_adj ;	
+		
 	}
 	 0
 	{ 
@@ -800,6 +898,11 @@ rule: {
 	}
 
 rule: { 
+
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.35 ;
@@ -812,6 +915,14 @@ rule: {
 		$cae_lu3	 	:= (1,0)~lu3;
 		$cae_ue_cota 	:= (1,0)~ue_cota;
 		$cae_mgm 		:= (1,0)~mgm;			
+		
+		$cae_camp_fullfil_economic_beh 					:= (1,0)~camp_fullfil_economic_beh ;
+		$cae_camp_fullfil_enviromental_beh				:= (1,0)~camp_fullfil_enviromental_beh ;
+		$cae_plu_adj 									:= (1,0)~plu_adj ;
+		$cae_wlu_adj									:= (1,0)~wlu_adj ;
+		$cae_wlu_adj_cro								:= (1,0)~wlu_adj_cro ;
+		$cae_ptl_adj 									:= (1,0)~ptl_adj ;
+		$cae_wtl_adj									:= (1,0)~wtl_adj ;	
 	}
 	 0
 	{ 
@@ -844,6 +955,11 @@ rule: {
 	}
 
 rule: { 
+
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.36 ;
@@ -857,6 +973,14 @@ rule: {
 		$cae_ue_cota 	:= (1,-1)~ue_cota;
 		$cae_mgm 		:= (1,-1)~mgm;			
 		
+		$cae_camp_fullfil_economic_beh 					:= (1,-1)~camp_fullfil_economic_beh ;
+		$cae_camp_fullfil_enviromental_beh				:= (1,-1)~camp_fullfil_enviromental_beh ;
+		$cae_plu_adj 									:= (1,-1)~plu_adj ;
+		$cae_wlu_adj									:= (1,-1)~wlu_adj ;
+		$cae_wlu_adj_cro								:= (1,-1)~wlu_adj_cro ;
+		$cae_ptl_adj 									:= (1,-1)~ptl_adj ;
+		$cae_wtl_adj									:= (1,-1)~wtl_adj ;	
+				
 	}
 	 0
 	{ 
@@ -889,6 +1013,11 @@ rule: {
 	}
 
 rule: { 
+
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.37 ;
@@ -901,6 +1030,15 @@ rule: {
 		$cae_lu3	 	:= (0,-1)~lu3;
 		$cae_ue_cota 	:= (0,-1)~ue_cota;
 		$cae_mgm 		:= (0,-1)~mgm;		
+		
+		$cae_camp_fullfil_economic_beh 					:= (0,-1)~camp_fullfil_economic_beh ;
+		$cae_camp_fullfil_enviromental_beh				:= (0,-1)~camp_fullfil_enviromental_beh ;
+		$cae_plu_adj 									:= (0,-1)~plu_adj ;
+		$cae_wlu_adj									:= (0,-1)~wlu_adj ;
+		$cae_wlu_adj_cro								:= (0,-1)~wlu_adj_cro ;
+		$cae_ptl_adj 									:= (0,-1)~ptl_adj ;
+		$cae_wtl_adj									:= (0,-1)~wtl_adj ;			
+		
 	}
 	 0
 	{ 
@@ -932,6 +1070,11 @@ rule: {
 	}
 
 rule: { 
+
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.38 ;
@@ -944,6 +1087,15 @@ rule: {
 		$cae_lu3	 	:= (-1,-1)~lu3;
 		$cae_ue_cota 	:= (-1,-1)~ue_cota;
 		$cae_mgm 		:= (-1,-1)~mgm;	
+		
+		$cae_camp_fullfil_economic_beh 					:= (-1,-1)~camp_fullfil_economic_beh ;
+		$cae_camp_fullfil_enviromental_beh				:= (-1,-1)~camp_fullfil_enviromental_beh ;
+		$cae_plu_adj 									:= (-1,-1)~plu_adj ;
+		$cae_wlu_adj									:= (-1,-1)~wlu_adj ;
+		$cae_wlu_adj_cro								:= (-1,-1)~wlu_adj_cro ;
+		$cae_ptl_adj 									:= (-1,-1)~ptl_adj ;
+		$cae_wtl_adj									:= (-1,-1)~wtl_adj ;				
+		
 	}
 	 0
 	{ 
@@ -978,6 +1130,12 @@ rule: {
 
 % Ningun vecino cumple la condicion de mejor economico y ambiental
 rule: { 
+
+		% Este no suma contadores fallidos, ya que sigue evaluando.
+		% contadores campañas sucesivas exitosas o fallidas.
+		%~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		%~cont_succesfull_campaign	:=  0;	
+
 		#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		%#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.39 ;
@@ -1003,6 +1161,11 @@ rule: {
 % - Si da ue ok, no hace copia economica.
 rule: { 
 		~ueo := (0,0)~ueo + 1;
+		
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:=  0;
+		~cont_succesfull_campaign	:=  (0,0)~cont_succesfull_campaign + 1;		
+		
 		#macro(SetEtapaUEOkEsperaVecinos)
 		~flag_paso := 4.10 ;
 		%~flag_cae := 4.10 ;
@@ -1026,7 +1189,11 @@ rule: {
 % Prepara cmgmio %LU
 % Prepara adaptacion UE al contexto
 rule: { 
-		~uee 		:= (0,0)~uee + 1;						
+		~uee 		:= (0,0)~uee + 1;	
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		%#macro(SetEtapaCampFallidaCopiaEc)		
@@ -1040,6 +1207,16 @@ rule: {
 		$clu3	 	:= (-1,0)~lu3;
 		$cue_cota 	:= (-1,0)~ue_cota;
 		$cmgm 		:= (-1,0)~mgm;
+		
+		$c_camp_fullfil_economic_beh 				:= (-1,0)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (-1,0)~camp_fullfil_enviromental_beh ;
+		$c_plu_adj 									:= (-1,0)~plu_adj ;
+		$c_wlu_adj									:= (-1,0)~wlu_adj ;
+		$c_wlu_adj_cro								:= (-1,0)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (-1,0)~ptl_adj ;
+		$c_wtl_adj									:= (-1,0)~wtl_adj ;				
+		
+		
 	}
 	 0
 	{ 
@@ -1062,6 +1239,10 @@ rule: {
 
 rule: { 
 		~uee 		:= (0,0)~uee + 1;						
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		%#macro(SetEtapaCampFallidaCopiaEc)			
@@ -1075,6 +1256,16 @@ rule: {
 		$clu3	 	:= (-1,1)~lu3;
 		$cue_cota 	:= (-1,1)~ue_cota;
 		$cmgm 		:= (-1,1)~mgm;
+		
+		$c_camp_fullfil_economic_beh 				:= (-1,1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (-1,1)~camp_fullfil_enviromental_beh ;
+		$c_plu_adj 									:= (-1,1)~plu_adj ;
+		$c_wlu_adj									:= (-1,1)~wlu_adj ;
+		$c_wlu_adj_cro								:= (-1,1)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (-1,1)~ptl_adj ;
+		$c_wtl_adj									:= (-1,1)~wtl_adj ;				
+		
+		
 	}
 		0
 	{ 
@@ -1095,7 +1286,11 @@ rule: {
 	}
 
 rule: { 
-		~uee 		:= (0,0)~uee + 1;						
+		~uee 		:= (0,0)~uee + 1;		
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		%#macro(SetEtapaCampFallidaCopiaEc)			
@@ -1109,6 +1304,16 @@ rule: {
 		$clu3	 	:= (0,1)~lu3;
 		$cue_cota 	:= (0,1)~ue_cota;
 		$cmgm 		:= (0,1)~mgm;
+		
+		$c_camp_fullfil_economic_beh 				:= (0,1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (0,1)~camp_fullfil_enviromental_beh ;
+		$c_plu_adj 									:= (0,1)~plu_adj ;
+		$c_wlu_adj									:= (0,1)~wlu_adj ;
+		$c_wlu_adj_cro								:= (0,1)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (0,1)~ptl_adj ;
+		$c_wtl_adj									:= (0,1)~wtl_adj ;						
+		
+		
 	}
 	 0
 	{ 
@@ -1129,7 +1334,11 @@ rule: {
 	}
 
 rule: { 
-		~uee 		:= (0,0)~uee + 1;						
+		~uee 		:= (0,0)~uee + 1;			
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		%#macro(SetEtapaCampFallidaCopiaEc)			
@@ -1143,6 +1352,15 @@ rule: {
 		$clu3	 	:= (1,1)~lu3;
 		$cue_cota 	:= (1,1)~ue_cota;
 		$cmgm 		:= (1,1)~mgm;
+		
+		$c_camp_fullfil_economic_beh 				:= (1,1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (1,1)~camp_fullfil_enviromental_beh ;
+		$c_plu_adj 									:= (1,1)~plu_adj ;
+		$c_wlu_adj									:= (1,1)~wlu_adj ;
+		$c_wlu_adj_cro								:= (1,1)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (1,1)~ptl_adj ;
+		$c_wtl_adj									:= (1,1)~wtl_adj ;	
+		
 	}
 	 0
 	{ 
@@ -1163,7 +1381,11 @@ rule: {
 	}
 
 rule: { 
-		~uee 		:= (0,0)~uee + 1;						
+		~uee 		:= (0,0)~uee + 1;		
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		%#macro(SetEtapaCampFallidaCopiaEc)			
@@ -1177,6 +1399,15 @@ rule: {
 		$clu3	 	:= (1,0)~lu3;
 		$cue_cota 	:= (1,0)~ue_cota;
 		$cmgm 		:= (1,0)~mgm;
+		
+		$c_camp_fullfil_economic_beh 				:= (1,0)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (1,0)~camp_fullfil_enviromental_beh ;
+		$c_plu_adj 									:= (1,0)~plu_adj ;
+		$c_wlu_adj									:= (1,0)~wlu_adj ;
+		$c_wlu_adj_cro								:= (1,0)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (1,0)~ptl_adj ;
+		$c_wtl_adj									:= (1,0)~wtl_adj ;			
+		
 	}
 	 0
 	{ 
@@ -1197,7 +1428,12 @@ rule: {
 	}
 
 rule: { 
-		~uee 		:= (0,0)~uee + 1;						
+		~uee 		:= (0,0)~uee + 1;		
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+
+		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		%#macro(SetEtapaCampFallidaCopiaEc)			
@@ -1211,6 +1447,15 @@ rule: {
 		$clu3	 	:= (1,-1)~lu3;
 		$cue_cota 	:= (1,-1)~ue_cota;
 		$cmgm 		:= (1,-1)~mgm;
+
+		$c_camp_fullfil_economic_beh 				:= (1,-1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (1,-1)~camp_fullfil_enviromental_beh ;
+		$c_plu_adj 									:= (1,-1)~plu_adj ;
+		$c_wlu_adj									:= (1,-1)~wlu_adj ;
+		$c_wlu_adj_cro								:= (1,-1)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (1,-1)~ptl_adj ;
+		$c_wtl_adj									:= (1,-1)~wtl_adj ;					
+		
 	}
 	 0
 	{ 
@@ -1231,7 +1476,11 @@ rule: {
 	}
 
 rule: { 
-		~uee 		:= (0,0)~uee + 1;						
+		~uee 		:= (0,0)~uee + 1;					
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		%#macro(SetEtapaCampFallidaCopiaEc)	
@@ -1245,6 +1494,15 @@ rule: {
 		$clu3	 	:= (0,-1)~lu3;
 		$cue_cota 	:= (0,-1)~ue_cota;
 		$cmgm 		:= (0,-1)~mgm;
+		
+		$c_camp_fullfil_economic_beh 				:= (0,-1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (0,-1)~camp_fullfil_enviromental_beh ;
+		$c_plu_adj 									:= (0,-1)~plu_adj ;
+		$c_wlu_adj									:= (0,-1)~wlu_adj ;
+		$c_wlu_adj_cro								:= (0,-1)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (0,-1)~ptl_adj ;
+		$c_wtl_adj									:= (0,-1)~wtl_adj ;			
+		
 	}
 	 0
 	{ 
@@ -1265,7 +1523,11 @@ rule: {
 	}
 
 rule: { 
-		~uee 		:= (0,0)~uee + 1;						
+		~uee 		:= (0,0)~uee + 1;		
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
+		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		%#macro(SetEtapaCampFallidaCopiaEc)			
@@ -1279,6 +1541,14 @@ rule: {
 		$clu3	 	:= (-1,-1)~lu3;
 		$cue_cota 	:= (-1,-1)~ue_cota;
 		$cmgm 		:= (-1,-1)~mgm;
+		
+		$c_camp_fullfil_economic_beh 				:= (-1,-1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (-1,-1)~camp_fullfil_enviromental_beh ;
+		$c_plu_adj 									:= (-1,-1)~plu_adj ;
+		$c_wlu_adj									:= (-1,-1)~wlu_adj ;
+		$c_wlu_adj_cro								:= (-1,-1)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (-1,-1)~ptl_adj ;
+		$c_wtl_adj									:= (-1,-1)~wtl_adj ;				
 	}
 	 0
 	{ 
@@ -1301,7 +1571,13 @@ rule: {
 % Ningun vecino cumple la ME (cambia el productor)
 % Prepara adaptacion UE al resultado
 rule: { 
-		~uee 		:= (0,0)~uee + 1;						
+		~uee 						:= (0,0)~uee + 1;		
+		
+		
+		% si ningun vecino cumple a condicion economica y sigo comparando.
+		% contadores campañas sucesivas exitosas o fallidas.
+		%~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		%~cont_succesfull_campaign	:=  0;	
 		#macro(actualizaCantidadUADegrada)
 		%#macro(SetEtapaUEErrorEsperaVecinos)
 		#macro(SetEtapaCampFallidaCopiaEc)	
@@ -1323,6 +1599,11 @@ rule: {
 % 2a - Control UA cumplida, cuando fallo la copia economica
 % - Si da ua ok, no hace copia ambiental.
 rule: { 
+
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:=  0;
+		~cont_succesfull_campaign	:=  (0,0)~cont_succesfull_campaign + 1;	
+
 		%~ueo := (0,0)~ueo + 1;
 		#macro(SetEtapaUEOkEsperaVecinos)
 		~flag_paso := 4.20 ;
@@ -1344,6 +1625,9 @@ rule: {
 % ver despues cual es el modo correcto de hacer la copia en estos casos.
 
 rule: { 
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.21 ;
 	}
@@ -1355,6 +1639,15 @@ rule: {
 		$ca_lu3	 		:= (-1,0)~lu3;
 		$ca_ue_cota 	:= (-1,0)~ue_cota;
 		$cmgm 			:= (-1,0)~mgm;
+		
+		$ca_camp_fullfil_economic_beh 				:= (-1,0)~camp_fullfil_economic_beh ;
+		$ca_camp_fullfil_enviromental_beh			:= (-1,0)~camp_fullfil_enviromental_beh ;
+		$ca_plu_adj 								:= (-1,0)~plu_adj ;
+		$ca_wlu_adj									:= (-1,0)~wlu_adj ;
+		$ca_wlu_adj_cro								:= (-1,0)~wlu_adj_cro ;
+		$ca_ptl_adj 								:= (-1,0)~ptl_adj ;
+		$ca_wtl_adj									:= (-1,0)~wtl_adj ;			
+		
 	}
 	 0
 	{ 
@@ -1376,6 +1669,9 @@ rule: {
 	}
 
 rule: { 
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.22 ;
 	}
@@ -1387,6 +1683,15 @@ rule: {
 		$ca_lu3	 		:= (-1,1)~lu3;
 		$ca_ue_cota 	:= (-1,1)~ue_cota;
 		$cmgm	 		:= (-1,1)~mgm;
+		
+		$ca_camp_fullfil_economic_beh 				:= (-1,1)~camp_fullfil_economic_beh ;
+		$ca_camp_fullfil_enviromental_beh			:= (-1,1)~camp_fullfil_enviromental_beh ;
+		$ca_plu_adj 								:= (-1,1)~plu_adj ;
+		$ca_wlu_adj									:= (-1,1)~wlu_adj ;
+		$ca_wlu_adj_cro								:= (-1,1)~wlu_adj_cro ;
+		$ca_ptl_adj 								:= (-1,1)~ptl_adj ;
+		$ca_wtl_adj									:= (-1,1)~wtl_adj ;			
+		
 	}
 		0
 	{ 		
@@ -1407,6 +1712,9 @@ rule: {
 	}
 
 rule: { 
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.23 ;
 	}
@@ -1418,6 +1726,16 @@ rule: {
 		$ca_lu3	 		:= (0,1)~lu3;
 		$ca_ue_cota 	:= (0,1)~ue_cota;
 		$cmgm	 		:= (0,1)~mgm;
+		
+		$ca_camp_fullfil_economic_beh 				:= (0,1)~camp_fullfil_economic_beh ;
+		$ca_camp_fullfil_enviromental_beh			:= (0,1)~camp_fullfil_enviromental_beh ;
+		$ca_plu_adj 								:= (0,1)~plu_adj ;
+		$ca_wlu_adj									:= (0,1)~wlu_adj ;
+		$ca_wlu_adj_cro								:= (0,1)~wlu_adj_cro ;
+		$ca_ptl_adj 								:= (0,1)~ptl_adj ;
+		$ca_wtl_adj									:= (0,1)~wtl_adj ;	
+		
+		
 	}
 	 0
 	{ 
@@ -1439,6 +1757,9 @@ rule: {
 	}
 
 rule: { 
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.24 ;
 	}
@@ -1450,6 +1771,15 @@ rule: {
 		$ca_lu3	 		:= (1,1)~lu3;
 		$ca_ue_cota 	:= (1,1)~ue_cota;
 		$cmgm	 		:= (1,1)~mgm;		
+		
+		$ca_camp_fullfil_economic_beh 				:= (1,1)~camp_fullfil_economic_beh ;
+		$ca_camp_fullfil_enviromental_beh			:= (1,1)~camp_fullfil_enviromental_beh ;
+		$ca_plu_adj 								:= (1,1)~plu_adj ;
+		$ca_wlu_adj									:= (1,1)~wlu_adj ;
+		$ca_wlu_adj_cro								:= (1,1)~wlu_adj_cro ;
+		$ca_ptl_adj 								:= (1,1)~ptl_adj ;
+		$ca_wtl_adj									:= (1,1)~wtl_adj ;	
+		
 	}
 	 0
 	{ 
@@ -1470,6 +1800,9 @@ rule: {
 	}
 
 rule: { 
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.25 ;
 	}
@@ -1480,7 +1813,16 @@ rule: {
 		$ca_lu2 		:= (1,0)~lu2;
 		$ca_lu3	 		:= (1,0)~lu3;
 		$ca_ue_cota 	:= (1,0)~ue_cota;
-		$cmgm	 		:= (1,0)~mgm;			
+		$cmgm	 		:= (1,0)~mgm;		
+
+		$ca_camp_fullfil_economic_beh 				:= (1,0)~camp_fullfil_economic_beh ;
+		$ca_camp_fullfil_enviromental_beh			:= (1,0)~camp_fullfil_enviromental_beh ;
+		$ca_plu_adj 								:= (1,0)~plu_adj ;
+		$ca_wlu_adj									:= (1,0)~wlu_adj ;
+		$ca_wlu_adj_cro								:= (1,0)~wlu_adj_cro ;
+		$ca_ptl_adj 								:= (1,0)~ptl_adj ;
+		$ca_wtl_adj									:= (1,0)~wtl_adj ;	
+		
 	}
 	 0
 	{ 
@@ -1501,6 +1843,9 @@ rule: {
 	}
 
 rule: { 
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.26 ;
 	}
@@ -1512,6 +1857,15 @@ rule: {
 		$ca_lu3	 		:= (1,-1)~lu3;
 		$ca_ue_cota 	:= (1,-1)~ue_cota;
 		$cmgm	 		:= (1,-1)~mgm;			
+		
+		$ca_camp_fullfil_economic_beh 				:= (1,-1)~camp_fullfil_economic_beh ;
+		$ca_camp_fullfil_enviromental_beh			:= (1,-1)~camp_fullfil_enviromental_beh ;
+		$ca_plu_adj 								:= (1,-1)~plu_adj ;
+		$ca_wlu_adj									:= (1,-1)~wlu_adj ;
+		$ca_wlu_adj_cro								:= (1,-1)~wlu_adj_cro ;
+		$ca_ptl_adj 								:= (1,-1)~ptl_adj ;
+		$ca_wtl_adj									:= (1,-1)~wtl_adj ;			
+		
 		
 	}
 	 0
@@ -1534,6 +1888,9 @@ rule: {
 	}
 
 rule: { 
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.27 ;
 	}
@@ -1545,6 +1902,15 @@ rule: {
 		$ca_lu3	 		:= (0,-1)~lu3;
 		$ca_ue_cota 	:= (0,-1)~ue_cota;
 		$cmgm	 		:= (0,-1)~mgm;		
+		
+		$ca_camp_fullfil_economic_beh 				:= (0,-1)~camp_fullfil_economic_beh ;
+		$ca_camp_fullfil_enviromental_beh			:= (0,-1)~camp_fullfil_enviromental_beh ;
+		$ca_plu_adj 								:= (0,-1)~plu_adj ;
+		$ca_wlu_adj									:= (0,-1)~wlu_adj ;
+		$ca_wlu_adj_cro								:= (0,-1)~wlu_adj_cro ;
+		$ca_ptl_adj 								:= (0,-1)~ptl_adj ;
+		$ca_wtl_adj									:= (0,-1)~wtl_adj ;				
+		
 	}
 	 0
 	{ 
@@ -1566,6 +1932,9 @@ rule: {
 	}
 
 rule: { 
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.28 ;
 	}
@@ -1577,6 +1946,15 @@ rule: {
 		$ca_lu3	 		:= (-1,-1)~lu3;
 		$ca_ue_cota 	:= (-1,-1)~ue_cota;
 		$cmgm	 		:= (-1,-1)~mgm;	
+		
+		$ca_camp_fullfil_economic_beh 				:= (-1,-1)~camp_fullfil_economic_beh ;
+		$ca_camp_fullfil_enviromental_beh			:= (-1,-1)~camp_fullfil_enviromental_beh ;
+		$ca_plu_adj 								:= (-1,-1)~plu_adj ;
+		$ca_wlu_adj									:= (-1,-1)~wlu_adj ;
+		$ca_wlu_adj_cro								:= (-1,-1)~wlu_adj_cro ;
+		$ca_ptl_adj 								:= (-1,-1)~ptl_adj ;
+		$ca_wtl_adj									:= (-1,-1)~wtl_adj ;					
+		
 	}
 	 0
 	{ 
@@ -1599,6 +1977,9 @@ rule: {
 
 % Ningun vecino cumple la condicion de mejor ambiental
 rule: { 
+		% contadores campañas sucesivas exitosas o fallidas.
+		~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
+		~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.29 ;
 	}
@@ -1657,6 +2038,10 @@ rule: {
 % 3 - Control UA cumplido
 % Prepara adaptacion UE al resultado
 rule: { 
+
+		% contadores campañas sucesivas exitosas o fallidas.
+		% no hace falta en este step ya se hizo en el momento de la copia
+
 		~uao 		:=  (0,0)~uao + 1;
 		#macro(SetEtapaProcesamiento)
 		%~flag_paso := 6.2 ;
@@ -1687,6 +2072,11 @@ rule: {
 % 4 - Control MA No cumplida (Calculo degradacion)
 % Prepara adaptacion UE al resultado
 rule: { 
+
+
+		% contadores campañas sucesivas exitosas o fallidas.
+		% no hace falta en este step ya se hizo en el momento de la copia
+
 		~deg 		:=  (((0,0)~eme - (0,0)~ua_cota) / (0,0)~ua_cota) * 100;
 		~uae 		:=  (0,0)~uae + 1;		
 		#macro(SetEtapaProcesamiento)
@@ -1941,7 +2331,7 @@ rule: {
 		%									#macro(ajuste_entorno)
 		%								);	
 										
-		~flag_cae :=	($ca_ue_cota  + ($ca_ue_cota  * #macro(ajuste_ambiente)));
+		%~flag_cae :=	($ca_ue_cota  + ($ca_ue_cota  * #macro(ajuste_ambiente)));
 		
 		
 		#macro(SetEtapaFinal)
@@ -2138,6 +2528,7 @@ rule : {
 		~amb 	:= portValue(thisPort);
 		~flag_cae := 0.9;	
 		~flag_value := $cam;
+		~initial_corner_cell := 1;
 		#macro(SetEtapaAmbienteRecibido)
 
 	}
