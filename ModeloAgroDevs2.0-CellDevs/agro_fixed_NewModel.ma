@@ -552,17 +552,6 @@ rule: {
 		~flag_paso := 2.1 ;
 		%~flag_cae := 2.1;	
 		%~flag_cae := (0,0)~lu1;
-		
-		%~flag_cae := (0,0)~flag_cae+1000;
-		
-		% contadores campañas sucesivas exitosas o fallidas.
-		
-		%if ( (0,0)~pro > ((0,0)~ue_cota + ((0,0)~ue_cota * #macro(ajuste_ambiente))) )
-		%if ((0,0)~eme >  ((0,0)~ua_cota) )		
-		
-		%~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		%~cont_succesfull_campaign	:=  0;	
-		
 
 	}
 		0
@@ -699,11 +688,6 @@ rule: {
 	
 % 4.3 - Copia vecinos economico y ambiental	
 rule: { 
-
-
-		% contadores campañas sucesivas exitosas o fallidas.
-		%~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		%~cont_succesfull_campaign	:=  0;	
 		
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
@@ -759,10 +743,6 @@ rule: {
 
 rule: { 
 
-		% contadores campañas sucesivas exitosas o fallidas.
-		%~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		%~cont_succesfull_campaign	:=  0;	
-
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.32 ;
@@ -815,10 +795,6 @@ rule: {
 	}
 
 rule: { 
-
-		% contadores campañas sucesivas exitosas o fallidas.
-		%~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		%~cont_succesfull_campaign	:=  0;	
 
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
@@ -875,10 +851,6 @@ rule: {
 
 rule: { 
 
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
-
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.34 ;
@@ -933,10 +905,6 @@ rule: {
 
 rule: { 
 
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
-
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.35 ;
@@ -989,10 +957,6 @@ rule: {
 	}
 
 rule: { 
-
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
@@ -1048,10 +1012,6 @@ rule: {
 
 rule: { 
 
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
-
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.37 ;
@@ -1104,10 +1064,6 @@ rule: {
 	}
 
 rule: { 
-
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 
 		%#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		#macro(SetEtapaUEErrorEsperaVecinos)
@@ -1166,9 +1122,6 @@ rule: {
 rule: { 
 
 		% Este no suma contadores fallidos, ya que sigue evaluando.
-		% contadores campañas sucesivas exitosas o fallidas.
-		%~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		%~cont_succesfull_campaign	:=  0;	
 
 		#macro(SetEtapaCampFallidaCopiaEcYAmb)
 		%#macro(SetEtapaUEErrorEsperaVecinos)
@@ -1196,10 +1149,6 @@ rule: {
 rule: { 
 		~ueo := (0,0)~ueo + 1;
 		
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:=  0;
-		% ~cont_succesfull_campaign	:=  (0,0)~cont_succesfull_campaign + 1;		
-		
 		#macro(SetEtapaUEOkEsperaVecinos)
 		~flag_paso := 4.10 ;
 		%~flag_cae := 4.10 ;
@@ -1224,9 +1173,6 @@ rule: {
 % Prepara adaptacion UE al contexto
 rule: { 
 		~uee 		:= (0,0)~uee + 1;	
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
@@ -1273,9 +1219,6 @@ rule: {
 
 rule: { 
 		~uee 		:= (0,0)~uee + 1;						
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
@@ -1321,9 +1264,6 @@ rule: {
 
 rule: { 
 		~uee 		:= (0,0)~uee + 1;		
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
@@ -1369,9 +1309,6 @@ rule: {
 
 rule: { 
 		~uee 		:= (0,0)~uee + 1;			
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
@@ -1416,9 +1353,6 @@ rule: {
 
 rule: { 
 		~uee 		:= (0,0)~uee + 1;		
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
@@ -1463,10 +1397,6 @@ rule: {
 
 rule: { 
 		~uee 		:= (0,0)~uee + 1;		
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
-
 		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
@@ -1511,9 +1441,6 @@ rule: {
 
 rule: { 
 		~uee 		:= (0,0)~uee + 1;					
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
@@ -1558,9 +1485,6 @@ rule: {
 
 rule: { 
 		~uee 		:= (0,0)~uee + 1;		
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 		
 		#macro(actualizaCantidadUADegrada)
 		#macro(SetEtapaUEErrorEsperaVecinos)
@@ -1609,9 +1533,6 @@ rule: {
 		
 		
 		% si ningun vecino cumple a condicion economica y sigo comparando.
-		% contadores campañas sucesivas exitosas o fallidas.
-		%~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		%~cont_succesfull_campaign	:=  0;	
 		#macro(actualizaCantidadUADegrada)
 		%#macro(SetEtapaUEErrorEsperaVecinos)
 		#macro(SetEtapaCampFallidaCopiaEc)	
@@ -1634,10 +1555,6 @@ rule: {
 % - Si da ua ok, no hace copia ambiental.
 rule: { 
 
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:=  0;
-		% ~cont_succesfull_campaign	:=  (0,0)~cont_succesfull_campaign + 1;	
-
 		%~ueo := (0,0)~ueo + 1;
 		#macro(SetEtapaUEOkEsperaVecinos)
 		~flag_paso := 4.20 ;
@@ -1659,9 +1576,6 @@ rule: {
 % ver despues cual es el modo correcto de hacer la copia en estos casos.
 
 rule: { 
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.21 ;
 	}
@@ -1703,9 +1617,6 @@ rule: {
 	}
 
 rule: { 
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.22 ;
 	}
@@ -1746,9 +1657,6 @@ rule: {
 	}
 
 rule: { 
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.23 ;
 	}
@@ -1791,9 +1699,6 @@ rule: {
 	}
 
 rule: { 
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.24 ;
 	}
@@ -1834,9 +1739,6 @@ rule: {
 	}
 
 rule: { 
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.25 ;
 	}
@@ -1877,9 +1779,7 @@ rule: {
 	}
 
 rule: { 
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
+
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.26 ;
 	}
@@ -1922,9 +1822,6 @@ rule: {
 	}
 
 rule: { 
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.27 ;
 	}
@@ -1966,9 +1863,6 @@ rule: {
 	}
 
 rule: { 
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.28 ;
 	}
@@ -2011,9 +1905,6 @@ rule: {
 
 % Ningun vecino cumple la condicion de mejor ambiental
 rule: { 
-		% contadores campañas sucesivas exitosas o fallidas.
-		% ~cont_failed_campaign		:= (0,0)~cont_failed_campaign + 1;
-		% ~cont_succesfull_campaign	:=  0;	
 		#macro(SetEtapaUEErrorEsperaVecinos)
 		~flag_paso := 4.29 ;
 	}
