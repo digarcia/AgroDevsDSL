@@ -52,6 +52,11 @@
 	~etapa = 2
 #EndMacro
 
+
+#BeginMacro(umbralesCalculados) 
+	~etapa = 2.1 
+#EndMacro
+
 #BeginMacro(UEOkEsperaVecinos) 
 	~etapa = 3
 #EndMacro
@@ -78,6 +83,10 @@
 
 #BeginMacro(Procesamiento) 
 	~etapa = 6
+#EndMacro
+
+#BeginMacro(Aprendizaje) 
+	~etapa = 6.1
 #EndMacro
 
 #BeginMacro(Final) 
@@ -115,6 +124,10 @@
 	~etapa	:= 2;
 #EndMacro
 
+#BeginMacro(SetEtapaUmbralesCalculados) 
+	~etapa	:= 2.1;
+#EndMacro
+
 #BeginMacro(SetEtapaUEOkEsperaVecinos) 
 	~etapa	:= 3;
 #EndMacro
@@ -141,6 +154,10 @@
 
 #BeginMacro(SetEtapaProcesamiento) 
 	~etapa	:= 6;
+#EndMacro
+
+#BeginMacro(SetEtapaAprendizaje) 
+	~etapa	:= 6.1;
 #EndMacro
 
 #BeginMacro(SetEtapaFinal) 
@@ -180,14 +197,14 @@
 #EndMacro
 
 #BeginMacro(vecinosUeControlado) 
-	(isUndefined((-1,0)~etapa) 	or (-1,0)~etapa > 2) 	and
-	(isUndefined((-1,1)~etapa) 	or (-1,1)~etapa > 2) 	and
-	(isUndefined((0,1)~etapa) 	or (0,1)~etapa > 2) 	and
-	(isUndefined((1,1)~etapa) 	or (1,1)~etapa > 2) 	and
-	(isUndefined((1,0)~etapa) 	or (1,0)~etapa > 2) 	and
-	(isUndefined((1,-1)~etapa) 	or (1,-1)~etapa > 2) 	and
-	(isUndefined((0,-1)~etapa) 	or (0,-1)~etapa > 2) 	and
-	(isUndefined((-1,-1)~etapa) or (-1,-1)~etapa > 2)
+	(isUndefined((-1,0)~etapa) 	or (-1,0)~etapa > 2.1) 	and
+	(isUndefined((-1,1)~etapa) 	or (-1,1)~etapa > 2.1) 	and
+	(isUndefined((0,1)~etapa) 	or (0,1)~etapa > 2.1) 	and
+	(isUndefined((1,1)~etapa) 	or (1,1)~etapa > 2.1) 	and
+	(isUndefined((1,0)~etapa) 	or (1,0)~etapa > 2.1) 	and
+	(isUndefined((1,-1)~etapa) 	or (1,-1)~etapa > 2.1) 	and
+	(isUndefined((0,-1)~etapa) 	or (0,-1)~etapa > 2.1) 	and
+	(isUndefined((-1,-1)~etapa) or (-1,-1)~etapa > 2.1)
 #EndMacro
 
 #BeginMacro(vecinosProcesamiento) 
