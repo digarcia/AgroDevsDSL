@@ -712,11 +712,11 @@ rule: {
 		
 		$c_camp_fullfil_economic_beh 					:= (-1,0)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh				:= (-1,0)~camp_fullfil_enviromental_beh ;
-		$cae_plu_adj 									:= (-1,0)~plu_adj ;
-		$cae_wlu_adj									:= (-1,0)~wlu_adj ;
-		$cae_wlu_adj_cro								:= (-1,0)~wlu_adj_cro ;
-		$cae_ptl_adj 									:= (-1,0)~ptl_adj ;
-		$cae_wtl_adj									:= (-1,0)~wtl_adj ;		
+		$c_plu_adj 										:= (-1,0)~plu_adj ;
+		$c_wlu_adj										:= (-1,0)~wlu_adj ;
+		$c_wlu_adj_cro									:= (-1,0)~wlu_adj_cro ;
+		$c_ptl_adj 										:= (-1,0)~ptl_adj ;
+		$c_wtl_adj										:= (-1,0)~wtl_adj ;		
 		$c_cont_failed_campaign							:= (-1,0)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign						:= (-1,0)~cont_succesfull_campaign ;	
 	}
@@ -766,11 +766,11 @@ rule: {
 		
 		$c_camp_fullfil_economic_beh 					:= (-1,1)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh				:= (-1,1)~camp_fullfil_enviromental_beh ;
-		$cae_plu_adj 									:= (-1,1)~plu_adj ;
-		$cae_wlu_adj									:= (-1,1)~wlu_adj ;
-		$cae_wlu_adj_cro								:= (-1,1)~wlu_adj_cro ;
-		$cae_ptl_adj 									:= (-1,1)~ptl_adj ;
-		$cae_wtl_adj									:= (-1,1)~wtl_adj ;				
+		$c_plu_adj 										:= (-1,1)~plu_adj ;
+		$c_wlu_adj										:= (-1,1)~wlu_adj ;
+		$c_wlu_adj_cro									:= (-1,1)~wlu_adj_cro ;
+		$c_ptl_adj 										:= (-1,1)~ptl_adj ;
+		$c_wtl_adj										:= (-1,1)~wtl_adj ;				
 		$c_cont_failed_campaign							:= (-1,1)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign						:= (-1,1)~cont_succesfull_campaign ;			
 	}
@@ -820,11 +820,11 @@ rule: {
 		
 		$c_camp_fullfil_economic_beh 					:= (0,1)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh				:= (0,1)~camp_fullfil_enviromental_beh ;
-		$cae_plu_adj 									:= (0,1)~plu_adj ;
-		$cae_wlu_adj									:= (0,1)~wlu_adj ;
-		$cae_wlu_adj_cro								:= (0,1)~wlu_adj_cro ;
-		$cae_ptl_adj 									:= (0,1)~ptl_adj ;
-		$cae_wtl_adj									:= (0,1)~wtl_adj ;	
+		$c_plu_adj 										:= (0,1)~plu_adj ;
+		$c_wlu_adj										:= (0,1)~wlu_adj ;
+		$c_wlu_adj_cro									:= (0,1)~wlu_adj_cro ;
+		$c_ptl_adj 										:= (0,1)~ptl_adj ;
+		$c_wtl_adj										:= (0,1)~wtl_adj ;	
 		$c_cont_failed_campaign							:= (0,1)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign						:= (0,1)~cont_succesfull_campaign ;			
 		
@@ -877,11 +877,11 @@ rule: {
 		
 		$c_camp_fullfil_economic_beh 					:= (1,1)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh				:= (1,1)~camp_fullfil_enviromental_beh ;
-		$cae_plu_adj 									:= (1,1)~plu_adj ;
-		$cae_wlu_adj									:= (1,1)~wlu_adj ;
-		$cae_wlu_adj_cro								:= (1,1)~wlu_adj_cro ;
-		$cae_ptl_adj 									:= (1,1)~ptl_adj ;
-		$cae_wtl_adj									:= (1,1)~wtl_adj ;	
+		$c_plu_adj 										:= (1,1)~plu_adj ;
+		$c_wlu_adj										:= (1,1)~wlu_adj ;
+		$c_wlu_adj_cro									:= (1,1)~wlu_adj_cro ;
+		$c_ptl_adj 										:= (1,1)~ptl_adj ;
+		$c_wtl_adj										:= (1,1)~wtl_adj ;	
 		$c_cont_failed_campaign							:= (1,1)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign						:= (1,1)~cont_succesfull_campaign ;			
 		
@@ -933,11 +933,11 @@ rule: {
 		
 		$c_camp_fullfil_economic_beh 					:= (1,0)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh				:= (1,0)~camp_fullfil_enviromental_beh ;
-		$cae_plu_adj 									:= (1,0)~plu_adj ;
-		$cae_wlu_adj									:= (1,0)~wlu_adj ;
-		$cae_wlu_adj_cro								:= (1,0)~wlu_adj_cro ;
-		$cae_ptl_adj 									:= (1,0)~ptl_adj ;
-		$cae_wtl_adj									:= (1,0)~wtl_adj ;	
+		$c_plu_adj 										:= (1,0)~plu_adj ;
+		$c_wlu_adj										:= (1,0)~wlu_adj ;
+		$c_wlu_adj_cro									:= (1,0)~wlu_adj_cro ;
+		$c_ptl_adj 										:= (1,0)~ptl_adj ;
+		$c_wtl_adj										:= (1,0)~wtl_adj ;	
 		$c_cont_failed_campaign							:= (1,0)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign						:= (1,0)~cont_succesfull_campaign ;			
 	}
@@ -988,11 +988,11 @@ rule: {
 		
 		$c_camp_fullfil_economic_beh 					:= (1,-1)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh				:= (1,-1)~camp_fullfil_enviromental_beh ;
-		$cae_plu_adj 									:= (1,-1)~plu_adj ;
-		$cae_wlu_adj									:= (1,-1)~wlu_adj ;
-		$cae_wlu_adj_cro								:= (1,-1)~wlu_adj_cro ;
-		$cae_ptl_adj 									:= (1,-1)~ptl_adj ;
-		$cae_wtl_adj									:= (1,-1)~wtl_adj ;	
+		$c_plu_adj 										:= (1,-1)~plu_adj ;
+		$c_wlu_adj										:= (1,-1)~wlu_adj ;
+		$c_wlu_adj_cro									:= (1,-1)~wlu_adj_cro ;
+		$c_ptl_adj 										:= (1,-1)~ptl_adj ;
+		$c_wtl_adj										:= (1,-1)~wtl_adj ;	
 		$c_cont_failed_campaign							:= (1,-1)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign						:= (1,-1)~cont_succesfull_campaign ;			
 				
@@ -1044,11 +1044,11 @@ rule: {
 		
 		$c_camp_fullfil_economic_beh 					:= (0,-1)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh				:= (0,-1)~camp_fullfil_enviromental_beh ;
-		$cae_plu_adj 									:= (0,-1)~plu_adj ;
-		$cae_wlu_adj									:= (0,-1)~wlu_adj ;
-		$cae_wlu_adj_cro								:= (0,-1)~wlu_adj_cro ;
-		$cae_ptl_adj 									:= (0,-1)~ptl_adj ;
-		$cae_wtl_adj									:= (0,-1)~wtl_adj ;		
+		$c_plu_adj 										:= (0,-1)~plu_adj ;
+		$c_wlu_adj										:= (0,-1)~wlu_adj ;
+		$c_wlu_adj_cro									:= (0,-1)~wlu_adj_cro ;
+		$c_ptl_adj 										:= (0,-1)~ptl_adj ;
+		$c_wtl_adj										:= (0,-1)~wtl_adj ;		
 		$c_cont_failed_campaign							:= (0,-1)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign						:= (0,-1)~cont_succesfull_campaign ;			
 		
@@ -1099,11 +1099,11 @@ rule: {
 		
 		$c_camp_fullfil_economic_beh 					:= (-1,-1)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh				:= (-1,-1)~camp_fullfil_enviromental_beh ;
-		$cae_plu_adj 									:= (-1,-1)~plu_adj ;
-		$cae_wlu_adj									:= (-1,-1)~wlu_adj ;
-		$cae_wlu_adj_cro								:= (-1,-1)~wlu_adj_cro ;
-		$cae_ptl_adj 									:= (-1,-1)~ptl_adj ;
-		$cae_wtl_adj									:= (-1,-1)~wtl_adj ;	
+		$c_plu_adj 										:= (-1,-1)~plu_adj ;
+		$c_wlu_adj										:= (-1,-1)~wlu_adj ;
+		$c_wlu_adj_cro									:= (-1,-1)~wlu_adj_cro ;
+		$c_ptl_adj 										:= (-1,-1)~ptl_adj ;
+		$c_wtl_adj										:= (-1,-1)~wtl_adj ;	
 		$c_cont_failed_campaign							:= (-1,-1)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign						:= (-1,-1)~cont_succesfull_campaign ;			
 		
@@ -1626,11 +1626,11 @@ rule: {
 		
 		$c_camp_fullfil_economic_beh 				:= (-1,0)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh			:= (-1,0)~camp_fullfil_enviromental_beh ;
-		$ca_plu_adj 								:= (-1,0)~plu_adj ;
-		$ca_wlu_adj									:= (-1,0)~wlu_adj ;
-		$ca_wlu_adj_cro								:= (-1,0)~wlu_adj_cro ;
-		$ca_ptl_adj 								:= (-1,0)~ptl_adj ;
-		$ca_wtl_adj									:= (-1,0)~wtl_adj ;			
+		$c_plu_adj 									:= (-1,0)~plu_adj ;
+		$c_wlu_adj									:= (-1,0)~wlu_adj ;
+		$c_wlu_adj_cro								:= (-1,0)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (-1,0)~ptl_adj ;
+		$c_wtl_adj									:= (-1,0)~wtl_adj ;			
 		$c_cont_failed_campaign						:= (-1,0)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign					:= (-1,0)~cont_succesfull_campaign ;			
 		
@@ -1669,11 +1669,11 @@ rule: {
 		
 		$c_camp_fullfil_economic_beh 				:= (-1,1)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh			:= (-1,1)~camp_fullfil_enviromental_beh ;
-		$ca_plu_adj 								:= (-1,1)~plu_adj ;
-		$ca_wlu_adj									:= (-1,1)~wlu_adj ;
-		$ca_wlu_adj_cro								:= (-1,1)~wlu_adj_cro ;
-		$ca_ptl_adj 								:= (-1,1)~ptl_adj ;
-		$ca_wtl_adj									:= (-1,1)~wtl_adj ;		
+		$c_plu_adj 									:= (-1,1)~plu_adj ;
+		$c_wlu_adj									:= (-1,1)~wlu_adj ;
+		$c_wlu_adj_cro								:= (-1,1)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (-1,1)~ptl_adj ;
+		$c_wtl_adj									:= (-1,1)~wtl_adj ;		
 		$c_cont_failed_campaign						:= (-1,1)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign					:= (-1,1)~cont_succesfull_campaign ;			
 		
@@ -1711,11 +1711,11 @@ rule: {
 		
 		$c_camp_fullfil_economic_beh 				:= (0,1)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh			:= (0,1)~camp_fullfil_enviromental_beh ;
-		$ca_plu_adj 								:= (0,1)~plu_adj ;
-		$ca_wlu_adj									:= (0,1)~wlu_adj ;
-		$ca_wlu_adj_cro								:= (0,1)~wlu_adj_cro ;
-		$ca_ptl_adj 								:= (0,1)~ptl_adj ;
-		$ca_wtl_adj									:= (0,1)~wtl_adj ;	
+		$c_plu_adj 									:= (0,1)~plu_adj ;
+		$c_wlu_adj									:= (0,1)~wlu_adj ;
+		$c_wlu_adj_cro								:= (0,1)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (0,1)~ptl_adj ;
+		$c_wtl_adj									:= (0,1)~wtl_adj ;	
 		$c_cont_failed_campaign						:= (0,1)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign					:= (0,1)~cont_succesfull_campaign ;		
 		
@@ -1755,11 +1755,11 @@ rule: {
 		
 		$c_camp_fullfil_economic_beh 				:= (1,1)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh			:= (1,1)~camp_fullfil_enviromental_beh ;
-		$ca_plu_adj 								:= (1,1)~plu_adj ;
-		$ca_wlu_adj									:= (1,1)~wlu_adj ;
-		$ca_wlu_adj_cro								:= (1,1)~wlu_adj_cro ;
-		$ca_ptl_adj 								:= (1,1)~ptl_adj ;
-		$ca_wtl_adj									:= (1,1)~wtl_adj ;	
+		$c_plu_adj 									:= (1,1)~plu_adj ;
+		$c_wlu_adj									:= (1,1)~wlu_adj ;
+		$c_wlu_adj_cro								:= (1,1)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (1,1)~ptl_adj ;
+		$c_wtl_adj									:= (1,1)~wtl_adj ;	
 		$c_cont_failed_campaign						:= (1,1)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign					:= (1,1)~cont_succesfull_campaign ;		
 		
@@ -1797,11 +1797,11 @@ rule: {
 
 		$c_camp_fullfil_economic_beh 				:= (1,0)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh			:= (1,0)~camp_fullfil_enviromental_beh ;
-		$ca_plu_adj 								:= (1,0)~plu_adj ;
-		$ca_wlu_adj									:= (1,0)~wlu_adj ;
-		$ca_wlu_adj_cro								:= (1,0)~wlu_adj_cro ;
-		$ca_ptl_adj 								:= (1,0)~ptl_adj ;
-		$ca_wtl_adj									:= (1,0)~wtl_adj ;	
+		$c_plu_adj 									:= (1,0)~plu_adj ;
+		$c_wlu_adj									:= (1,0)~wlu_adj ;
+		$c_wlu_adj_cro								:= (1,0)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (1,0)~ptl_adj ;
+		$c_wtl_adj									:= (1,0)~wtl_adj ;	
 		$c_cont_failed_campaign						:= (1,0)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign					:= (1,0)~cont_succesfull_campaign ;		
 		
@@ -1840,11 +1840,11 @@ rule: {
 		
 		$c_camp_fullfil_economic_beh 				:= (1,-1)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh			:= (1,-1)~camp_fullfil_enviromental_beh ;
-		$ca_plu_adj 								:= (1,-1)~plu_adj ;
-		$ca_wlu_adj									:= (1,-1)~wlu_adj ;
-		$ca_wlu_adj_cro								:= (1,-1)~wlu_adj_cro ;
-		$ca_ptl_adj 								:= (1,-1)~ptl_adj ;
-		$ca_wtl_adj									:= (1,-1)~wtl_adj ;			
+		$c_plu_adj 									:= (1,-1)~plu_adj ;
+		$c_wlu_adj									:= (1,-1)~wlu_adj ;
+		$c_wlu_adj_cro								:= (1,-1)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (1,-1)~ptl_adj ;
+		$c_wtl_adj									:= (1,-1)~wtl_adj ;			
 		$c_cont_failed_campaign						:= (1,-1)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign					:= (1,-1)~cont_succesfull_campaign ;		
 		
@@ -1883,11 +1883,11 @@ rule: {
 		
 		$c_camp_fullfil_economic_beh 				:= (0,-1)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh			:= (0,-1)~camp_fullfil_enviromental_beh ;
-		$ca_plu_adj 								:= (0,-1)~plu_adj ;
-		$ca_wlu_adj									:= (0,-1)~wlu_adj ;
-		$ca_wlu_adj_cro								:= (0,-1)~wlu_adj_cro ;
-		$ca_ptl_adj 								:= (0,-1)~ptl_adj ;
-		$ca_wtl_adj									:= (0,-1)~wtl_adj ;		
+		$c_plu_adj 									:= (0,-1)~plu_adj ;
+		$c_wlu_adj									:= (0,-1)~wlu_adj ;
+		$c_wlu_adj_cro								:= (0,-1)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (0,-1)~ptl_adj ;
+		$c_wtl_adj									:= (0,-1)~wtl_adj ;		
 		$c_cont_failed_campaign						:= (0,-1)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign					:= (0,-1)~cont_succesfull_campaign ;		
 		
@@ -1926,11 +1926,11 @@ rule: {
 		
 		$c_camp_fullfil_economic_beh 				:= (-1,-1)~camp_fullfil_economic_beh ;
 		$c_camp_fullfil_enviromental_beh			:= (-1,-1)~camp_fullfil_enviromental_beh ;
-		$ca_plu_adj 								:= (-1,-1)~plu_adj ;
-		$ca_wlu_adj									:= (-1,-1)~wlu_adj ;
-		$ca_wlu_adj_cro								:= (-1,-1)~wlu_adj_cro ;
-		$ca_ptl_adj 								:= (-1,-1)~ptl_adj ;
-		$ca_wtl_adj									:= (-1,-1)~wtl_adj ;	
+		$c_plu_adj 									:= (-1,-1)~plu_adj ;
+		$c_wlu_adj									:= (-1,-1)~wlu_adj ;
+		$c_wlu_adj_cro								:= (-1,-1)~wlu_adj_cro ;
+		$c_ptl_adj 									:= (-1,-1)~ptl_adj ;
+		$c_wtl_adj									:= (-1,-1)~wtl_adj ;	
 		$c_cont_failed_campaign						:= (-1,-1)~cont_failed_campaign	 ;	
 		$c_cont_succesfull_campaign					:= (-1,-1)~cont_succesfull_campaign ;		
 		
@@ -2423,7 +2423,14 @@ rule: {
 		~camp_fullfil_enviromental_beh := if ( ((0,0)~cont_failed_campaign >=1 and $c_cont_succesfull_campaign >=1  and  (0,0)~copy_behaviour =1) , $c_camp_fullfil_enviromental_beh, (0,0)~camp_fullfil_enviromental_beh);
 		
 
+		~plu_adj 	 := if ( ((0,0)~cont_failed_campaign >=1  and $c_cont_succesfull_campaign >=1 and  (0,0)~copy_behaviour =1 ) , $c_plu_adj, 		(0,0)~plu_adj );
+		~wlu_adj 	 := if ( ((0,0)~cont_failed_campaign >=1  and $c_cont_succesfull_campaign >=1 and  (0,0)~copy_behaviour =1 ) , $c_wlu_adj, 		(0,0)~wlu_adj );
+		~wlu_adj_cro := if ( ((0,0)~cont_failed_campaign >=1  and $c_cont_succesfull_campaign >=1 and  (0,0)~copy_behaviour =1 ) , $c_wlu_adj_cro,(0,0)~wlu_adj_cro);
+		~ptl_adj 	 := if ( ((0,0)~cont_failed_campaign >=1  and $c_cont_succesfull_campaign >=1 and  (0,0)~copy_behaviour =1 ) , $c_ptl_adj, 		(0,0)~ptl_adj );
+		~wtl_adj	 := if ( ((0,0)~cont_failed_campaign >=1  and $c_cont_succesfull_campaign >=1 and  (0,0)~copy_behaviour =1 ) , $c_wtl_adj, 		(0,0)~wtl_adj );
+
 		
+
 		#macro(SetEtapaFinal)
 		~flag_paso := 8.1 ;
 		~flag_cae := if ( ((0,0)~cont_failed_campaign >=1  and $c_cont_succesfull_campaign >=1 and  (0,0)~copy_behaviour =1 ),81.1 , 81.0 );
