@@ -24,7 +24,11 @@
 %#include(escenarios/inicializacion-modifica-TL-clima-5.inc)
 %#include(escenarios/inicializacion-modifica-TL-precio-aumenta.inc)
 %#include(pergamino2020/inicializacionModeloDaniela.inc)
-#include(pergamino2020/inicializacionModeloDaniela5x5.inc)
+%#include(pergamino2020/inicializacionModeloDaniela5x5.inc)
+%#include(pergamino2020/inicializacionModeloDaniela_CopyBehaviour5x5.inc)
+#include(pergamino2020/inicializacionModeloDaniela_CopyBehaviouvrV2_5x5.inc)
+
+
 
 %#include(pergamino2020/inicializacion-Ejemplo-5x5.inc)
 %#include(pergamino2020/inicializacionPergamino2020CopiaEcyAmb.inc)
@@ -158,7 +162,9 @@ in : in_ambiente in_curr_lu1_price in_curr_lu2_price in_curr_lu4_price
 % wlu_adj weather land use adjustment
 % wlu_adj_cro weather land use adjustment crops
 
-neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price lu_total   plu_adj wlu_adj wlu_adj_cro  roi rue_cota ptl_adj wtl_adj initial_corner_cell cont_failed_campaign cont_succesfull_campaign
+%copy_behaviour indicates if the agent "learns" the enviromental or economic behaviour from its best neighbor. (1 yes, 0 or ? no)
+
+neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price lu_total   plu_adj wlu_adj wlu_adj_cro  roi rue_cota ptl_adj wtl_adj initial_corner_cell cont_failed_campaign cont_succesfull_campaign copy_behaviour
 
 
 
@@ -704,8 +710,8 @@ rule: {
 		$cae_ue_cota 	:= (-1,0)~ue_cota;
 		$cae_mgm 		:= (-1,0)~mgm;
 		
-		$cae_camp_fullfil_economic_beh 					:= (-1,0)~camp_fullfil_economic_beh ;
-		$cae_camp_fullfil_enviromental_beh				:= (-1,0)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 					:= (-1,0)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh				:= (-1,0)~camp_fullfil_enviromental_beh ;
 		$cae_plu_adj 									:= (-1,0)~plu_adj ;
 		$cae_wlu_adj									:= (-1,0)~wlu_adj ;
 		$cae_wlu_adj_cro								:= (-1,0)~wlu_adj_cro ;
@@ -758,8 +764,8 @@ rule: {
 		$cae_ue_cota 	:= (-1,1)~ue_cota;
 		$cae_mgm 		:= (-1,1)~mgm;
 		
-		$cae_camp_fullfil_economic_beh 					:= (-1,1)~camp_fullfil_economic_beh ;
-		$cae_camp_fullfil_enviromental_beh				:= (-1,1)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 					:= (-1,1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh				:= (-1,1)~camp_fullfil_enviromental_beh ;
 		$cae_plu_adj 									:= (-1,1)~plu_adj ;
 		$cae_wlu_adj									:= (-1,1)~wlu_adj ;
 		$cae_wlu_adj_cro								:= (-1,1)~wlu_adj_cro ;
@@ -812,8 +818,8 @@ rule: {
 		$cae_ue_cota 	:= (0,1)~ue_cota;
 		$cae_mgm 		:= (0,1)~mgm;
 		
-		$cae_camp_fullfil_economic_beh 					:= (0,1)~camp_fullfil_economic_beh ;
-		$cae_camp_fullfil_enviromental_beh				:= (0,1)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 					:= (0,1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh				:= (0,1)~camp_fullfil_enviromental_beh ;
 		$cae_plu_adj 									:= (0,1)~plu_adj ;
 		$cae_wlu_adj									:= (0,1)~wlu_adj ;
 		$cae_wlu_adj_cro								:= (0,1)~wlu_adj_cro ;
@@ -869,8 +875,8 @@ rule: {
 		$cae_ue_cota 	:= (1,1)~ue_cota;
 		$cae_mgm 		:= (1,1)~mgm;		
 		
-		$cae_camp_fullfil_economic_beh 					:= (1,1)~camp_fullfil_economic_beh ;
-		$cae_camp_fullfil_enviromental_beh				:= (1,1)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 					:= (1,1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh				:= (1,1)~camp_fullfil_enviromental_beh ;
 		$cae_plu_adj 									:= (1,1)~plu_adj ;
 		$cae_wlu_adj									:= (1,1)~wlu_adj ;
 		$cae_wlu_adj_cro								:= (1,1)~wlu_adj_cro ;
@@ -925,8 +931,8 @@ rule: {
 		$cae_ue_cota 	:= (1,0)~ue_cota;
 		$cae_mgm 		:= (1,0)~mgm;			
 		
-		$cae_camp_fullfil_economic_beh 					:= (1,0)~camp_fullfil_economic_beh ;
-		$cae_camp_fullfil_enviromental_beh				:= (1,0)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 					:= (1,0)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh				:= (1,0)~camp_fullfil_enviromental_beh ;
 		$cae_plu_adj 									:= (1,0)~plu_adj ;
 		$cae_wlu_adj									:= (1,0)~wlu_adj ;
 		$cae_wlu_adj_cro								:= (1,0)~wlu_adj_cro ;
@@ -980,8 +986,8 @@ rule: {
 		$cae_ue_cota 	:= (1,-1)~ue_cota;
 		$cae_mgm 		:= (1,-1)~mgm;			
 		
-		$cae_camp_fullfil_economic_beh 					:= (1,-1)~camp_fullfil_economic_beh ;
-		$cae_camp_fullfil_enviromental_beh				:= (1,-1)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 					:= (1,-1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh				:= (1,-1)~camp_fullfil_enviromental_beh ;
 		$cae_plu_adj 									:= (1,-1)~plu_adj ;
 		$cae_wlu_adj									:= (1,-1)~wlu_adj ;
 		$cae_wlu_adj_cro								:= (1,-1)~wlu_adj_cro ;
@@ -1036,8 +1042,8 @@ rule: {
 		$cae_ue_cota 	:= (0,-1)~ue_cota;
 		$cae_mgm 		:= (0,-1)~mgm;		
 		
-		$cae_camp_fullfil_economic_beh 					:= (0,-1)~camp_fullfil_economic_beh ;
-		$cae_camp_fullfil_enviromental_beh				:= (0,-1)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 					:= (0,-1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh				:= (0,-1)~camp_fullfil_enviromental_beh ;
 		$cae_plu_adj 									:= (0,-1)~plu_adj ;
 		$cae_wlu_adj									:= (0,-1)~wlu_adj ;
 		$cae_wlu_adj_cro								:= (0,-1)~wlu_adj_cro ;
@@ -1091,8 +1097,8 @@ rule: {
 		$cae_ue_cota 	:= (-1,-1)~ue_cota;
 		$cae_mgm 		:= (-1,-1)~mgm;	
 		
-		$cae_camp_fullfil_economic_beh 					:= (-1,-1)~camp_fullfil_economic_beh ;
-		$cae_camp_fullfil_enviromental_beh				:= (-1,-1)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 					:= (-1,-1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh				:= (-1,-1)~camp_fullfil_enviromental_beh ;
 		$cae_plu_adj 									:= (-1,-1)~plu_adj ;
 		$cae_wlu_adj									:= (-1,-1)~wlu_adj ;
 		$cae_wlu_adj_cro								:= (-1,-1)~wlu_adj_cro ;
@@ -1618,8 +1624,8 @@ rule: {
 		$ca_ue_cota 	:= (-1,0)~ue_cota;
 		$cmgm 			:= (-1,0)~mgm;
 		
-		$ca_camp_fullfil_economic_beh 				:= (-1,0)~camp_fullfil_economic_beh ;
-		$ca_camp_fullfil_enviromental_beh			:= (-1,0)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 				:= (-1,0)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (-1,0)~camp_fullfil_enviromental_beh ;
 		$ca_plu_adj 								:= (-1,0)~plu_adj ;
 		$ca_wlu_adj									:= (-1,0)~wlu_adj ;
 		$ca_wlu_adj_cro								:= (-1,0)~wlu_adj_cro ;
@@ -1661,8 +1667,8 @@ rule: {
 		$ca_ue_cota 	:= (-1,1)~ue_cota;
 		$cmgm	 		:= (-1,1)~mgm;
 		
-		$ca_camp_fullfil_economic_beh 				:= (-1,1)~camp_fullfil_economic_beh ;
-		$ca_camp_fullfil_enviromental_beh			:= (-1,1)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 				:= (-1,1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (-1,1)~camp_fullfil_enviromental_beh ;
 		$ca_plu_adj 								:= (-1,1)~plu_adj ;
 		$ca_wlu_adj									:= (-1,1)~wlu_adj ;
 		$ca_wlu_adj_cro								:= (-1,1)~wlu_adj_cro ;
@@ -1703,8 +1709,8 @@ rule: {
 		$ca_ue_cota 	:= (0,1)~ue_cota;
 		$cmgm	 		:= (0,1)~mgm;
 		
-		$ca_camp_fullfil_economic_beh 				:= (0,1)~camp_fullfil_economic_beh ;
-		$ca_camp_fullfil_enviromental_beh			:= (0,1)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 				:= (0,1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (0,1)~camp_fullfil_enviromental_beh ;
 		$ca_plu_adj 								:= (0,1)~plu_adj ;
 		$ca_wlu_adj									:= (0,1)~wlu_adj ;
 		$ca_wlu_adj_cro								:= (0,1)~wlu_adj_cro ;
@@ -1747,8 +1753,8 @@ rule: {
 		$ca_ue_cota 	:= (1,1)~ue_cota;
 		$cmgm	 		:= (1,1)~mgm;		
 		
-		$ca_camp_fullfil_economic_beh 				:= (1,1)~camp_fullfil_economic_beh ;
-		$ca_camp_fullfil_enviromental_beh			:= (1,1)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 				:= (1,1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (1,1)~camp_fullfil_enviromental_beh ;
 		$ca_plu_adj 								:= (1,1)~plu_adj ;
 		$ca_wlu_adj									:= (1,1)~wlu_adj ;
 		$ca_wlu_adj_cro								:= (1,1)~wlu_adj_cro ;
@@ -1789,8 +1795,8 @@ rule: {
 		$ca_ue_cota 	:= (1,0)~ue_cota;
 		$cmgm	 		:= (1,0)~mgm;		
 
-		$ca_camp_fullfil_economic_beh 				:= (1,0)~camp_fullfil_economic_beh ;
-		$ca_camp_fullfil_enviromental_beh			:= (1,0)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 				:= (1,0)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (1,0)~camp_fullfil_enviromental_beh ;
 		$ca_plu_adj 								:= (1,0)~plu_adj ;
 		$ca_wlu_adj									:= (1,0)~wlu_adj ;
 		$ca_wlu_adj_cro								:= (1,0)~wlu_adj_cro ;
@@ -1832,8 +1838,8 @@ rule: {
 		$ca_ue_cota 	:= (1,-1)~ue_cota;
 		$cmgm	 		:= (1,-1)~mgm;			
 		
-		$ca_camp_fullfil_economic_beh 				:= (1,-1)~camp_fullfil_economic_beh ;
-		$ca_camp_fullfil_enviromental_beh			:= (1,-1)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 				:= (1,-1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (1,-1)~camp_fullfil_enviromental_beh ;
 		$ca_plu_adj 								:= (1,-1)~plu_adj ;
 		$ca_wlu_adj									:= (1,-1)~wlu_adj ;
 		$ca_wlu_adj_cro								:= (1,-1)~wlu_adj_cro ;
@@ -1875,8 +1881,8 @@ rule: {
 		$ca_ue_cota 	:= (0,-1)~ue_cota;
 		$cmgm	 		:= (0,-1)~mgm;		
 		
-		$ca_camp_fullfil_economic_beh 				:= (0,-1)~camp_fullfil_economic_beh ;
-		$ca_camp_fullfil_enviromental_beh			:= (0,-1)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 				:= (0,-1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (0,-1)~camp_fullfil_enviromental_beh ;
 		$ca_plu_adj 								:= (0,-1)~plu_adj ;
 		$ca_wlu_adj									:= (0,-1)~wlu_adj ;
 		$ca_wlu_adj_cro								:= (0,-1)~wlu_adj_cro ;
@@ -1918,8 +1924,8 @@ rule: {
 		$ca_ue_cota 	:= (-1,-1)~ue_cota;
 		$cmgm	 		:= (-1,-1)~mgm;	
 		
-		$ca_camp_fullfil_economic_beh 				:= (-1,-1)~camp_fullfil_economic_beh ;
-		$ca_camp_fullfil_enviromental_beh			:= (-1,-1)~camp_fullfil_enviromental_beh ;
+		$c_camp_fullfil_economic_beh 				:= (-1,-1)~camp_fullfil_economic_beh ;
+		$c_camp_fullfil_enviromental_beh			:= (-1,-1)~camp_fullfil_enviromental_beh ;
 		$ca_plu_adj 								:= (-1,-1)~plu_adj ;
 		$ca_wlu_adj									:= (-1,-1)~wlu_adj ;
 		$ca_wlu_adj_cro								:= (-1,-1)~wlu_adj_cro ;
@@ -2411,12 +2417,16 @@ rule: {
 rule: { 
 		%~amb 	:=  ?;
 		
-		%~camp_fullfil_economic_beh := if ( (0,0)~cont_failed_campaign>=3 and (vecino)~cont_succesfull_campaign>=3 ) and  copy_behaviour= 1 
-		%~camp_fullfil_enviromental_beh := if ( (0,0)~cont_failed_campaign>=3 and (vecino)~cont_succesfull_campaign>=3 ) and  copy_behaviour= 1 
+		
+		
+		~camp_fullfil_economic_beh := if ( ((0,0)~cont_failed_campaign >=1  and $c_cont_succesfull_campaign >=1 and  (0,0)~copy_behaviour =1 ) , $c_camp_fullfil_economic_beh, (0,0)~camp_fullfil_economic_beh );
+		~camp_fullfil_enviromental_beh := if ( ((0,0)~cont_failed_campaign >=1 and $c_cont_succesfull_campaign >=1  and  (0,0)~copy_behaviour =1) , $c_camp_fullfil_enviromental_beh, (0,0)~camp_fullfil_enviromental_beh);
+		
+
 		
 		#macro(SetEtapaFinal)
 		~flag_paso := 8.1 ;
-		%~flag_cae := 8.1;	
+		~flag_cae := if ( ((0,0)~cont_failed_campaign >=1  and $c_cont_succesfull_campaign >=1 and  (0,0)~copy_behaviour =1 ),81.1 , 81.0 );
 	}
 	{
 		%copia economica reset
