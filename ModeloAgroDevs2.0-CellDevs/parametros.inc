@@ -32,8 +32,12 @@
 	~etapa = 1
 #EndMacro
 
-#BeginMacro(ajusteLandUsePrice) 
+#BeginMacro(priceChangeCalculation) 
 	~etapa = 1.1
+#EndMacro
+
+#BeginMacro(ajusteLandUsePrice) 
+	~etapa = 1.11
 #EndMacro
 
 #BeginMacro(ajusteLandUseWeather) 
@@ -104,8 +108,12 @@
 	~etapa	:= 1;
 #EndMacro
 
-#BeginMacro(SetAjusteLandUsePrice) 
+#BeginMacro(SetPriceChangeCalculation) 
 	~etapa	:= 1.1;
+#EndMacro
+
+#BeginMacro(SetAjusteLandUsePrice) 
+	~etapa	:= 1.11;
 #EndMacro
 
 #BeginMacro(SetAjusteLandUseWeather) 
