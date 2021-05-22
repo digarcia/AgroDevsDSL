@@ -26,7 +26,9 @@
 %#include(pergamino2020/inicializacionModeloDaniela.inc)
 %#include(pergamino2020/inicializacionModeloDaniela5x5.inc)
 %#include(pergamino2020/inicializacionModeloDaniela_CopyBehaviour5x5.inc)
-#include(pergamino2020/inicializacionModeloDaniela_CopyBehaviouvrV2_5x5.inc)
+%#include(pergamino2020/inicializacionModeloDaniela_CopyBehaviouvrV2_5x5.inc)
+#include(pergamino2020/inicializacionModeloDaniela_PriceLandAdjustmentV3_5x5.inc)
+
 
 
 
@@ -257,21 +259,30 @@ rule: {
 % Precalculo de PriceChange para cada LU	
 rule: { 
 	#macro(SetPriceChangeCalculation)
+	 ~flag_paso := 1.03 ;
 	}
 	{
 		% $percLu1PriceChange := 1;	
-		 $percLu1PriceChange := ((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1);
-		 $percLu2PriceChange := ((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2);
-		 $percLu4PriceChange := ((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4);
+		%$percLu1PriceChange := ((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1);
+		%$percLu2PriceChange := ((0,0)~curr_lu2_price - #macro(precio_lu2))/#macro(precio_lu2);
+		%$percLu4PriceChange := ((0,0)~curr_lu4_price - #macro(precio_lu4))/#macro(precio_lu4);
+
+		$percLu1PriceChange := ((0,0)~curr_lu1_price - (0,0)~prev_lu1_price )/(0,0)~prev_lu1_price ;
+		$percLu2PriceChange := ((0,0)~curr_lu2_price - (0,0)~prev_lu2_price )/(0,0)~prev_lu2_price ;
+		$percLu4PriceChange := ((0,0)~curr_lu4_price - (0,0)~prev_lu4_price )/(0,0)~prev_lu4_price ;
+
+
 	}
 	 0
 	{ 
 		(0,0)#macro(ambienteRecibido) 	
-		and ( (0,0)~plu_adj = 1 )
+		and ( (0,0)~plu_adj > 0 )
 
 	}	
 	
 % Variacion de LandUse por precio
+
+% Variacion de Land Use por Subida de precio
 rule: { 
 	%(lu_nueva_precio-lu_orig_precio)/(lu_orig_precio)		
 
@@ -280,7 +291,7 @@ rule: {
 	
 	%~lu1 := (0,0)~lu1 * 1.20;	
 	#macro(SetAjusteLandUsePrice)
-	~flag_paso := 1.11 ;
+	~flag_paso := 1.111 ;
 	%~flag_cae := 1.11 ;	
 	%~flag_cae := ((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1);
 	
@@ -289,6 +300,77 @@ rule: {
 	{ 
 		(0,0)#macro(priceChangeCalculation) 	
 		and ( (0,0)~plu_adj = 1 )
+
+	}	
+
+% Variacion de Land Use por Bajada de precio
+rule: { 
+	%(lu_nueva_precio-lu_orig_precio)/(lu_orig_precio)		
+
+
+		~lu_total	:= 	 (0,0)~lu1 +  (0,0)~lu2 +  (0,0)~lu3 ;
+	
+	%~lu1 := (0,0)~lu1 * 1.20;	
+	#macro(SetAjusteLandUsePrice)
+	~flag_paso := 1.112 ;
+	%~flag_cae := 1.11 ;	
+	%~flag_cae := ((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1);
+	
+	}
+	 0
+	{ 
+		(0,0)#macro(priceChangeCalculation) 	
+		and ( (0,0)~plu_adj = 2 )
+
+	}
+
+% Variacion de Land Use por Variacion de precio
+rule: { 
+	%(lu_nueva_precio-lu_orig_precio)/(lu_orig_precio)		
+
+		%~lu1 := if( $percLu1PriceChange > 0.1 and $percLu2PriceChange < -0.1 and abs($percLu4PriceChange) < 0.1 , (0,0)~lu1 + (0,0)~lu2 * 0.25 ,(0,0)~lu1 	);
+		%~lu1 := if( $percLu1PriceChange > 0.1 and $percLu2PriceChange< -0.1 and abs($percLu4PriceChange)< 0.1 , (0,0)~lu1 + (0,0)~lu2 * 0.25 ,
+		%if( $percLu1PriceChange > 0.1 and abs($percLu2PriceChange)< 0.1 and $percLu4PriceChange< -0.1, (0,0)~lu1 + (0,0)~lu3 * 0.25 ,(0,0)~lu1 	));
+		~lu1 := if( $percLu1PriceChange > 0.1 and $percLu2PriceChange < -0.1 and abs($percLu4PriceChange) < 0.1 , (0,0)~lu1 + (0,0)~lu2 * 0.25 ,
+		if( $percLu1PriceChange > 0.1 and abs($percLu2PriceChange) < 0.1 and $percLu4PriceChange < -0.1, (0,0)~lu1 + (0,0)~lu3 * 0.25 ,
+		if( $percLu1PriceChange > 0.1 and $percLu2PriceChange < -0.1 and $percLu4PriceChange < -0.1, (0,0)~lu1 + (0,0)~lu2 * 0.125  + (0,0)~lu3 * 0.125,
+		if( $percLu1PriceChange > 0.1 and abs($percLu2PriceChange) < 0.1 and abs($percLu4PriceChange) < 0.1, (0,0)~lu1 + (0,0)~lu2 * 0.125  + (0,0)~lu3 * 0.125,
+		if( $percLu1PriceChange > 0.1 and $percLu2PriceChange > 0.1 and $percLu4PriceChange < -0.1, (0,0)~lu1 + (0,0)~lu3 * 0.125,
+		if( $percLu1PriceChange > 0.1 and $percLu2PriceChange < -0.1 and $percLu4PriceChange > 0.1, (0,0)~lu1 + (0,0)~lu2 * 0.125,			
+		if( $percLu1PriceChange > 0.1 and $percLu2PriceChange > 0.1 and abs($percLu4PriceChange) < 0.1, (0,0)~lu1 + (0,0)~lu3 * 0.125,			
+		if( $percLu1PriceChange > 0.1 and abs($percLu2PriceChange) < 0.1 and $percLu4PriceChange > 0.1, (0,0)~lu1 + (0,0)~lu2 * 0.125,
+		if( abs($percLu1PriceChange) < 0.1 and abs($percLu2PriceChange) < 0.1 and abs($percLu4PriceChange) < 0.1, (0,0)~lu1 ,
+		if( abs($percLu1PriceChange) < 0.1 and abs($percLu2PriceChange) < 0.1 and $percLu4PriceChange > 0.1, (0,0)~lu1 * 0.875,			
+		if( abs($percLu1PriceChange) < 0.1 and $percLu2PriceChange < 0.1 and abs($percLu4PriceChange) > 0.1, (0,0)~lu1 * 0.875,	
+		if( abs($percLu1PriceChange) < 0.1 and $percLu2PriceChange > 0.1 and $percLu4PriceChange < -0.1, (0,0)~lu1 ,		
+		if( abs($percLu1PriceChange) < 0.1 and $percLu2PriceChange < -0.1 and $percLu4PriceChange > 0.1, (0,0)~lu1 ,	
+		if( abs($percLu1PriceChange) < 0.1 and $percLu2PriceChange < -0.1 and $percLu4PriceChange < -0.1, (0,0)~lu1 + (0,0)~lu2 * 0.125 +(0,0)~lu3 * 0.125,	
+		if( abs($percLu1PriceChange) < 0.1 and $percLu2PriceChange < -0.1 and abs($percLu4PriceChange) < 0.1, (0,0)~lu1 + (0,0)~lu2 * 0.125,					
+		if( abs($percLu1PriceChange) < 0.1 and abs($percLu2PriceChange) < 0.1 and $percLu4PriceChange < -0.1, (0,0)~lu1 + (0,0)~lu3 * 0.125,	
+		if( $percLu1PriceChange < -0.1 and abs($percLu2PriceChange) < 0.1 and $percLu4PriceChange > 0.1, (0,0)~lu1 * 0.75,	
+		if( $percLu1PriceChange < -0.1 and $percLu2PriceChange > 0.1 and abs($percLu4PriceChange) < 0.1, (0,0)~lu1 * 0.75,	
+		if( $percLu1PriceChange < -0.1 and $percLu2PriceChange < -0.1 and $percLu4PriceChange > 0.1, (0,0)~lu1 * 0.875,	
+		if( $percLu1PriceChange < -0.1 and $percLu2PriceChange > 0.1 and $percLu4PriceChange < -0.1, (0,0)~lu1 * 0.875,				
+		if( $percLu1PriceChange < -0.1 and $percLu2PriceChange < -0.1 and $percLu4PriceChange < -0.1, (0,0)~lu1,				
+		if( $percLu1PriceChange < -0.1 and $percLu2PriceChange < -0.1 and abs($percLu4PriceChange) < 0.1, (0,0)~lu1 * 0.875,	
+		if( $percLu1PriceChange < -0.1 and abs($percLu2PriceChange) < 0.1 and $percLu4PriceChange < -0.1, (0,0)~lu1 * 0.875,				
+		if( $percLu1PriceChange < -0.1 and abs($percLu2PriceChange) < 0.1 and abs($percLu4PriceChange) < 0.1, (0,0)~lu1 * 0.75,		
+		(0,0)~lu1 	))))))))))))))))))))))));	
+
+				
+		~lu_total	:= 	 (0,0)~lu1 +  (0,0)~lu2 +  (0,0)~lu3 ;
+	
+	%~lu1 := (0,0)~lu1 * 1.20;	
+	#macro(SetAjusteLandUsePrice)
+	~flag_paso := 1.113 ;
+	%~flag_cae := 1.11 ;	
+	%~flag_cae := ((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1);
+	
+	}
+	 0
+	{ 
+		(0,0)#macro(priceChangeCalculation) 	
+		and ( (0,0)~plu_adj = 3 )
 
 	}	
 	
