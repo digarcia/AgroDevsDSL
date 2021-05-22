@@ -27,7 +27,7 @@
 %#include(pergamino2020/inicializacionModeloDaniela5x5.inc)
 %#include(pergamino2020/inicializacionModeloDaniela_CopyBehaviour5x5.inc)
 %#include(pergamino2020/inicializacionModeloDaniela_CopyBehaviouvrV2_5x5.inc)
-#include(pergamino2020/inicializacionModeloDaniela_PriceLandAdjustmentV3_5x5.inc)
+#include(pergamino2020/inicializacionModeloDaniela_PriceLandAdjustmentV4_5x5.inc)
 
 
 
@@ -295,6 +295,33 @@ rule: {
 	%~flag_cae := 1.11 ;	
 	%~flag_cae := ((0,0)~curr_lu1_price - #macro(precio_lu1))/#macro(precio_lu1);
 	
+	
+	~lu1 := if ( $percLu1PriceChange > 0.1 and $percLu2PriceChange <=0.1  and $percLu4PriceChange <= 0.1, (0,0)~lu1 + (0,0)~lu2 * 0.125 +(0,0)~lu3 * 0.125,	
+			if ( $percLu1PriceChange > 0.1 and $percLu2PriceChange > 0.1   and $percLu4PriceChange <= 0.1, (0,0)~lu1 + (0,0)~lu3 * 0.125, 
+			if ( $percLu1PriceChange > 0.1 and $percLu2PriceChange <= 0.1  and $percLu4PriceChange > 0.1, (0,0)~lu1 + (0,0)~lu2 * 0.125, 
+			if ( $percLu1PriceChange > 0.1 and $percLu2PriceChange > 0.1   and $percLu4PriceChange > 0.1, (0,0)~lu1 ,
+			if ( $percLu1PriceChange < 0.1 and $percLu2PriceChange <= 0.1  and $percLu4PriceChange > 0.1, (0,0)~lu1 * 0.875 ,
+			if ( $percLu1PriceChange < 0.1 and $percLu2PriceChange > 0.1   and $percLu4PriceChange <= 0.1, (0,0)~lu1 * 0.875 ,
+			if ( $percLu1PriceChange < 0.1 and $percLu2PriceChange > 0.1   and $percLu4PriceChange > 0.1, (0,0)~lu1 * 0.75, 
+			(0,0)~lu1 )))))));	
+	
+	~lu2 := if ( $percLu2PriceChange > 0.1 and $percLu1PriceChange <=0.1  and $percLu4PriceChange <= 0.1, (0,0)~lu2 + (0,0)~lu1 * 0.125 +(0,0)~lu3 * 0.125,	
+			if ( $percLu2PriceChange > 0.1 and $percLu1PriceChange > 0.1   and $percLu4PriceChange <= 0.1, (0,0)~lu2 + (0,0)~lu3 * 0.125, 
+			if ( $percLu2PriceChange > 0.1 and $percLu1PriceChange <= 0.1  and $percLu4PriceChange > 0.1, (0,0)~lu2 + (0,0)~lu1 * 0.125, 
+			if ( $percLu2PriceChange > 0.1 and $percLu1PriceChange > 0.1   and $percLu4PriceChange > 0.1, (0,0)~lu2 ,
+			if ( $percLu2PriceChange < 0.1 and $percLu1PriceChange <= 0.1  and $percLu4PriceChange > 0.1, (0,0)~lu2 * 0.875 ,
+			if ( $percLu2PriceChange < 0.1 and $percLu1PriceChange > 0.1   and $percLu4PriceChange <= 0.1, (0,0)~lu2 * 0.875 ,
+			if ( $percLu2PriceChange < 0.1 and $percLu1PriceChange > 0.1   and $percLu4PriceChange > 0.1, (0,0)~lu2 * 0.75, 
+			(0,0)~lu2 )))))));	
+	
+	~lu3 := if ( $percLu4PriceChange > 0.1 and $percLu1PriceChange <=0.1  and $percLu2PriceChange <= 0.1, (0,0)~lu3 + (0,0)~lu1 * 0.125 +(0,0)~lu2 * 0.125,	
+			if ( $percLu4PriceChange > 0.1 and $percLu1PriceChange > 0.1   and $percLu2PriceChange <= 0.1, (0,0)~lu3 + (0,0)~lu2 * 0.125, 
+			if ( $percLu4PriceChange > 0.1 and $percLu1PriceChange <= 0.1  and $percLu2PriceChange > 0.1, (0,0)~lu3 + (0,0)~lu1 * 0.125, 
+			if ( $percLu4PriceChange > 0.1 and $percLu1PriceChange > 0.1   and $percLu2PriceChange > 0.1, (0,0)~lu3 ,
+			if ( $percLu4PriceChange < 0.1 and $percLu1PriceChange <= 0.1  and $percLu2PriceChange > 0.1, (0,0)~lu3 * 0.875 ,
+			if ( $percLu4PriceChange < 0.1 and $percLu1PriceChange > 0.1   and $percLu2PriceChange <= 0.1, (0,0)~lu3 * 0.875 ,
+			if ( $percLu4PriceChange < 0.1 and $percLu1PriceChange > 0.1   and $percLu2PriceChange > 0.1, (0,0)~lu3 * 0.75, 
+			(0,0)~lu3 )))))));	
 	}
 	 0
 	{ 
