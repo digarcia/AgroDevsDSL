@@ -327,7 +327,6 @@ rule: {
 			(0,0)~lu3 )))))));	
 			
 	~lu_total	:= 	 (0,0)~lu1 +  (0,0)~lu2 +  (0,0)~lu3 ;		
-			
 	}
 	 0
 	{ 
@@ -552,7 +551,7 @@ rule: {
 	 0
 	{ 
 		(0,0)#macro(ajusteLandUsePrice) 	
-		% and ( (0,0)~wlu_adj = 1 )
+		 and ( (0,0)~wlu_adj = 1 )
 	}	
 	
 	
@@ -691,6 +690,7 @@ rule: {
 		~flag_paso := 2.1 ;
 		%~flag_cae := 2.1;	
 		%~flag_cae := (0,0)~lu1;
+
 
 	}
 		0
