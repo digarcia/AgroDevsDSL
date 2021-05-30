@@ -682,6 +682,22 @@ rule: {
 		and (isUndefined((0,0)~ptl_adj) or  ((0,0)~ptl_adj = 0) or ((0,0)~ptl_adj < 0)) 
 	}	
 	
+rule: { 	
+		%Calculo Lu Total
+		#macro(SetCalculoLuTotal)
+		
+		~flag_paso := 1.5;	
+		~lu_total	:= 	 (0,0)~lu1 +  (0,0)~lu2 +  (0,0)~lu3 ;
+
+	}
+	 0
+	{ 
+		(0,0)#macro(ajusteMgmPrice) 	
+	}		
+	
+	
+	
+	
 % Procesamiento
 % 1 - Calculo Profit / Emergia
 % TODO: sacar inicializacion flag_cae
@@ -703,7 +719,7 @@ rule: {
 	}
 		0
 	{ 
-		(0,0)#macro(ajusteMgmPrice) 	and
+		(0,0)#macro(calculoLuTotal) 	and
 		(not isUndefined((0,0)~lu1)) 	and
 		(not isUndefined((0,0)~lu2)) 	and
 		(not isUndefined((0,0)~lu3)) 	and
@@ -719,7 +735,7 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(ajusteMgmPrice)
+		(0,0)#macro(calculoLuTotal)
 	}
 
 

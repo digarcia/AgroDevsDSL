@@ -52,6 +52,10 @@
 	~etapa = 1.4
 #EndMacro
 
+#BeginMacro(calculoLuTotal) 
+	~etapa = 1.5
+#EndMacro
+
 #BeginMacro(parametrosCalculados) 
 	~etapa = 2
 #EndMacro
@@ -126,6 +130,10 @@
 
 #BeginMacro(SetAjusteMgmPrice) 
 	~etapa	:= 1.4;
+#EndMacro
+
+#BeginMacro(SetCalculoLuTotal) 
+	~etapa	:= 1.5;
 #EndMacro
 
 #BeginMacro(SetEtapaParametrosCalculados) 
