@@ -171,7 +171,7 @@ in : in_ambiente in_curr_lu1_price in_curr_lu2_price in_curr_lu4_price
 
 %copy_behaviour indicates if the agent "learns" the enviromental or economic behaviour from its best neighbor. (1 yes, 0 or ? no)
 
-neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price lu_total   plu_adj wlu_adj wlu_adj_cro  roi rue_cota ptl_adj wtl_adj initial_corner_cell cont_failed_campaign cont_succesfull_campaign copy_behaviour
+neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price lu_total   plu_adj wlu_adj wlu_adj_cro  roi rue_cota ptl_adj wtl_adj initial_corner_cell cont_failed_campaign cont_succesfull_campaign copy_behaviour  used_mgm
 
 
 
@@ -688,6 +688,7 @@ rule: {
 		
 		~flag_paso := 1.5;	
 		~lu_total	:= 	 (0,0)~lu1 +  (0,0)~lu2 +  (0,0)~lu3 ;
+		~used_mgm := 	 (0,0)~mgm;
 
 	}
 	 0
