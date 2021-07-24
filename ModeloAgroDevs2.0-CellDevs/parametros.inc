@@ -32,6 +32,10 @@
 	~etapa = 1
 #EndMacro
 
+#BeginMacro(ambienteRecibidoPriceBackup) 
+	~etapa = 1.01
+#EndMacro
+
 #BeginMacro(priceChangeCalculation) 
 	~etapa = 1.1
 #EndMacro
@@ -110,6 +114,10 @@
 
 #BeginMacro(SetEtapaAmbienteRecibido) 
 	~etapa	:= 1;
+#EndMacro
+
+#BeginMacro(SetEtapaAmbienteRecibidoPriceBackup) 
+	~etapa	:= 1.01;
 #EndMacro
 
 #BeginMacro(SetPriceChangeCalculation) 

@@ -137,8 +137,8 @@ initialCellsvalue : pergamino2020/agro5x5.val
 % clu3 valor a copiar en lu3
 % cue_cota valor a copiar en ue_cota
 % cmgm valor a copiar en mgm
-StateVariables: cam sum_deg clu aju clu1 clu2 clu3 cue_cota cmgm  copia_ae cae_aju cae_lu1 cae_lu2 cae_lu3 cae_ue_cota cae_mgm copia_a ca_aju ca_lu1 ca_lu2 ca_lu3 ca_ue_cota ca_mgm  	cae_camp_fullfil_economic_beh cae_camp_fullfil_enviromental_beh	cae_plu_adj cae_wlu_adj cae_wlu_adj_cro	cae_ptl_adj cae_wtl_adj		c_camp_fullfil_economic_beh c_camp_fullfil_enviromental_beh c_plu_adj  c_wlu_adj c_wlu_adj_cro c_ptl_adj  c_wtl_adj  ca_camp_fullfil_economic_beh ca_camp_fullfil_enviromental_beh ca_plu_adj  ca_wlu_adj ca_wlu_adj_cro ca_ptl_adj ca_wtl_adj c_cont_failed_campaign	c_cont_succesfull_campaign		percLu1PriceChange	percLu2PriceChange	percLu4PriceChange
-StateValues: 0 0 0 0 ? ? ? ? ?  ? ? ? ? ? ? ?  ? ? ? ? ? ? ?     ? ? ? ? ? ? ?    ? ? ? ? ? ? ?    ? ? ? ? ? ? ?   ? ?		? ? ?
+StateVariables: cam sum_deg clu aju clu1 clu2 clu3 cue_cota cmgm  copia_ae cae_aju cae_lu1 cae_lu2 cae_lu3 cae_ue_cota cae_mgm copia_a ca_aju ca_lu1 ca_lu2 ca_lu3 ca_ue_cota ca_mgm  	cae_camp_fullfil_economic_beh cae_camp_fullfil_enviromental_beh	cae_plu_adj cae_wlu_adj cae_wlu_adj_cro	cae_ptl_adj cae_wtl_adj		c_camp_fullfil_economic_beh c_camp_fullfil_enviromental_beh c_plu_adj  c_wlu_adj c_wlu_adj_cro c_ptl_adj  c_wtl_adj  ca_camp_fullfil_economic_beh ca_camp_fullfil_enviromental_beh ca_plu_adj  ca_wlu_adj ca_wlu_adj_cro ca_ptl_adj ca_wtl_adj c_cont_failed_campaign	c_cont_succesfull_campaign		percLu1PriceChange	percLu2PriceChange	percLu4PriceChange  	priceBackup
+StateValues: 0 0 0 0 ? ? ? ? ?  ? ? ? ? ? ? ?  ? ? ? ? ? ? ?     ? ? ? ? ? ? ?    ? ? ? ? ? ? ?    ? ? ? ? ? ? ?   ? ?		? ? ?    ?
 
 					
 				
@@ -171,7 +171,7 @@ in : in_ambiente in_curr_lu1_price in_curr_lu2_price in_curr_lu4_price
 
 %copy_behaviour indicates if the agent "learns" the enviromental or economic behaviour from its best neighbor. (1 yes, 0 or ? no)
 
-neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price lu_total   plu_adj wlu_adj wlu_adj_cro  roi rue_cota ptl_adj wtl_adj initial_corner_cell cont_failed_campaign cont_succesfull_campaign copy_behaviour  used_mgm
+neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price lu_total   plu_adj wlu_adj wlu_adj_cro  roi rue_cota ptl_adj wtl_adj initial_corner_cell cont_failed_campaign cont_succesfull_campaign copy_behaviour  used_mgm  price_backup2
 
 
 
@@ -198,11 +198,38 @@ rule: {
 		~prev_lu2_price  := (0,0)~curr_lu2_price;
 		~prev_lu4_price  := (0,0)~curr_lu4_price;
 		~flag_cae := 1.99 ;
+		~price_backup2 := 8;
+		#macro(SetEtapaAmbienteRecibidoPriceBackup)
+	}
+	{		
+		$priceBackup := 1;
 	}
 	0
 	{
-	(0,0)#macro(inicio) 	
+	(0,0)#macro(ambienteRecibido) 	
 	and (0,0)~initial_corner_cell = 1 
+	%and $priceBackup < 1 
+	and (0,0)~price_backup2 !=1 
+	%and 1 != 1
+	}
+	
+	
+	rule: { 
+		%saves previous price
+		~flag_cae := 1.99 ;
+		~price_backup2 := 9;
+		#macro(SetEtapaAmbienteRecibidoPriceBackup)
+	}
+	{		
+		$priceBackup := 1;
+	}
+	0
+	{
+	(0,0)#macro(ambienteRecibido) 	
+	and (0,0)~initial_corner_cell = 1 
+	%and $priceBackup < 1 
+	and (0,0)~price_backup2 = 1 
+	%and 1 != 1
 	}
 	
 
@@ -217,7 +244,7 @@ rule: {
 		~curr_lu1_price := (0,-1)~curr_lu1_price; 
 		~curr_lu2_price := (0,-1)~curr_lu2_price; 
 		~curr_lu4_price := (0,-1)~curr_lu4_price; 
-		#macro(SetEtapaAmbienteRecibido)
+		#macro(SetEtapaAmbienteRecibidoPriceBackup)
 		~flag_paso := 1.01 ;
 		~flag_cae := 1.01;	
 		~flag_value := $cam;
@@ -229,7 +256,7 @@ rule: {
 	{ 
 		(0,0)#macro(inicio) 	and
 		(not isUndefined((0,-1)~amb)) 	and
-		(0,-1)#macro(ambienteRecibido)	and
+		(0,-1)#macro(ambienteRecibidoPriceBackup)	and
 		(0,0)~amb	 	!= (0,-1)~amb   
 		%and 1 != 1
 	}
@@ -244,7 +271,7 @@ rule: {
 		~curr_lu1_price := (-1,0)~curr_lu1_price; 
 		~curr_lu2_price := (-1,0)~curr_lu2_price; 
 		~curr_lu4_price := (-1,0)~curr_lu4_price; 
-		#macro(SetEtapaAmbienteRecibido)
+		#macro(SetEtapaAmbienteRecibidoPriceBackup)
 		~flag_paso := 1.02 ;
 		~flag_cae := 1.02;	
 		~flag_value := $cam;
@@ -256,7 +283,7 @@ rule: {
 	{ 
 		(0,0)#macro(inicio) 			and
 		(not isUndefined((-1,0)~amb)) 	and
-		(-1,0)#macro(ambienteRecibido)	and
+		(-1,0)#macro(ambienteRecibidoPriceBackup)	and
 		(0,0)~amb 	!= (-1,0)~amb		
 		%and 1 != 1
 	}
@@ -280,7 +307,7 @@ rule: {
 	}
 	 0
 	{ 
-		(0,0)#macro(ambienteRecibido) 	
+		(0,0)#macro(ambienteRecibidoPriceBackup) 	
 		and ( (0,0)~plu_adj > 0 )
 
 	}	
@@ -502,7 +529,7 @@ rule: {
 	 0
 	{ 
 		% if plu_adj is no initialized has the initial cell value (that is negative)
-		(0,0)#macro(ambienteRecibido) 	
+		(0,0)#macro(ambienteRecibidoPriceBackup) 	
 		and (isUndefined((0,0)~plu_adj) or  ((0,0)~plu_adj = 0) or ((0,0)~plu_adj < 0)) 
 	}	
 	
@@ -2615,6 +2642,7 @@ rule: {
 		#macro(SetEtapaInicio)
 		%~flag_paso := 0.1 ;
 		%~flag_cae := 0.1;	
+		%~price_backup2 := 9;
 	}
 	{
 		%copia economica reset
@@ -2644,6 +2672,10 @@ rule: {
 		$ca_lu3     := ?;
 		$ca_ue_cota 	:= ?;
 		$ca_mgm 		:= ?;	
+		
+		
+		%priceBackup flag reset
+		$priceBackup := 1;
 		
 
 	}
@@ -2716,8 +2748,12 @@ rule : {
 		%receive the new price
 		~curr_lu1_price := portValue(thisPort);
 		~flag_cae := 0.91;	
-		#macro(SetEtapaAmbienteRecibido)
-
+		%#macro(SetEtapaAmbienteRecibido)	
+		%~price_backup2 := if ((0,0)~price_backup2 = ?, 2 , (0,0)~price_backup2 + 1);
+		~price_backup2 := 1 ;
+	}
+	{		
+		$priceBackup := 1;
 	}
  	 0
 	{ t }	
@@ -2732,9 +2768,12 @@ rule : {
 		~curr_lu2_price := portValue(thisPort);
 
 		~flag_cae := 0.92;	
-		#macro(SetEtapaAmbienteRecibido)
-
+		%#macro(SetEtapaAmbienteRecibido)
+		%~price_backup2 := 1;		
 	}
+	{		
+		$priceBackup := 1;
+	}	
  	 0
 	{ t }	
 
@@ -2748,9 +2787,12 @@ rule : {
 		~curr_lu4_price := portValue(thisPort);
 		
 		~flag_cae := 0.94;	
-		#macro(SetEtapaAmbienteRecibido)
-
+		%#macro(SetEtapaAmbienteRecibido)
+		%~price_backup2 := 1;
 	}
+	{		
+		$priceBackup := 1;
+	}	
  	 0
 	{ t }	
 	
