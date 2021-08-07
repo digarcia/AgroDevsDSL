@@ -171,7 +171,7 @@ in : in_ambiente in_curr_lu1_price in_curr_lu2_price in_curr_lu4_price
 
 %copy_behaviour indicates if the agent "learns" the enviromental or economic behaviour from its best neighbor. (1 yes, 0 or ? no)
 
-neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price lu_total   plu_adj wlu_adj wlu_adj_cro  roi rue_cota ptl_adj wtl_adj initial_corner_cell cont_failed_campaign cont_succesfull_campaign copy_behaviour  used_mgm  price_backup2
+neighborports: amb mgm lu1 lu2 lu3 pro eme ua_tipo ua_cota ue_cota deg uae uao uee ueo alq etapa camp_fullfil_economic_beh camp_fullfil_enviromental_beh flag_paso flag_cae flag_value curr_lu1_price curr_lu2_price curr_lu4_price prev_lu1_price prev_lu2_price prev_lu4_price lu_total   plu_adj wlu_adj wlu_adj_cro  roi rue_cota ptl_adj wtl_adj initial_corner_cell cont_failed_campaign cont_succesfull_campaign copy_behaviour  used_mgm  price_backup1 price_backup2 price_backup4
 
 
 
@@ -201,14 +201,10 @@ rule: {
 		~price_backup2 := 8;
 		#macro(SetEtapaAmbienteRecibidoPriceBackup)
 	}
-	{		
-		$priceBackup := 1;
-	}
 	0
 	{
 	(0,0)#macro(ambienteRecibido) 	
 	and (0,0)~initial_corner_cell = 1 
-	%and $priceBackup < 1 
 	and (0,0)~price_backup2 !=1 
 	%and 1 != 1
 	}
@@ -220,14 +216,10 @@ rule: {
 		~price_backup2 := 9;
 		#macro(SetEtapaAmbienteRecibidoPriceBackup)
 	}
-	{		
-		$priceBackup := 1;
-	}
 	0
 	{
 	(0,0)#macro(ambienteRecibido) 	
 	and (0,0)~initial_corner_cell = 1 
-	%and $priceBackup < 1 
 	and (0,0)~price_backup2 = 1 
 	%and 1 != 1
 	}
@@ -2675,7 +2667,6 @@ rule: {
 		
 		
 		%priceBackup flag reset
-		$priceBackup := 1;
 		
 
 	}
@@ -2752,9 +2743,6 @@ rule : {
 		%~price_backup2 := if ((0,0)~price_backup2 = ?, 2 , (0,0)~price_backup2 + 1);
 		~price_backup2 := 1 ;
 	}
-	{		
-		$priceBackup := 1;
-	}
  	 0
 	{ t }	
 	
@@ -2771,9 +2759,6 @@ rule : {
 		%#macro(SetEtapaAmbienteRecibido)
 		%~price_backup2 := 1;		
 	}
-	{		
-		$priceBackup := 1;
-	}	
  	 0
 	{ t }	
 
@@ -2789,9 +2774,6 @@ rule : {
 		~flag_cae := 0.94;	
 		%#macro(SetEtapaAmbienteRecibido)
 		%~price_backup2 := 1;
-	}
-	{		
-		$priceBackup := 1;
 	}	
  	 0
 	{ t }	
