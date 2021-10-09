@@ -194,16 +194,11 @@ portInTransition : curr_lu4_price@campo(0,0) setPrecioLu4
 % Copia de previous price para la celda (0,0)
 rule: { 
 		%saves previous price
-		%~prev_lu1_price  := (0,0)~curr_lu1_price;
-		%~prev_lu2_price  := (0,0)~curr_lu2_price;
-		%~prev_lu4_price  := (0,0)~curr_lu4_price;
-		%saves previous price
 		~prev_lu1_price  := if ((0,0)~price_backup1 = 1, (0,0)~prev_lu1_price, (0,0)~curr_lu1_price); % no se actualiza cuando ya se backupeo
 		~prev_lu2_price  := if ((0,0)~price_backup2 = 1, (0,0)~prev_lu2_price, (0,0)~curr_lu2_price); % no se actualiza cuando ya se backupeo
 		~prev_lu4_price  := if ((0,0)~price_backup4 = 1, (0,0)~prev_lu4_price, (0,0)~curr_lu4_price); % no se actualiza cuando ya se backupeo		
 		
 		~flag_cae := 1.99 ;
-		%~price_backup2 := 8;
 		%set flag accordin if something is backed up in this step or not
 		~price_backup1  := if ((0,0)~price_backup1 = 1, 9, 8); % no se actualiza cuando ya se backupeo
 		~price_backup2  := if ((0,0)~price_backup2 = 1, 9, 8); % no se actualiza cuando ya se backupeo
@@ -215,26 +210,10 @@ rule: {
 	{
 	(0,0)#macro(ambienteRecibido) 	
 	and (0,0)~initial_corner_cell = 1 
-	%and (0,0)~price_backup1 !=1 
-	%and 1 != 1
 	}
 	
-	
-	%rule: { 
-	%	%saves previous price
-	%	~flag_cae := 1.99 ;
-	%	~price_backup2 := 9;
-	%	#macro(SetEtapaAmbienteRecibidoPriceBackup)
-	%}
-	%0
-	%{
-	%(0,0)#macro(ambienteRecibido) 	
-	%and (0,0)~initial_corner_cell = 1 
-	%and (0,0)~price_backup1 = 1 
-	%and 1 != 1
-	%}
-	
 
+	
 % Propagacion Ambiente y precios
 rule: { 
 		~amb 	:= (0,-1)~amb; 
@@ -2644,7 +2623,6 @@ rule: {
 		#macro(SetEtapaInicio)
 		%~flag_paso := 0.1 ;
 		%~flag_cae := 0.1;	
-		%~price_backup2 := 9;
 	}
 	{
 		%copia economica reset
@@ -2749,8 +2727,6 @@ rule : {
 		%receive the new price
 		~curr_lu1_price := portValue(thisPort);
 		~flag_cae := 0.91;	
-		%#macro(SetEtapaAmbienteRecibido)	
-		%~price_backup2 := if ((0,0)~price_backup2 = ?, 2 , (0,0)~price_backup2 + 1);
 		~price_backup1 := 1 ;
 	}
  	 0
